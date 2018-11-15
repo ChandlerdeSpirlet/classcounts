@@ -25,6 +25,14 @@ app.get('/', function (request, response) {
         })
     })
 });
+app.get('/add', function (request, response) {
+    // render views/store/add.ejs
+    response.render('store/add', {
+        title: 'Add New Blackbelt',
+        barcode: '',
+        bbname: ''
+    })
+});
 app.post('/add', function (request, response) {
     // Validate user input - ensure non emptiness
     request.assert('barcode', 'Barcode is required').notEmpty();

@@ -5,34 +5,11 @@
 </head>
 <body>
 <div>
-    <a href="/store">Home</a> | 
-    <a href="/store/add">Add Blackbelt</a> |
-    <a href="/">Add Classes</a> 
-    <!--<a href="/store">All items</a>--><!--Removing to display all items on home page-->
+    <a href="/">Home</a> |
+    <a href="/store/add">Add item</a> |
+    <a href="/store">All items</a>
 </div>
 <h1><%= title %></h1>
 </body>
-<form action="/uploadCsv" method="post" enctype="multipart/form-data" class="box login">
-    <input type="file" name="file">
-    <input type="submit" class="" value="Upload" tabindex="1">
-</form>
-<form action="/store/add" method="post" name="form1">
-    <table width="25%" border="0">
-        <tr>
-            <td>Name</td>
-            <td><input type="text" name="bbName" id="name" value="<%= name %>"/></td>
-        </tr>
-        <tr>
-            <td>Barcode</td>
-            <td><input type="number" name="barcode" min="0" max="9999999" value="<%= barcode %>"/></td>
-        </tr>
-        <tr>
-            Resubmit the file with the class data after adding a new black belt.
-        </tr>
-        <tr>
-            <td></td>
-            <td><input type="submit" name="Submit" value="Add"/></td>
-        </tr>
-    </table>
-</form>
 </html>
+
