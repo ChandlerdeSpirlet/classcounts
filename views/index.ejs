@@ -1,0 +1,18 @@
+<html>
+<head>
+    <!-- 'title' is the data that is passed from the index.js during the response.render function call -->
+    <title><%= title %></title>
+</head>
+<body>
+<div>
+    <a href="/store">Home</a> | 
+    <a href="/">Add Item</a> 
+    <!--<a href="/store">All items</a>--><!--Removing to display all items on home page-->
+</div>
+<h1><%= title %></h1>
+</body>
+<form action="/uploadCsv" method="post" enctype="multipart/form-data" class="box login">
+    <input type="file" name="file">
+    <input type="submit" class="" value="Upload" tabindex="1">
+</form>
+</html>
