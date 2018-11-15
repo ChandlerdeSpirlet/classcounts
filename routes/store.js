@@ -2,11 +2,12 @@ var express = require('express');
 var db = require('../database');
 var app = express();
 module.exports = app;
-/*
-app.get('/', function (request, response) {
 
+app.get('/', function (request, response) {
+    response.render('layouts/header', 'Under Construction');
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
+    /*
     var query = 'SELECT * FROM counts';
 
     db.any(query)
@@ -25,8 +26,9 @@ app.get('/', function (request, response) {
             data: ''
         })
     })
+    */
 });
-*/
+
 app.get('/add', function (request, response) {
     // render views/store/add.ejs
     response.render('store/add', {
