@@ -84,3 +84,15 @@ app.post('/add', function (request, response) {
         })
     }
 });
+app.delete('/delete', function (req, res) {
+    var deleteQuery = 'update counts set regular = 0, sparring = 0, swats = 0 where barcode > 0';
+    db.none(deleteQuery)
+        .then(function (result) {
+                    req.flash('success', 'Successfully refreshed classes');
+                    res.redirect('/store');
+        })
+        .catch(function (err) {
+                    req.flash('error', err);
+                    res.redirect('/store')
+        })
+});
