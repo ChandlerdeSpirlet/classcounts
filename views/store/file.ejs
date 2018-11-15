@@ -1,0 +1,19 @@
+<!--Including Header Partial-->
+<%- include ../layouts/header.ejs %>
+
+<!--Using if-check to see if an error occurred and displaying appropriate message-->
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:blue"><%- messages.success %></p>
+<% } %>
+
+<script type="text/javascript">
+    var err = <%- JSON.stringify(messages) %>;
+    console.log(err);
+</script>
+Hello World
+
+<!--Including Footer Partial-->
+<%- include ../layouts/footer.ejs %>
