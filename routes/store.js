@@ -28,6 +28,10 @@ app.get('/', function (request, response) {
     })
     
 });
+app.get('/file', function (request, response) {
+    // render the views/index.ejs template file
+    response.render('store/file', {title: 'Add Class File'})
+});
 
 app.get('/add', function (request, response) {
     // render views/store/add.ejs
