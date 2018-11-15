@@ -48,7 +48,7 @@ app.post('/add', function (request, response) {
             bbname: request.sanitize('bbname').escape().trim()
         };
         // Running SQL query to insert data into the store table
-        db.none('INSERT INTO counts(barcode, bbname) VALUES($1, $2, regular, sparring, swats)', [item.barcode, item.bbname, 0, 0, 0])
+        db.none('INSERT INTO counts(barcode, bbname, regular, sparring, swats) VALUES($1, $2, $3, $4, $5)', [item.barcode, item.bbname, 0, 0, 0])
             .then(function (result) {
                 request.flash('success', 'Blackbelt added successfully!');
                 // render views/store/add.ejs
