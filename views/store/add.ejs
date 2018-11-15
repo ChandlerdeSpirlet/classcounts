@@ -1,0 +1,32 @@
+<!--Including Header partial-->
+<%- include ../layouts/header.ejs %>
+
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:green"><%- messages.success %></p>
+<% } %>
+<!--Create a form to take input from user-->
+<form action="/store/add" method="post" name="form1">
+    <table width="25%" border="0">
+        <tr>
+            <td>Barcode</td>
+            <td><input type="number" name="barcode" min="0" max="9999999" value="<%= barcode %>"/></td>
+        </tr>
+        <tr>
+            <td>Name</td>
+            <td><input type="text" name="bbname" id="name" value="<%= bbname %>"/></td>
+        </tr>
+        <tr>
+            Resubmit the file with the class data after adding a new black belt.
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" name="Submit" value="Add"/></td>
+        </tr>
+    </table>
+</form>
+
+<!--Including Footer partial-->
+<%- include ../layouts/footer.ejs %>
