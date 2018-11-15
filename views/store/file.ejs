@@ -14,11 +14,12 @@
     console.log(err);
 </script>
 <h3>Refresh Class Numbers</h3>
-Please refresh class numbers before adding a new file.
+Please refresh class numbers before adding a new file.<br>
+<br>
 <form action="/store/delete" method="post" style="float:left">
     <input name="delete" onclick="return confirm('Are you sure you ' +
-                                'want to delete?')"  type="submit" value='Delete'>
-<input name="_method" type="hidden" value="DELETE">
+                                'want to refresh classes, this will set everyone to have 0 of everything?')"  type="submit" value='Delete'>
+<input name="_method" type="hidden" value="REFRESH">
 </form>
 
 <!--Including Footer Partial-->
