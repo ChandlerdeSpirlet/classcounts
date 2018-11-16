@@ -1,6 +1,11 @@
 var express = require('express');
 var db = require('../database');
 var app = express();
+
+var multer = require('multer');
+var uploadTmp = multer({dest: 'uploads/'});
+
+
 module.exports = app;
 
 app.get('/', function (request, response) {
@@ -96,3 +101,5 @@ app.delete('/delete', function (req, res) {
                     res.redirect('/store')
         })
 });
+
+app.post('/file-upload', uploadTmp.single('xport'), function(req, res, next){}};
