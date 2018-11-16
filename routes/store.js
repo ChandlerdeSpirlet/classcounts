@@ -42,7 +42,6 @@ app.post('/add', function (request, response) {
     // Validate user input - ensure non emptiness
     request.assert('barcode', 'Barcode is required').notEmpty();
     request.assert('bbname', 'Name is required').notEmpty();
-
     var errors = request.validationErrors();
     if (!errors) { // No validation errors
         var item = {
