@@ -1,7 +1,6 @@
 var express = require('express');
 var db = require('../database');
 var app = express();
-
 module.exports = app;
 
 app.get('/', function (request, response) {
@@ -29,6 +28,10 @@ app.get('/', function (request, response) {
     })
     
 });
+app.get('/file', function (request, response) {
+    // render the views/index.ejs template file
+    response.render('store/file', {title: 'Add Class File'})
+});
 
 app.get('/add', function (request, response) {
     // render views/store/add.ejs
@@ -42,6 +45,7 @@ app.post('/add', function (request, response) {
     // Validate user input - ensure non emptiness
     request.assert('barcode', 'Barcode is required').notEmpty();
     request.assert('bbname', 'Name is required').notEmpty();
+
     var errors = request.validationErrors();
     if (!errors) { // No validation errors
         var item = {
