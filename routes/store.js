@@ -1,10 +1,7 @@
 var express = require('express');
 var db = require('../database');
 var app = express();
-
 module.exports = app;
-
-
 
 app.get('/', function (request, response) {
     
@@ -30,6 +27,10 @@ app.get('/', function (request, response) {
         })
     })
     
+});
+app.get('/file', function (request, response) {
+    // render the views/index.ejs template file
+    response.render('store/file', {title: 'Add Class File'})
 });
 
 app.get('/add', function (request, response) {
@@ -83,7 +84,6 @@ app.post('/add', function (request, response) {
         })
     }
 });
-
 app.delete('/delete', function (req, res) {
     var deleteQuery = 'update counts set regular = 0, sparring = 0, swats = 0 where barcode > 0';
     db.none(deleteQuery)
