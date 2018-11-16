@@ -1,7 +1,14 @@
 var express = require('express');
 var db = require('../database');
 var app = express();
+
+var fs = require('fs');
+var csv = require('fast-csv');
+const multer = require('multer');
+const bodyParser = require('body-parser');
 module.exports = app;
+
+
 
 app.get('/', function (request, response) {
     
@@ -27,10 +34,6 @@ app.get('/', function (request, response) {
         })
     })
     
-});
-app.get('/file', function (request, response) {
-    // render the views/index.ejs template file
-    response.render('store/file', {title: 'Add Class File'})
 });
 
 app.get('/add', function (request, response) {
@@ -83,6 +86,40 @@ app.post('/add', function (request, response) {
             bbname: request.body.bbname
         })
     }
+});
+
+app.use(bodyParser.json());
+app.use('/', express.static('/ClassCounts' + '/public'));
+const multerConfig = {
+    storage: multer.diskStorage({
+        destination: function(req, res, next){
+            next(null, './public/class-storage');
+        },
+            filename: function(req, file, next){
+                console.log(file);
+                const ext = file.mimetype.split('/')[1];
+                next(null, file.fieldname + '.' + ext);
+            }
+    }),
+        fileFilter: function(req, file, next){
+            if(!file){
+                next();
+            }
+            const xport = file.mimetype.startsWith('csv/');
+            if (csv){
+                console.log('csv uploaded');
+                next(null, true);
+            } else {
+                console.log("file not supported");
+                return next();
+            }
+        }
+}
+app.upload('/upload', function(req, res){
+    res.render('store/file');
+});
+app.post('/upload', multer(multerConfig).single('myFile'), function(req, res){
+    res.send('Complete!');
 });
 app.delete('/delete', function (req, res) {
     var deleteQuery = 'update counts set regular = 0, sparring = 0, swats = 0 where barcode > 0';
