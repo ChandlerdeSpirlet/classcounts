@@ -2,10 +2,6 @@ var express = require('express');
 var db = require('../database');
 var app = express();
 
-const multer = require('multer');
-const upload = multer({
-    dest: 'uploads/'
-});
 module.exports = app;
 
 app.get('/', function (request, response) {
@@ -32,14 +28,6 @@ app.get('/', function (request, response) {
         })
     })
     
-});
-app.get('/file', function (request, response) {
-    // render the views/index.ejs template file
-    //response.render('store/file', {title: 'Add Class File'})
-    res.sendFile(__dirname + '/file');
-});
-app.post('/file', upload.single('file-to-upload'), (req, res) => {
-    res.redirect('/store');
 });
 
 app.get('/add', function (request, response) {

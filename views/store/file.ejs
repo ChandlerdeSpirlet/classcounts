@@ -13,10 +13,7 @@
     var err = <%- JSON.stringify(messages) %>;
     console.log(err);
 </script>
-<form action="/store" enctype="multipart/form-data" method="post">
-    <input type="file" name="file-to-upload">
-    <input type="submit" value="Upload">
-</form>
+
 <h3>Refresh Class Numbers</h3>
 Please refresh class numbers before adding a new file.<br>
 <form action="/store/delete" method="post" style="float:left">
