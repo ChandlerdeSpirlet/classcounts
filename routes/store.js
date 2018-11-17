@@ -1,15 +1,21 @@
 var express = require('express');
 var db = require('../database');
 var app = express();
+var busboy = require('connect-busboy');
+var path = require('path');
+var fs = require('fs-extra');
 
 module.exports = app;
+app.use(busboy());
+app.use(express.static(path.join(__dirname, 'store')));
+
 
 app.get('/', function (request, response) {
     
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     
-    var query = 'SELECT * FROM counts';
+    var query = 'SELECT * FROM counts order by bbname';
 
     db.any(query)
         .then(function (rows) {
@@ -33,6 +39,22 @@ app.get('/file', function (request, response) {
     // render the views/index.ejs template file
     response.render('store/file', {title: 'Add Class File'})
 });
+app.route('/file').post(function(req, res, next) {
+    var fstream;
+    req.pipe(req.busboy);
+    req.busboy.on('file', function (fieldname, file, filename) {
+        console.log("Uploading: " + filename);
+
+        //Path where image will be uploaded
+        fstream = fs.createWriteStream(__dirname + '/files/' + filename);
+        file.pipe(fstream);
+        fstream.on('close', function () {    
+            console.log("Upload Finished of " + filename);              
+            res.redirect('back');           //where to go next
+        });
+    });
+});
+
 
 app.get('/add', function (request, response) {
     // render views/store/add.ejs

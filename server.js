@@ -6,6 +6,8 @@ app.use(expressValidator());
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
+var multer = require('multer');
+var multerupload = multer({dest: 'files/'})
 var methodOverride = require('method-override');
 app.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
@@ -30,8 +32,8 @@ var index = require('./routes/index');
 var store = require('./routes/store');
 app.use('/', index);
 app.use('/store', store);
-//var port = 4000;
-var port = process.env.PORT;
+var port = 5000;
+//var port = process.env.PORT;
 app.listen(port, function() {
     console.log('Server running on http://localhost:' + port)
 });
