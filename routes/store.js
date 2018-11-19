@@ -5,6 +5,8 @@ var busboy = require('connect-busboy');
 var path = require('path');
 var fs = require('fs-extra');
 
+
+
 module.exports = app;
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'store')));
@@ -53,21 +55,7 @@ app.route('/file').post(function(req, res, next) {
             res.redirect('back');           //where to go next
         });
     });
-    let csvStream = csv.fromPath(__dirname + '/files/', {headers: true})
-        .on("data", function(record){
-            csvStream.pause();
-            let bb = record.Person;
-            let code = record.Barcode;
-            let type = record.Name;
-            if (type == 'SWAT'){
-                db.none('update counts set swat = (swat + 1) where barcode = $1', [code]);
-            }
-            csvStream.resume();
-        }).on("end", function(){
-            console.log("Job is done!");
-        }).on("error", function(err){
-            console.log("err");
-        });
+    
 });
 
 
