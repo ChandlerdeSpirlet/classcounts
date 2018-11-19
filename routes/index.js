@@ -6,7 +6,7 @@ app.get('/', function (request, response) {
 
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
-    var query = 'SELECT * FROM counts';
+    var query = 'SELECT * FROM counts order by bbname';
 
     db.any(query)
         .then(function (rows) {

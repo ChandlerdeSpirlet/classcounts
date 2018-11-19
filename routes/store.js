@@ -3,7 +3,9 @@ var db = require('../database');
 var app = express();
 var busboy = require('connect-busboy');
 var path = require('path');
-var fs = require('fs-extra');
+var fs = require('fs');
+let fastcsv = require('fast-csv');
+
 
 
 
@@ -37,25 +39,48 @@ app.get('/', function (request, response) {
     })
     
 });
+
 app.get('/file', function (request, response) {
     // render the views/index.ejs template file
     response.render('store/file', {title: 'Add Class File'})
 });
+
+function readData(area){
+    let readableStreamInput = fs.createReadStream(area);
+    let csvData = [];
+
+    fastcsv
+        .fromStream(readableStreamInput, {headers: false})
+        .on('data', (data) => {
+            let rowData = {};
+
+            Object.keys(data).forEach(current_key => {
+                rowData[current_key] = data[current_key]
+            });
+            csvData.push(rowData);
+        }).on('end', () => {
+            for (var x = 2; x < csvData.length; x++){
+                if (csvData[x][2] == 'SWAT'){
+                    db.none('update counts set swats = (swats + 1) where barcode = ' + csvData[x][1]);
+                }
+            }
+        })
+};
+
 app.route('/file').post(function(req, res, next) {
     var fstream;
     req.pipe(req.busboy);
     req.busboy.on('file', function (fieldname, file, filename) {
         console.log("Uploading: " + filename);
-
         //Path where image will be uploaded
         fstream = fs.createWriteStream(__dirname + '/files/' + filename);
         file.pipe(fstream);
         fstream.on('close', function () {    
             console.log("Upload Finished of " + filename);              
-            res.redirect('back');           //where to go next
+            res.redirect('/store');           //where to go next
+            readData(__dirname + '/files/' + filename);
         });
     });
-    
 });
 
 
