@@ -6,9 +6,6 @@ var path = require('path');
 var fs = require('fs');
 let fastcsv = require('fast-csv');
 
-
-
-
 module.exports = app;
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'store')));
@@ -48,7 +45,6 @@ app.get('/file', function (request, response) {
 function readData(area){
     let readableStreamInput = fs.createReadStream(area);
     let csvData = [];
-
     fastcsv
         .fromStream(readableStreamInput, {headers: false})
         .on('data', (data) => {
@@ -82,7 +78,6 @@ app.route('/file').post(function(req, res, next) {
         });
     });
 });
-
 
 app.get('/add', function (request, response) {
     // render views/store/add.ejs
@@ -135,6 +130,30 @@ app.post('/add', function (request, response) {
         })
     }
 });
+
+app.get('/del', function(req, res){
+    res.render('store/del', {
+        title: 'Remove Blackbelt',
+        barcode : '',
+        bbname: ''
+    })
+});
+app.post('/del', function(req, res){
+    req.assert('barcode', 'Barcode is required to prevent mistakes').notEmpty();
+    var item = {
+        barcode: req.sanitize('barcode').escape(),
+        bbname: req.sanitize('bbname').escape()
+    };
+    db.none('delete from counts where (barcode = $1) or (bbname = $2)', [item.barcode, item.bbname])
+        .then(function(result){
+            req.flash('success', item.barcode, item.bbname, ' has been removed.');
+            res.redirect('/store');
+        }).catch(function(err){
+            req.flash('error', err, ' blackbelt could not be removed');
+            res.redirect('/store');
+        })
+});
+
 app.delete('/delete', function (req, res) {
     var deleteQuery = 'update counts set regular = 0, sparring = 0, swats = 0 where barcode > 0';
     db.none(deleteQuery)
