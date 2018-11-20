@@ -10,6 +10,13 @@ module.exports = app;
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'store')));
 
+var query = 'select * from "refresh"';
+db.any(query)
+    .then(function(data){
+        var temp = data[0];
+        global.globalDate = temp.refreshed;
+});
+
 
 app.get('/', function (request, response) {
     
@@ -22,7 +29,7 @@ app.get('/', function (request, response) {
         .then(function (rows) {
         // render views/store/list.ejs template file
         response.render('store/list', {
-            title: 'Class Counts',
+            title: 'Class Counts - Updated ' + globalDate,
             data: rows
         })
     })
@@ -30,7 +37,7 @@ app.get('/', function (request, response) {
         // display error message in case an error
         request.flash('error', err);
         response.render('store/list', {
-            title: 'Class Counts',
+            title: 'Class Counts - Updated ' + globalDate,
             data: ''
         })
     })
@@ -43,6 +50,8 @@ app.get('/file', function (request, response) {
 });
 
 function readData(area){
+    var query = 'update "refresh" set refreshed = To_char(NOW() :: DATE, \'Mon dd, yyyy\')';
+    db.none(query);
     let readableStreamInput = fs.createReadStream(area);
     let csvData = [];
     fastcsv
@@ -72,8 +81,22 @@ app.route('/file').post(function(req, res, next) {
         fstream = fs.createWriteStream(__dirname + '/files/' + filename);
         file.pipe(fstream);
         fstream.on('close', function () {    
-            console.log("Upload Finished of " + filename);              
-            res.redirect('/store');           //where to go next
+            console.log("Upload Finished of " + filename);  
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd = '0'+dd
+            } 
+
+            if(mm<10) {
+                mm = '0'+mm
+            } 
+
+            today = mm + '/' + dd + '/' + yyyy;          
+            res.redirect('/store')          //where to go next
             readData(__dirname + '/files/' + filename);
         });
     });

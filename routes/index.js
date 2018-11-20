@@ -2,6 +2,14 @@ var express = require('express');
 var db = require('../database');
 var app = express();
 module.exports = app;
+
+var query = 'select * from "refresh"';
+db.any(query)
+    .then(function(data){
+        var temp = data[0];
+        global.globalDate = temp.refreshed;
+});
+
 app.get('/', function (request, response) {
 
     // TODO: Initialize the query variable with a SQL query
@@ -12,7 +20,7 @@ app.get('/', function (request, response) {
         .then(function (rows) {
         // render views/store/list.ejs template file
         response.render('store/list', {
-            title: 'Class Counts',
+            title: 'Class Counts - Updated ' + globalDate,
             data: rows
         })
     })
