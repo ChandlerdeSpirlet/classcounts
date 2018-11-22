@@ -19,7 +19,13 @@
 #blackbelts {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    width: 100%;
+    
+}
+@media screen and (max-width: 640px) {
+    table {
+        overflow-x: auto;
+        display: block;
+    }
 }
 
 #blackbelts td, #blackbelts th {
