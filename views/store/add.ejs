@@ -7,6 +7,25 @@
 <% if (messages.success) { %>
     <p style="color:green"><%- messages.success %></p>
 <% } %>
+<style> 
+    input[type=text] {
+        width: 130px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+    
+    input[type=text]:focus {
+        width: 100%;
+    }
+    </style>
 <!--Create a form to take input from user-->
 <form action="/store/add" method="post" name="form1">
     <table width="25%" border="0">
