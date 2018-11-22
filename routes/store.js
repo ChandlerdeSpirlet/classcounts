@@ -127,6 +127,9 @@ app.route('/file').post(function(req, res, next) {
         });
     });
 });
+app.get('/logout', function(req, res){
+    res.redirect('list.ejs');
+});
 
 app.get('/login', function(req, res){
     res.render('store/login', {
