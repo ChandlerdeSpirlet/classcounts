@@ -43,6 +43,31 @@ app.get('/', function (request, response) {
     })
     
 });
+app.get('/list2', function (request, response) {
+    
+    // TODO: Initialize the query variable with a SQL query
+    // that returns all the rows and columns in the 'store' table
+    
+    var query = 'SELECT * FROM counts order by bbname';
+
+    db.any(query)
+        .then(function (rows) {
+        // render views/store/list.ejs template file
+        response.render('store/list2', {
+            title: 'Class Counts - Updated ' + globalDate,
+            data: rows
+        })
+    })
+    .catch(function (err) {
+        // display error message in case an error
+        request.flash('error', err);
+        response.render('store/list2', {
+            title: 'Class Counts - Updated ' + globalDate,
+            data: ''
+        })
+    })
+    
+});
 
 app.get('/file', function (request, response) {
     // render the views/index.ejs template file
@@ -95,11 +120,51 @@ app.route('/file').post(function(req, res, next) {
                 mm = '0'+mm
             } 
 
-            today = mm + '/' + dd + '/' + yyyy;          
-            res.redirect('/store')          //where to go next
+            today = mm + '/' + dd + '/' + yyyy; 
+            req.flash('success', 'Classes added!');
+            res.redirect('list2')          //where to go next
             readData(__dirname + '/files/' + filename);
         });
     });
+});
+
+app.get('/login', function(req, res){
+    res.render('store/login', {
+        title: 'Login',
+        bbuser: '',
+        bbpass: ''
+    })
+});
+app.get('/login2', function(req, res){
+    res.render('store/login2', {
+        title: 'Login',
+        bbuser: '',
+        bbpass: ''
+    })
+});
+app.post('/login', function(request, response){
+    request.assert('bbuser', 'Username is required').notEmpty();
+    request.assert('bbpass', 'Password is required').notEmpty();
+
+    var errors = request.validationErrors();
+    if (!errors){
+        var item = {
+            bbuser: request.sanitize('bbuser').trim(),
+            bbpass: request.sanitize('bbpass').trim()
+        };
+        db.func('checkuser', [item.bbuser, item.bbpass])
+            .then( data => {
+                var temp = data[0];
+                var final = temp.checkuser;
+                if (final == true){
+                    request.flash('success', 'Login credentials accepted!');
+                    response.redirect('list2'); ///store/login2
+                } else {
+                    request.flash('error', 'Login credentials rejected! Contact system admin if this is an issue.');
+                    response.redirect('/store/login');
+                }
+            })
+    }
 });
 
 app.get('/add', function (request, response) {
@@ -170,10 +235,10 @@ app.post('/del', function(req, res){
     db.none('delete from counts where (barcode = $1) or (bbname = $2)', [item.barcode, item.bbname])
         .then(function(result){
             req.flash('success', item.barcode, item.bbname, ' has been removed.');
-            res.redirect('/store');
+            res.redirect('list2');
         }).catch(function(err){
             req.flash('error', err, ' blackbelt could not be removed');
-            res.redirect('/store');
+            res.redirect('list2');
         })
 });
 
@@ -182,10 +247,10 @@ app.delete('/delete', function (req, res) {
     db.none(deleteQuery)
         .then(function (result) {
                     req.flash('success', 'Successfully refreshed classes');
-                    res.redirect('/store');
+                    res.redirect('file');
         })
         .catch(function (err) {
                     req.flash('error', err);
-                    res.redirect('/store')
+                    res.redirect('file');
         })
 });

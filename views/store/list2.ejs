@@ -1,0 +1,70 @@
+<!--Including Header Partial-->
+<%- include ../layouts/header2.ejs %>
+
+<!--Using if-check to see if an error occurred and displaying appropriate message-->
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:blue"><%- messages.success %></p>
+<% } %>
+<script type="text/javascript">
+    var err = <%- JSON.stringify(messages) %>;
+    console.log(err);
+</script>
+
+<html>
+<head>
+<style>
+#blackbelts {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#blackbelts td, #blackbelts th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#blackbelts tr:nth-child(even){background-color: #f2f2f2;}
+
+#blackbelts tr:hover {background-color: #ddd;}
+
+#blackbelts th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: blue;
+    color: white;
+}
+</style>
+</head>
+
+<table id="blackbelts">
+    <tr>
+        <th>Card Number</th>
+        <th>Name</th>
+        <th>Regular Class</th>
+        <th>Sparring Class</th>
+        <th>SWAT Class</th>
+    </tr>
+    <% if (data) { %>
+    <!-- Using a for-loop to loop over each row in the database.
+    The 'data' variable is passed from the store.js during the response.render function call -->
+        <% data.forEach(function(item){ %>
+            <tr>
+                <td><%= item.barcode %></td>
+                <td><%= item.bbname %></td>
+                <td><%= item.regular %></td>
+                <td><%= item.sparring %></td>
+                <td><%= item.swats %></td>
+            </tr>
+        <% }) %>
+    <% } %>
+</table>
+
+</html>
+
+<!--Including Footer Partial-->
+<%- include ../layouts/footer.ejs %>
