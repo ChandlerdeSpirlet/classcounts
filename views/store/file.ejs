@@ -32,7 +32,7 @@
         width: 100%;
     }
     
-    .button {
+    [type=submit] {
     background-color: blue; /* Green */
     border: none;
     color: white;
@@ -45,18 +45,18 @@
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
-}
+    }
 
-.delete {
-    background-color: white; 
-    color: black; 
-    border: 2px solid blue;
-}
+    [type=submit] {
+        background-color: white; 
+        color: black; 
+        border: 2px solid blue;
+    }
 
-.delete:hover {
-    background-color: blue;
-    color: white;
-}
+    [type=submit]:hover {
+        background-color: blue;
+        color: white;
+    }
 </style>
 <form method="post" enctype="multipart/form-data">
     <div>
@@ -67,14 +67,5 @@
         <button>Submit</button>
     </div>
 </form>
-
-<h3>Refresh Class Numbers</h3>
-Please refresh class numbers before adding a new file.<br>
-<form action="/store/delete" method="post" style="float:left">
-    <input name="delete" onclick="return confirm('Are you sure you ' +
-                                'want to refresh classes, this will set everyone to have 0 of everything?')"  type="submit" value='Refresh'>
-<input name="_method" type="hidden" value="DELETE">
-</form>
-
 <!--Including Footer Partial-->
 <%- include ../layouts/footer.ejs %>

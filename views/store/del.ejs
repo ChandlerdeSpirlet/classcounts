@@ -43,7 +43,7 @@
     input[type=number]:focus {
         width: 100%;
     }
-    .button {
+    [type=submit] {
     background-color: blue; /* Green */
     border: none;
     color: white;
@@ -56,18 +56,18 @@
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
-}
+    }
 
-.Submit {
-    background-color: white; 
-    color: black; 
-    border: 2px solid blue;
-}
+    [type=submit] {
+        background-color: white; 
+        color: black; 
+        border: 2px solid blue;
+    }
 
-.Submit:hover {
-    background-color: blue;
-    color: white;
-}
+    [type=submit]:hover {
+        background-color: blue;
+        color: white;
+    }
 </style>
 <form action="/store/del" method="post" name="form1">
     <table width="25%" border="0">
