@@ -175,6 +175,7 @@ app.get('/login2', function(req, res){
         bbpass: ''
     })
 });
+
 app.post('/login', function(request, response){
     request.assert('bbuser', 'Username is required').notEmpty();
     request.assert('bbpass', 'Password is required').notEmpty();
