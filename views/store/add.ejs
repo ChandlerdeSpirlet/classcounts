@@ -42,7 +42,7 @@
     input[type=number]:focus {
         width: 100%;
     }
-    .submit {
+    [type=submit] {
     background-color: blue; /* Green */
     border: none;
     color: white;
@@ -55,18 +55,18 @@
     -webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
     cursor: pointer;
-}
+    }
 
-.submit {
-    background-color: white; 
-    color: black; 
-    border: 2px solid blue;
-}
+    [type=submit] {
+        background-color: white; 
+        color: black; 
+        border: 2px solid blue;
+    }
 
-.submit:hover {
-    background-color: blue;
-    color: white;
-}
+    [type=submit]:hover {
+        background-color: blue;
+        color: white;
+    }
 </style>
 <!--Create a form to take input from user-->
 <form action="/store/add" method="post" name="form1">
