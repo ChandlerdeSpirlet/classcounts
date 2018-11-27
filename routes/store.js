@@ -124,14 +124,6 @@ function readData(area){
 function refresh(){
     var deleteQuery = 'update counts set regular = 0, sparring = 0, swats = 0 where barcode > 0';
     db.none(deleteQuery)
-        .then(function (result) {
-                    req.flash('success', 'Successfully refreshed classes');
-                    res.redirect('file');
-        })
-        .catch(function (err) {
-                    req.flash('error', err);
-                    res.redirect('file');
-        })
 };
 
 app.route('/file').post(function(req, res, next) {
