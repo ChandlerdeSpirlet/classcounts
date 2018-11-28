@@ -185,6 +185,9 @@ app.route('/file').post(function(req, res, next) {
 app.get('/logout', function(req, res){
     res.redirect('list.ejs');
 });
+app.get('/changelog', function(req, res){
+    res.render('changelog.ejs');
+});
 
 app.get('/login', function(req, res){
     res.render('store/login', {
@@ -227,6 +230,70 @@ app.post('/login', function(request, response){
                     response.redirect('/store/login');
                 }
             })
+    }
+});
+
+app.get('/edit', function (request, response) {
+    // render views/store/add.ejs
+    response.render('store/edit', {
+        title: 'Update Classes',
+        barcode: '',
+        reg: '',
+        spar: '',
+        swat: ''
+    })
+});
+app.post('/edit', function (request, response) {
+    // Validate user input - ensure non emptiness
+    request.assert('barcode', 'Barcode is required').notEmpty();
+    request.assert('reg', 'Regular is required').notEmpty();
+    request.assert('spar', 'Sparring is required').notEmpty();
+    request.assert('swat', 'SWATs is required').notEmpty();
+
+    var errors = request.validationErrors();
+    if (!errors) { // No validation errors
+        var item = {
+            // sanitize() is a function used to prevent Hackers from inserting
+            // malicious code(as data) into our database. There by preventing
+            // SQL-injection attacks.
+            barcode: request.sanitize('barcode').escape().trim(),
+            reg: request.sanitize('reg').escape().trim(),
+            spar: request.sanitize('spar').escape().trim(),
+            swat: request.sanitize('swat').escape().trim()
+        };
+        // Running SQL query to insert data into the store table
+        db.none('update counts set regular = $2, sparring = $3, swats = $4 where barcode = $1', [item.barcode, item.reg, item.spar, item.swat])
+            .then(function (result) {
+                request.flash('success', 'Classes changed successfully!');
+                // render views/store/add.ejs
+                response.render('store/edit', {
+                    title: 'Update Classes',
+                    barcode: '',
+                    reg: '',
+                    spar: '',
+                    swat: ''
+                })
+            }).catch(function (err) {
+            request.flash('error', err);
+            // render views/store/add.ejs
+            response.render('store/edit', {
+                title: 'Update Classes',
+                barcode: item.barcode,
+                reg: item.reg,
+                spar: item.spar,
+                swat: item.swat
+            })
+        })
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        request.flash('error', error_msg);
+        response.render('store/edit', {
+            title: 'Update Classes',
+            barcode: request.body.barcode,
+            reg: request.body.reg,
+            spar: request.body.spar,
+            swat: request.body.swat
+        })
     }
 });
 
