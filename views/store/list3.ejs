@@ -1,5 +1,5 @@
 <!--Including Header Partial-->
-<%- include ../layouts/header.ejs %>
+<%- include ../layouts/header3.ejs %>
 
 <!--Using if-check to see if an error occurred and displaying appropriate message-->
 <% if (messages.error) { %>
@@ -20,7 +20,6 @@
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
     width: 100%;
-    table-layout: fixed;
 }
 
 #blackbelts td, #blackbelts th {
@@ -41,7 +40,7 @@
 }
 </style>
 </head>
-<div>
+<div style="overflow-x:auto">
 <table id="blackbelts" class="responsive">
     <tr>
         <th>Card Number</th>

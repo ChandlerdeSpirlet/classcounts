@@ -68,6 +68,31 @@ app.get('/list2', function (request, response) {
     })
     
 });
+app.get('/list3', function (request, response) {
+    
+    // TODO: Initialize the query variable with a SQL query
+    // that returns all the rows and columns in the 'store' table
+    
+    var query = 'SELECT * FROM counts order by bbname';
+
+    db.any(query)
+        .then(function (rows) {
+        // render views/store/list.ejs template file
+        response.render('store/list3', {
+            title: 'Class Counts - Updated ' + globalDate,
+            data: rows
+        })
+    })
+    .catch(function (err) {
+        // display error message in case an error
+        request.flash('error', err);
+        response.render('store/list3', {
+            title: 'Class Counts - Updated ' + globalDate,
+            data: ''
+        })
+    })
+    
+});
 
 app.get('/file', function (request, response) {
     // render the views/index.ejs template file
@@ -175,6 +200,13 @@ app.get('/login2', function(req, res){
         bbpass: ''
     })
 });
+app.get('/login3', function(req, res){
+    res.render('store/login3', {
+        title: 'Login',
+        bbuser: '',
+        bbpass: ''
+    })
+});
 
 app.post('/login', function(request, response){
     request.assert('bbuser', 'Username is required').notEmpty();
@@ -190,6 +222,10 @@ app.post('/login', function(request, response){
             .then( data => {
                 var temp = data[0];
                 var final = temp.checkuser;
+                if (final == true && item.bbuser == 'admin'){
+                    request.flash('success', 'Admin login credentials accepted!');
+                    response.redirect('list3');
+                }
                 if (final == true){
                     request.flash('success', 'Login credentials accepted!');
                     response.redirect('list2'); ///store/login2
@@ -198,6 +234,73 @@ app.post('/login', function(request, response){
                     response.redirect('/store/login');
                 }
             })
+    }
+});
+
+app.get('/changelog', function(req, res){
+    res.redirect('/store/changelog')
+});
+
+app.get('/edit', function(req, res){
+    res.render('/store/edit', {
+        title: 'Edit Counts',
+        barcode: '',
+        reg: '',
+        spar: '',
+        swat: ''
+    }
+});
+app.post('/edit', function (request, response) {
+    // Validate user input - ensure non emptiness
+    request.assert('barcode', 'Barcode is required').notEmpty();
+    request.assert('reg', 'Regular is required').notEmpty();
+    request.assert('spar', 'Sparring is required').notEmpty();
+    request.assert('swat', 'SWATs is required').notEmpty();
+
+    var errors = request.validationErrors();
+    if (!errors) { // No validation errors
+        var item = {
+            // sanitize() is a function used to prevent Hackers from inserting
+            // malicious code(as data) into our database. There by preventing
+            // SQL-injection attacks.
+            barcode: request.sanitize('barcode').escape().trim(),
+            reg: request.sanitize('reg').escape().trim(),
+            spar: request.sanitize('spar').escape().trim(),
+            swat: request.sanitize('swat').escape().trim()
+        };
+        // Running SQL query to insert data into the store table
+        db.none('update counts set regular = $2, sparring = $3, swats = $4 where barcode = $1', [item.barcode, item.reg, item.spar, item.swat])
+            .then(function (result) {
+                request.flash('success', 'Classes updated successfully!');
+                // render views/store/add.ejs
+                response.render('store/edit', {
+                    title: 'Edit Counts',
+                    barcode: '',
+                    reg: '',
+                    spar: '',
+                    swat: ''
+                })
+            }).catch(function (err) {
+            request.flash('error', err);
+            // render views/store/add.ejs
+            response.render('store/edit', {
+                title: 'Edit Counts',
+                barcode: item.barcode,
+                reg: item.reg,
+                spar: item.spar,
+                swat: item.swat
+            })
+        })
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        request.flash('error', error_msg);
+        response.render('store/edit', {
+            title: 'Edit Counts',
+            barcode: request.body.barcode,
+            reg: request.body.reg,
+            spar: request.body.spar,
+            swat: request.body.swat
+        })
     }
 });
 
