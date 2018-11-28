@@ -186,7 +186,7 @@ app.get('/logout', function(req, res){
     res.redirect('list.ejs');
 });
 app.get('/changelog', function(req, res){
-    res.render('changelog.ejs', {
+    res.render('store/changelog', {
         title: 'Changelog'
     })
 });
