@@ -190,6 +190,10 @@ app.post('/login', function(request, response){
             .then( data => {
                 var temp = data[0];
                 var final = temp.checkuser;
+                if (final == true && item.bbuser == "admin"){
+                    request.flash('success', 'Admin credentials accepted!');
+                    response.redirect('list3');
+                }
                 if (final == true){
                     request.flash('success', 'Login credentials accepted!');
                     response.redirect('list2'); ///store/login2
