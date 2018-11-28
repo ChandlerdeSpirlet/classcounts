@@ -19,7 +19,8 @@
 #blackbelts {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
     border-collapse: collapse;
-    
+    width: 100%;
+    table-layout: fixed;
 }
 
 #blackbelts td, #blackbelts th {
@@ -30,6 +31,10 @@
 #blackbelts tr:nth-child(even){background-color: #f2f2f2;}
 
 #blackbelts tr:hover {background-color: #ddd;}
+@media screen and (max-width: 600px) {
+    table {
+    border: 0;
+    }
 
 #blackbelts th {
     padding-top: 12px;
@@ -40,7 +45,7 @@
 }
 </style>
 </head>
-<div style="overflow-x:auto">
+<div>
 <table id="blackbelts" class="responsive">
     <tr>
         <th>Card Number</th>
