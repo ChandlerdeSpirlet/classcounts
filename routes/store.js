@@ -5,6 +5,8 @@ var busboy = require('connect-busboy');
 var path = require('path');
 var fs = require('fs');
 let fastcsv = require('fast-csv');
+var nodemailer = require('nodemailer');
+
 
 module.exports = app;
 app.use(busboy());
@@ -349,6 +351,48 @@ app.post('/add', function (request, response) {
             bbname: request.body.bbname
         })
     }
+});
+
+app.get('/email', function (request, response) {
+    // render views/store/add.ejs
+    response.render('store/email', {
+        title: 'Contact Us',
+        bbname: '',
+        email: '',
+        text: ''
+    })
+});
+app.post('/email', function (request, response) {
+    // Validate user input - ensure non emptiness
+    request.assert('bbname', 'Name is required').notEmpty();
+    request.assert('email', 'Email is required').notEmpty();
+    request.assert('text', 'Problem is required.').notEmpty();
+
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'classcountsema@gmail.com',
+            pass: 'novnap-hizcaf-rimGi7'
+        }
+    });
+    var opening = 'Name: ' + bbname + '\n' + 'email: ' + email + '\n' + 'Problem: ' + text;
+    var mailOptions = {
+        from: 'classcountsema@gmail.com',
+        to: 'chandler.despirlet@icloud.com',
+        subject: 'Class Counts form submission',
+        text: opening
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error){
+            console.log(error);
+            req.flash('error', 'Form could not be submitted.');
+            res.redirect('list');
+        } else {
+            console.log('Email sent: ' + info.response);
+            req.flash('success', 'Form has been sent');
+            res.redirect('list');
+        }
+    });
 });
 
 app.get('/del', function(req, res){
