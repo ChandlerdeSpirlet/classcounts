@@ -25,6 +25,23 @@
     input[type=text]:focus {
         width: 100%;
     }
+    input[type=email] {
+        width: 130px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+    
+    input[type=email]:focus {
+        width: 100%;
+    }
     input[type=number] {
         width: 130px;
         box-sizing: border-box;
@@ -73,7 +90,7 @@
     <table width="25%" border="0">
         <tr>
             <td>Name</td>
-            <td><input type="text" name="bbname" id="name" value="<%= bbname %>"/></td>
+            <td><input type="text" name="bbname" id="bbname" value="<%= bbname %>"/></td>
         </tr>
         <tr>
             <td>Email</td>
@@ -85,7 +102,7 @@
         </tr>
         <tr>
             <td></td>
-            <td><input type="submit" name="Submit" value="Add"/></td>
+            <td><input type="submit" name="Submit" value="Send"/></td>
         </tr>
     </table>
 </form>
