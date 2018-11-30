@@ -387,11 +387,13 @@ app.post('/email', function (request, response) {
         subject: 'Class Counts form submission',
         text: opening
     };
-    transporter.sendMail(mailOptions, function(error, info){
+    transporter.sendMail(mailOptions, function(error, info, req, res){
         if (error){
             console.log(error);
         } else {
             console.log('Email sent: ' + info.response);
+            req.flash('success', 'Your response has been sent!');
+            res.redirect('list2');
         }
     });
 });
