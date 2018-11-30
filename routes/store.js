@@ -366,7 +366,7 @@ app.post('/email', function (request, response) {
     // Validate user input - ensure non emptiness
     request.assert('name', 'Name is required').notEmpty();
     request.assert('email', 'Email is required').notEmpty();
-    request.assert('text', 'Problem is required.').notEmpty();
+    request.assert('text', 'Response is required.').notEmpty();
 
     var errors = request.validationErrors();
     if (!errors){
