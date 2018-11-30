@@ -425,7 +425,7 @@ app.post('/del', function(req, res){
         barcode: req.sanitize('barcode').escape(),
         bbname: req.sanitize('bbname').escape()
     };
-    var errors = request.validationErrors();
+    var errors = req.validationErrors();
     if (!errors){
         db.none('delete from counts where (barcode = $1) or (bbname = $2)', [item.barcode, item.bbname])
         .then(function(result){
@@ -439,7 +439,7 @@ app.post('/del', function(req, res){
         var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
         req.flash('error', error_msg);
         res.render('store/del', {
-            title: 'Contact Us',
+            title: 'Remove Blackbelt',
             barcode: req.body.barcode,
             bbname: req.body.bbname
         })
