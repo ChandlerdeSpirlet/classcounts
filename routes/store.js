@@ -411,6 +411,64 @@ app.post('/email', function (request, response) {
         })
     }
 });
+app.get('/email2', function (request, response) {
+    // render views/store/add.ejs
+    response.render('store/email2', {
+        title: 'Contact Us',
+        name: '',
+        email: '',
+        text: ''
+    })
+});
+app.post('/email2', function (request, response) {
+    // Validate user input - ensure non emptiness
+    request.assert('name', 'Name is required').notEmpty();
+    request.assert('email', 'Email is required').notEmpty();
+    request.assert('text', 'Response is required.').notEmpty();
+
+    var errors = request.validationErrors();
+    if (!errors){
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'classcountsema@gmail.com',
+                pass: 'novnap-hizcaf-rimGi7'
+            }
+        });
+        var item = {
+            name: request.sanitize('name').escape().trim(),
+            email: request.sanitize('email').escape().trim(),
+            text: request.sanitize('text').escape().trim()
+        };
+        var opening = 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
+        var mailOptions = {
+            from: 'classcountsema@gmail.com',
+            to: 'chandler.despirlet@icloud.com',
+            subject: 'Class Counts form submission',
+            text: opening
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error){
+                console.log(error);
+                request.flash('error', 'Your response has not been sent!');
+                response.redirect('email2');
+            } else {
+                console.log('Email sent: ' + info.response);
+                request.flash('success', 'Your response has been sent!');
+                response.redirect('email2');
+            }
+        });
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        request.flash('error', error_msg);
+        response.render('store/email2', {
+            title: 'Contact Us',
+            name: request.body.barcode,
+            email: request.body.reg,
+            text: request.body.spar
+        })
+    }
+});
 
 app.get('/del', function(req, res){
     res.render('store/del', {
