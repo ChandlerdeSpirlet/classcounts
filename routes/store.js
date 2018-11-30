@@ -390,10 +390,12 @@ app.post('/email', function (request, response) {
     transporter.sendMail(mailOptions, function(error, info){
         if (error){
             console.log(error);
+            request.flash('error', 'Your response has not been sent!');
+            response.redirect('list');
         } else {
             console.log('Email sent: ' + info.response);
-            req.flash('success', 'Your response has been sent!');
-            res.redirect('list2');
+            request.flash('success', 'Your response has been sent!');
+            response.redirect('list');
         }
     });
 });
