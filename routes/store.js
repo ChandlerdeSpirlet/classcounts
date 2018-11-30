@@ -437,11 +437,11 @@ app.post('/del', function(req, res){
         })
     } else {
         var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
-        request.flash('error', error_msg);
-        response.render('store/del', {
+        req.flash('error', error_msg);
+        res.render('store/del', {
             title: 'Contact Us',
-            barcode: request.body.barcode,
-            bbname: request.body.bbname
+            barcode: req.body.barcode,
+            bbname: req.body.bbname
         })
     }
 });
