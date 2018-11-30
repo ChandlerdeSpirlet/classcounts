@@ -444,7 +444,7 @@ app.post('/email2', function (request, response) {
         var mailOptions = {
             from: 'classcountsema@gmail.com',
             to: 'chandler.despirlet@icloud.com',
-            subject: 'Class Counts form submission',
+            subject: 'Class Counts form submission - Logged In',
             text: opening
         };
         transporter.sendMail(mailOptions, function(error, info){
