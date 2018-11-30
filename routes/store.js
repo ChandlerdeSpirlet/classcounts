@@ -375,7 +375,12 @@ app.post('/email', function (request, response) {
             pass: 'novnap-hizcaf-rimGi7'
         }
     });
-    var opening = 'Name: ' + name + '\n' + 'email: ' + email + '\n' + 'Problem: ' + text;
+    var item = {
+        name: request.sanitize('name').escape().trim(),
+        email: request.sanitize('email').escape().trim(),
+        text: request.sanitize('text').escape().trim()
+    };
+    var opening = 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
     var mailOptions = {
         from: 'classcountsema@gmail.com',
         to: 'chandler.despirlet@icloud.com',
