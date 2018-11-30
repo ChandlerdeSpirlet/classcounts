@@ -368,36 +368,48 @@ app.post('/email', function (request, response) {
     request.assert('email', 'Email is required').notEmpty();
     request.assert('text', 'Problem is required.').notEmpty();
 
-    var transporter = nodemailer.createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'classcountsema@gmail.com',
-            pass: 'novnap-hizcaf-rimGi7'
-        }
-    });
-    var item = {
-        name: request.sanitize('name').escape().trim(),
-        email: request.sanitize('email').escape().trim(),
-        text: request.sanitize('text').escape().trim()
-    };
-    var opening = 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
-    var mailOptions = {
-        from: 'classcountsema@gmail.com',
-        to: 'chandler.despirlet@icloud.com',
-        subject: 'Class Counts form submission',
-        text: opening
-    };
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error){
-            console.log(error);
-            request.flash('error', 'Your response has not been sent!');
-            response.redirect('email');
-        } else {
-            console.log('Email sent: ' + info.response);
-            request.flash('success', 'Your response has been sent!');
-            response.redirect('email');
-        }
-    });
+    var errors = request.validationErrors();
+    if (!errors){
+        var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'classcountsema@gmail.com',
+                pass: 'novnap-hizcaf-rimGi7'
+            }
+        });
+        var item = {
+            name: request.sanitize('name').escape().trim(),
+            email: request.sanitize('email').escape().trim(),
+            text: request.sanitize('text').escape().trim()
+        };
+        var opening = 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
+        var mailOptions = {
+            from: 'classcountsema@gmail.com',
+            to: 'chandler.despirlet@icloud.com',
+            subject: 'Class Counts form submission',
+            text: opening
+        };
+        transporter.sendMail(mailOptions, function(error, info){
+            if (error){
+                console.log(error);
+                request.flash('error', 'Your response has not been sent!');
+                response.redirect('email');
+            } else {
+                console.log('Email sent: ' + info.response);
+                request.flash('success', 'Your response has been sent!');
+                response.redirect('email');
+            }
+        });
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        request.flash('error', error_msg);
+        response.render('store/email', {
+            title: 'Contact Us',
+            name: request.body.barcode,
+            email: request.body.reg,
+            text: request.body.spar
+        })
+    }
 });
 
 app.get('/del', function(req, res){
@@ -413,7 +425,9 @@ app.post('/del', function(req, res){
         barcode: req.sanitize('barcode').escape(),
         bbname: req.sanitize('bbname').escape()
     };
-    db.none('delete from counts where (barcode = $1) or (bbname = $2)', [item.barcode, item.bbname])
+    var errors = request.validationErrors();
+    if (!errors){
+        db.none('delete from counts where (barcode = $1) or (bbname = $2)', [item.barcode, item.bbname])
         .then(function(result){
             req.flash('success', item.barcode, item.bbname, ' has been removed.');
             res.redirect('list2');
@@ -421,6 +435,15 @@ app.post('/del', function(req, res){
             req.flash('error', err, ' blackbelt could not be removed');
             res.redirect('list2');
         })
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        request.flash('error', error_msg);
+        response.render('store/del', {
+            title: 'Contact Us',
+            barcode: request.body.barcode,
+            bbname: request.body.bbname
+        })
+    }
 });
 
 app.delete('/delete', function (req, res) {
