@@ -357,14 +357,14 @@ app.get('/email', function (request, response) {
     // render views/store/add.ejs
     response.render('store/email', {
         title: 'Contact Us',
-        bbname: '',
+        name: '',
         email: '',
         text: ''
     })
 });
 app.post('/email', function (request, response) {
     // Validate user input - ensure non emptiness
-    request.assert('bbname', 'Name is required').notEmpty();
+    request.assert('name', 'Name is required').notEmpty();
     request.assert('email', 'Email is required').notEmpty();
     request.assert('text', 'Problem is required.').notEmpty();
 
@@ -375,7 +375,7 @@ app.post('/email', function (request, response) {
             pass: 'novnap-hizcaf-rimGi7'
         }
     });
-    var opening = 'Name: ' + bbname + '\n' + 'email: ' + email + '\n' + 'Problem: ' + text;
+    var opening = 'Name: ' + name + '\n' + 'email: ' + email + '\n' + 'Problem: ' + text;
     var mailOptions = {
         from: 'classcountsema@gmail.com',
         to: 'chandler.despirlet@icloud.com',
