@@ -391,11 +391,11 @@ app.post('/email', function (request, response) {
         if (error){
             console.log(error);
             request.flash('error', 'Your response has not been sent!');
-            response.redirect('list');
+            response.redirect('/list');
         } else {
             console.log('Email sent: ' + info.response);
             request.flash('success', 'Your response has been sent!');
-            response.redirect('list');
+            response.redirect('/list');
         }
     });
 });
