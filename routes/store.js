@@ -182,7 +182,7 @@ app.route('/file').post(function(req, res, next) {
 
             today = mm + '/' + dd + '/' + yyyy; 
             req.flash('success', 'Classes added!');
-            res.redirect('list2')          //where to go next
+            res.redirect('list2');        //where to go next
             readData(__dirname + '/files/' + filename);
         });
     });
