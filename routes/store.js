@@ -12,20 +12,22 @@ module.exports = app;
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'store')));
 
-var query = 'select * from "refresh"';
-db.any(query)
-    .then(function(data){
-        var temp = data[0];
-        global.globalDate = temp.refreshed;
-        console.log('global.globalDate -', global.globalDate);
-});
+function getDate() {
+    var query = 'select * from "refresh"';
+    db.any(query)
+        .then(function(data){
+            var temp = data[0];
+            global.globalDate = temp.refreshed;
+    });
+}
+
 
 
 app.get('/', function (request, response) {
     
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
-    
+    getDate();
     var query = 'SELECT * FROM counts order by bbname';
 
     db.any(query)
@@ -50,7 +52,7 @@ app.get('/list2', function (request, response) {
     
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
-    
+    getDate();
     var query = 'SELECT * FROM counts order by bbname';
 
     db.any(query)
@@ -72,7 +74,7 @@ app.get('/list2', function (request, response) {
     
 });
 app.get('/list3', function (request, response) {
-    
+    getDate();
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     
