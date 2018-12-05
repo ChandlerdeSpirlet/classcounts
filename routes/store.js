@@ -32,7 +32,7 @@ app.get('/', function (request, response) {
         .then(function (rows) {
         // render views/store/list.ejs template file
         response.render('store/list', {
-            title: 'Class Counts - Updated ' + globalDate,
+            title: 'Class Counts - Updated ' + global.globalDate,
             data: rows
         })
     })
@@ -40,7 +40,7 @@ app.get('/', function (request, response) {
         // display error message in case an error
         request.flash('error', err);
         response.render('store/list', {
-            title: 'Class Counts - Updated ' + globalDate,
+            title: 'Class Counts - Updated ' + global.globalDate,
             data: ''
         })
     })
@@ -57,7 +57,7 @@ app.get('/list2', function (request, response) {
         .then(function (rows) {
         // render views/store/list.ejs template file
         response.render('store/list2', {
-            title: 'Class Counts - Updated ' + globalDate,
+            title: 'Class Counts - Updated ' + global.globalDate,
             data: rows
         })
     })
@@ -65,7 +65,7 @@ app.get('/list2', function (request, response) {
         // display error message in case an error
         request.flash('error', err);
         response.render('store/list2', {
-            title: 'Class Counts - Updated ' + globalDate,
+            title: 'Class Counts - Updated ' + global.globalDate,
             data: ''
         })
     })
