@@ -17,6 +17,7 @@ db.any(query)
     .then(function(data){
         var temp = data[0];
         global.globalDate = temp.refreshed;
+        console.log('global.globalDate -', global.globalDate);
 });
 
 
