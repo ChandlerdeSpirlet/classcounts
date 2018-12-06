@@ -73,7 +73,7 @@
     <table width="25%" border="0">
         <tr>
             <td>Barcode</td>
-            <td><input type="number" name="barcode" min="0" max="9999999" value="<%= barcode %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="barcode" min="0" max="9999999" value="<%= barcode %>"/></td>
         </tr>
         <tr>
             <td>Name</td>
