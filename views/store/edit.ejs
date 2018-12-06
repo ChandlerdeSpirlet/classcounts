@@ -73,19 +73,19 @@
     <table width="25%" border="0">
         <tr>
             <td>Barcode</td>
-            <td><input type="number" name="barcode" min="0" max="9999999" value="<%= barcode %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="barcode" min="0" max="9999999" value="<%= barcode %>"/></td>
         </tr>
         <tr>
             <td>Regular</td>
-            <td><input type="number" name="reg" min="0" max="9999999" value="<%= reg %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="reg" min="0" max="9999999" value="<%= reg %>"/></td>
         </tr>
         <tr>
             <td>Sparring</td>
-            <td><input type="number" name="spar" min="0" max="9999999" value="<%= spar %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="spar" min="0" max="9999999" value="<%= spar %>"/></td>
         </tr>
         <tr>
             <td>SWATs</td>
-            <td><input type="number" name="swat" min="0" max="9999999" value="<%= swat %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="swat" min="0" max="9999999" value="<%= swat %>"/></td>
         </tr>
         <tr>
             <td></td>
