@@ -45,8 +45,8 @@
 <div style="overflow-x:auto">
 <table id="blackbelts" class="responsive">
     <tr>
-        <th>Card Number</th>
         <th>Name</th>
+        <th>Card Number</th>
         <th>Regular Class</th>
         <th>Sparring Class</th>
         <th>SWAT Class</th>
@@ -56,8 +56,8 @@
     The 'data' variable is passed from the store.js during the response.render function call -->
         <% data.forEach(function(item){ %>
             <tr>
-                <td><%= item.barcode %></td>
                 <td><%= item.bbname %></td>
+                <td><%= item.barcode %></td>
                 <td><%= item.regular %></td>
                 <td><%= item.sparring %></td>
                 <td><%= item.swats %></td>
