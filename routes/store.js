@@ -34,7 +34,8 @@ app.get('/', function (request, response) {
         .then(function (rows) {
         // render views/store/list.ejs template file
         response.render('store/list', {
-            title: 'Class Counts - Updated ' + global.globalDate,
+            title: 'Blackbelt Class Counts',
+            sub: 'Updated ' + global.globalDate,
             data: rows
         })
     })
