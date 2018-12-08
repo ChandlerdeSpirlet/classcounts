@@ -35,7 +35,7 @@ app.get('/', function (request, response) {
         // render views/store/list.ejs template file
         response.render('store/list', {
             title: 'Blackbelt Class Counts',
-            h2: 'Updated ' + global.globalDate,
+            sub: 'Updated ' + global.globalDate,
             data: rows
         })
     })
