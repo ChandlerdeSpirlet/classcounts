@@ -191,9 +191,60 @@ app.get('/logout', function(req, res){
     res.redirect('list.ejs');
 });
 app.get('/changelog', function(req, res){
-    res.render('store/changelog', {
-        title: 'Changelog'
+    var query = 'SELECT * FROM changelog';
+
+    db.any(query)
+        .then(function (rows) {
+        // render views/store/list.ejs template file
+        res.render('store/changelog', {
+            title: 'Changelog',
+            version: '',
+            date: '',
+            change: '',
+            data: rows
+        })
     })
+    .catch(function (err) {
+        // display error message in case an error
+        req.flash('error', err);
+        res.render('store/changelog', {
+            title: 'Changelog',
+            version: '',
+            date: '',
+            change: '',
+            data: ''
+        })
+    })
+});
+app.post('/changelog', function(req, res){
+    req.assert('version', 'Version is required').notEmpty();
+    req.assert('date', 'Date is required').notEmpty();
+    req.assert('change', 'Change is required').notEmpty();
+
+    var errors = req.validationErrors();
+    if (!errors){
+        var item = {
+            version: req.sanitize('version').trim(),
+            date: req.sanitize('date').trim(),
+            change: req.sanitize('change').trim()
+        };
+        db.none('insert into changelog (ver, date, changes) values ($1, $2, $3)', [item.version, item.date, item.change])
+        .then(function(res){
+            res.redirect('changelog');
+        }).catch(function(err){
+            req.flash('error', 'Something went wrong.');
+            res.redirect('changelog');
+        })
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        req.flash('error', error_msg);
+        res.render('store/changelog', {
+            title: 'Remove Blackbelt',
+            version: req.body.version,
+            date: req.body.date,
+            change: req.body.change
+        })
+    }
 });
 
 app.get('/login', function(req, res){
