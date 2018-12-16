@@ -191,7 +191,7 @@ app.get('/logout', function(req, res){
     res.redirect('list.ejs');
 });
 app.get('/changelog', function(req, res){
-    var query = 'SELECT * FROM changelog order by ver';
+    var query = 'SELECT * FROM changelog order by ver desc';
 
     db.any(query)
         .then(function (rows) {
