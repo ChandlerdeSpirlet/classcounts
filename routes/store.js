@@ -208,7 +208,7 @@ app.get('/changelog', function(req, res){
         // display error message in case an error
         req.flash('error', err);
         res.render('store/changelog', {
-            title: 'Changelog',
+            title: 'Change Log',
             version: '',
             date: '',
             change: '',
@@ -238,10 +238,11 @@ app.post('/changelog', function(req, res){
         var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
         req.flash('error', error_msg);
         res.render('store/changelog', {
-            title: 'Remove Blackbelt',
+            title: 'Change Log',
             version: req.body.version,
             date: req.body.date,
-            change: req.body.change
+            change: req.body.change, 
+            data: ''
         })
     }
 });
