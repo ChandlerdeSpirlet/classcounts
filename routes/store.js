@@ -167,10 +167,26 @@ app.get('/list3', function (request, response) {
 
 app.get('/file', function (request, response) {
     // render the views/index.ejs template file
-    getVersion();
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
-        response.redirect('list');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+    })
     } else {
         response.render('store/file', {title: 'Add Class File'})
     }
@@ -266,7 +282,24 @@ app.get('/logout', function(req, res){
 app.get('/changelog', function(req, res){
     if (!req.session.user){
         req.flash('error', 'Login credentials required');
-        res.redirect('list');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/list', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/list', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
     } else {
         var query = 'SELECT * FROM changelog order by ver desc';
 
@@ -335,7 +368,11 @@ app.get('/login', function(req, res){
 app.get('/login2', function(req, res){
     if (!req.session.user){
         req.flash('error', 'Login credentials required');
-        res.redirect('list');
+        rres.render('store/login', {
+            title: 'Login',
+            bbuser: '',
+            bbpass: ''
+        })
     } else {
         res.render('store/login2', {
             title: 'Login',
@@ -380,7 +417,24 @@ app.get('/edit', function (request, response) {
     // render views/store/add.ejs
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
-        response.redirect('list');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
     } else {
         response.render('store/edit', {
             title: 'Update Classes',
@@ -449,7 +503,24 @@ app.get('/add', function (request, response) {
     // render views/store/add.ejs
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
-        response.redirect('list');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
     } else {
         response.render('store/add', {
             title: 'Add New Blackbelt',
@@ -566,7 +637,24 @@ app.get('/email2', function (request, response) {
     // render views/store/add.ejs
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
-        response.redirect('list');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
     } else {
         response.render('store/email2', {
             title: 'Contact Us',
@@ -630,7 +718,24 @@ app.post('/email2', function (request, response) {
 app.get('/del', function(req, res){
     if (!req.session.user){
         req.flash('error', 'Login credentials required');
-        res.redirect('list');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/list', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/list', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
     } else {
         res.render('store/del', {
             title: 'Remove Blackbelt',
