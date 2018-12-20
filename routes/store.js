@@ -161,7 +161,7 @@ app.get('/file', function (request, response) {
     // render the views/index.ejs template file
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
-        res.redirect('list');
+        response.redirect('list');
     } else {
         response.render('store/file', {title: 'Add Class File'})
     }
