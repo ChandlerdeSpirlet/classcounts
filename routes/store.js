@@ -65,7 +65,25 @@ app.get('/list2', function (request, response) {
     // that returns all the rows and columns in the 'store' table
     if(!request.session.user){
         request.flash('error', 'Login credentials required');
-        response.redirect('list');
+        getDate();
+        var query = 'SELECT * FROM counts order by bbname';
+
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
     } else {
         getDate();
         var query = 'SELECT * FROM counts order by bbname';
