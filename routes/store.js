@@ -107,34 +107,64 @@ app.get('/list2', function (request, response) {
     }
 });
 app.get('/list3', function (request, response) {
-    getDate();
-    // TODO: Initialize the query variable with a SQL query
-    // that returns all the rows and columns in the 'store' table
-    
-    var query = 'SELECT * FROM counts order by bbname';
+    if (!request.session.user){
+        request.flash('error', 'Login credentials required');
+        getDate();
+        // TODO: Initialize the query variable with a SQL query
+        // that returns all the rows and columns in the 'store' table
+        
+        var query = 'SELECT * FROM counts order by bbname';
 
-    db.any(query)
-        .then(function (rows) {
-        // render views/store/list.ejs template file
-        response.render('store/list3', {
-            title: 'Class Counts - Updated ' + globalDate,
-            data: rows
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list', {
+                title: 'Class Counts - Updated ' + globalDate,
+                data: rows
+            })
         })
-    })
-    .catch(function (err) {
-        // display error message in case an error
-        request.flash('error', err);
-        response.render('store/list3', {
-            title: 'Class Counts - Updated ' + globalDate,
-            data: ''
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list', {
+                title: 'Class Counts - Updated ' + globalDate,
+                data: ''
+            })
         })
-    })
-    
+    } else {
+        getDate();
+        // TODO: Initialize the query variable with a SQL query
+        // that returns all the rows and columns in the 'store' table
+        
+        var query = 'SELECT * FROM counts order by bbname';
+
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list3', {
+                title: 'Class Counts - Updated ' + globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list3', {
+                title: 'Class Counts - Updated ' + globalDate,
+                data: ''
+            })
+        })
+    }
 });
 
 app.get('/file', function (request, response) {
     // render the views/index.ejs template file
-    response.render('store/file', {title: 'Add Class File'})
+    if (!request.session.user){
+        request.flash('error', 'Login credentials required');
+        res.redirect('list');
+    } else {
+        response.render('store/file', {title: 'Add Class File'})
+    }
 });
 
 function readData(area){
@@ -221,6 +251,7 @@ app.route('/file').post(function(req, res, next) {
     });
 });
 app.get('/logout', function(req, res){
+    req.session = null;
     res.redirect('list.ejs');
 });
 app.get('/changelog', function(req, res){
@@ -310,10 +341,12 @@ app.post('/login', function(request, response){
                 var temp = data[0];
                 var final = temp.checkuser;
                 if (final == true && item.bbuser == "admin"){
+                    request.session.user = item.bbuser;
                     request.flash('success', 'Admin credentials accepted!');
                     response.redirect('list3');
                 }
                 if (final == true){
+                    request.session.user = item.bbuser;
                     request.flash('success', 'Login credentials accepted!');
                     response.redirect('list2'); ///store/login2
                 } else {
