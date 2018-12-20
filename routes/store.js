@@ -31,6 +31,15 @@ function getDate() {
             global.globalDate = temp.refreshed;
     });
 }
+function getVersion() {
+    var query = 'select * from changelog order by ver desc';
+    db.any(query)
+        .then(function(data){
+            var version = data[0];
+            global.versionGlobal = version.ver;
+            console.log('in function - global.versionGlobal -', global.versionGlobal);
+        });
+}
 
 
 
@@ -38,9 +47,8 @@ app.get('/', function (request, response) {
     
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
-    getDate();
     var query = 'SELECT * FROM counts order by bbname';
-
+    getDate();
     db.any(query)
         .then(function (rows) {
         // render views/store/list.ejs template file
@@ -159,6 +167,7 @@ app.get('/list3', function (request, response) {
 
 app.get('/file', function (request, response) {
     // render the views/index.ejs template file
+    getVersion();
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
         response.redirect('list');
@@ -255,30 +264,35 @@ app.get('/logout', function(req, res){
     res.redirect('list.ejs');
 });
 app.get('/changelog', function(req, res){
-    var query = 'SELECT * FROM changelog order by ver desc';
+    if (!req.session.user){
+        req.flash('error', 'Login credentials required');
+        res.redirect('list');
+    } else {
+        var query = 'SELECT * FROM changelog order by ver desc';
 
-    db.any(query)
-        .then(function (rows) {
-        // render views/store/list.ejs template file
-        res.render('store/changelog', {
-            title: 'Changelog',
-            version: '',
-            date: '',
-            change: '',
-            data: rows
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/changelog', {
+                title: 'Changelog',
+                version: '',
+                date: '',
+                change: '',
+                data: rows
+            })
         })
-    })
-    .catch(function (err) {
-        // display error message in case an error
-        req.flash('error', err);
-        res.render('store/changelog', {
-            title: 'Change Log',
-            version: '',
-            date: '',
-            change: '',
-            data: ''
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/changelog', {
+                title: 'Change Log',
+                version: '',
+                date: '',
+                change: '',
+                data: ''
+            })
         })
-    })
+    }
 });
 app.post('/changelog', function(req, res){
     req.assert('version', 'Version is required').notEmpty();
@@ -319,11 +333,16 @@ app.get('/login', function(req, res){
     })
 });
 app.get('/login2', function(req, res){
-    res.render('store/login2', {
-        title: 'Login',
-        bbuser: '',
-        bbpass: ''
-    })
+    if (!req.session.user){
+        req.flash('error', 'Login credentials required');
+        res.redirect('list');
+    } else {
+        res.render('store/login2', {
+            title: 'Login',
+            bbuser: '',
+            bbpass: ''
+        })
+    }
 });
 
 app.post('/login', function(request, response){
@@ -359,13 +378,18 @@ app.post('/login', function(request, response){
 
 app.get('/edit', function (request, response) {
     // render views/store/add.ejs
-    response.render('store/edit', {
-        title: 'Update Classes',
-        barcode: '',
-        reg: '',
-        spar: '',
-        swat: ''
-    })
+    if (!request.session.user){
+        request.flash('error', 'Login credentials required');
+        response.redirect('list');
+    } else {
+        response.render('store/edit', {
+            title: 'Update Classes',
+            barcode: '',
+            reg: '',
+            spar: '',
+            swat: ''
+        })
+    }
 });
 app.post('/edit', function (request, response) {
     // Validate user input - ensure non emptiness
@@ -423,11 +447,16 @@ app.post('/edit', function (request, response) {
 
 app.get('/add', function (request, response) {
     // render views/store/add.ejs
-    response.render('store/add', {
-        title: 'Add New Blackbelt',
-        barcode: '',
-        bbname: ''
-    })
+    if (!request.session.user){
+        request.flash('error', 'Login credentials required');
+        response.redirect('list');
+    } else {
+        response.render('store/add', {
+            title: 'Add New Blackbelt',
+            barcode: '',
+            bbname: ''
+        })
+    }
 });
 app.post('/add', function (request, response) {
     // Validate user input - ensure non emptiness
@@ -502,7 +531,9 @@ app.post('/email', function (request, response) {
             email: request.sanitize('email').escape().trim(),
             text: request.sanitize('text').escape().trim()
         };
-        var opening = 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
+        getVersion();
+        console.log('in email -', global.versionGlobal);
+        var opening = 'Version: ' + global.versionGlobal  + '\n' + 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
         var mailOptions = {
             from: 'classcountsema@gmail.com',
             to: 'chandler.despirlet@icloud.com',
@@ -533,12 +564,17 @@ app.post('/email', function (request, response) {
 });
 app.get('/email2', function (request, response) {
     // render views/store/add.ejs
-    response.render('store/email2', {
-        title: 'Contact Us',
-        name: '',
-        email: '',
-        text: ''
-    })
+    if (!request.session.user){
+        request.flash('error', 'Login credentials required');
+        response.redirect('list');
+    } else {
+        response.render('store/email2', {
+            title: 'Contact Us',
+            name: '',
+            email: '',
+            text: ''
+        })
+    }
 });
 app.post('/email2', function (request, response) {
     // Validate user input - ensure non emptiness
@@ -560,7 +596,8 @@ app.post('/email2', function (request, response) {
             email: request.sanitize('email').escape().trim(),
             text: request.sanitize('text').escape().trim()
         };
-        var opening = 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
+        getVersion();
+        var opening = 'Version: ' + global.versionGlobal + '\n' + 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
         var mailOptions = {
             from: 'classcountsema@gmail.com',
             to: 'chandler.despirlet@icloud.com',
@@ -591,11 +628,16 @@ app.post('/email2', function (request, response) {
 });
 
 app.get('/del', function(req, res){
-    res.render('store/del', {
-        title: 'Remove Blackbelt',
-        barcode : '',
-        bbname: ''
-    })
+    if (!req.session.user){
+        req.flash('error', 'Login credentials required');
+        res.redirect('list');
+    } else {
+        res.render('store/del', {
+            title: 'Remove Blackbelt',
+            barcode : '',
+            bbname: ''
+        })
+    }
 });
 app.post('/del', function(req, res){
     req.assert('barcode', 'Barcode is required to prevent mistakes').notEmpty();
