@@ -6,9 +6,20 @@ var path = require('path');
 var fs = require('fs');
 let fastcsv = require('fast-csv');
 var nodemailer = require('nodemailer');
+var session = require("express-session");
+var cookieParser = require("cookie-parser");
+var exp_val = require('express-validator');
 
 
 module.exports = app;
+app.use(cookieParser('counts'));
+app.use(session({
+    secret: 'counts',
+    resave: false,
+    saveUninitialized: true,
+    cookie: {maxAge: 5 * 60 * 1000}
+}));
+app.use(exp_val());
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'store')));
 
@@ -52,26 +63,30 @@ app.get('/list2', function (request, response) {
     
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
-    getDate();
-    var query = 'SELECT * FROM counts order by bbname';
+    if(!request.session.user){
+        request.flash('error', 'Login credentials required');
+        response.redirect('list');
+    } else {
+        getDate();
+        var query = 'SELECT * FROM counts order by bbname';
 
-    db.any(query)
-        .then(function (rows) {
-        // render views/store/list.ejs template file
-        response.render('store/list2', {
-            title: 'Class Counts - Updated ' + global.globalDate,
-            data: rows
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list2', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
         })
-    })
-    .catch(function (err) {
-        // display error message in case an error
-        request.flash('error', err);
-        response.render('store/list2', {
-            title: 'Class Counts - Updated ' + global.globalDate,
-            data: ''
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list2', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
         })
-    })
-    
+    }
 });
 app.get('/list3', function (request, response) {
     getDate();

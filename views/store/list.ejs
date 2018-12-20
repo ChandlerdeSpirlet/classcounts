@@ -40,39 +40,30 @@
     background-color: blue;
     color: white;
 }
-thead {
-    position:sticky;
-}
 </style>
 </head>
-<div style="overflow-x:auto">
 <table id="blackbelts">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Card Number</th>
-            <th>Regular Class</th>
-            <th>Sparring Class</th>
-            <th>SWAT Class</th>
-        </tr>
-    </thead>
-    <tbody>
-        <% if (data) { %>
-        <!-- Using a for-loop to loop over each row in the database.
-        The 'data' variable is passed from the store.js during the response.render function call -->
-            <% data.forEach(function(item){ %>
-                <tr>
-                    <td><%= item.bbname %></td>
-                    <td><%= item.barcode %></td>
-                    <td><%= item.regular %></td>
-                    <td><%= item.sparring %></td>
-                    <td><%= item.swats %></td>
-                </tr>
-            <% }) %>
-        <% } %>
-    </tbody>
+    <tr>
+        <th>Name</th>
+        <th>Card Number</th>
+        <th>Regular Class</th>
+        <th>Sparring Class</th>
+        <th>SWAT Class</th>
+    </tr>
+    <% if (data) { %>
+    <!-- Using a for-loop to loop over each row in the database.
+    The 'data' variable is passed from the store.js during the response.render function call -->
+        <% data.forEach(function(item){ %>
+            <tr>
+                <td><%= item.bbname %></td>
+                <td><%= item.barcode %></td>
+                <td><%= item.regular %></td>
+                <td><%= item.sparring %></td>
+                <td><%= item.swats %></td>
+            </tr>
+        <% }) %>
+    <% } %>
 </table>
-</div>
 </html>
 
 <!--Including Footer Partial-->
