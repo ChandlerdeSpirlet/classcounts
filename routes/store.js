@@ -531,7 +531,7 @@ app.post('/email', function (request, response) {
             email: request.sanitize('email').escape().trim(),
             text: request.sanitize('text').escape().trim()
         };
-        getVersion();
+        version = getVersion();
         console.log('in email -', global.versionGlobal);
         var opening = 'Version: ' + global.versionGlobal  + '\n' + 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
         var mailOptions = {
@@ -596,7 +596,7 @@ app.post('/email2', function (request, response) {
             email: request.sanitize('email').escape().trim(),
             text: request.sanitize('text').escape().trim()
         };
-        getVersion();
+        version = getVersion();
         var opening = 'Version: ' + global.versionGlobal + '\n' + 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
         var mailOptions = {
             from: 'classcountsema@gmail.com',
