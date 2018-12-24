@@ -19,16 +19,16 @@ app.get('/', function (request, response) {
     db.any(query)
         .then(function (rows) {
         // render views/store/list.ejs template file
-        response.render('store/list', {
-            title: 'Class Counts - Updated ' + globalDate,
+        response.render('store/temp', {
+            title: 'Black Belt Class Counts \nUpdated ' + global.globalDate,
             data: rows
         })
     })
     .catch(function (err) {
         // display error message in case an error
         request.flash('error', err);
-        response.render('store/list', {
-            title: 'Class Counts',
+        response.render('store/temp', {
+            title: 'Black Belt Class Counts \nUpdated ' + global.globalDate,
             data: ''
         })
     })
