@@ -53,7 +53,7 @@ app.get('/', function (request, response) {
         .then(function (rows) {
         // render views/store/list.ejs template file
         response.render('store/temp', {
-            title: 'Black Belt Class Counts \nUpdated ' + global.globalDate,
+            title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
             data: rows
         })
     })
@@ -61,7 +61,7 @@ app.get('/', function (request, response) {
         // display error message in case an error
         request.flash('error', err);
         response.render('store/temp', {
-            title: 'Black Belt Class Counts \nUpdated ' + global.globalDate,
+            title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
             data: ''
         })
     })
