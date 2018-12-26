@@ -17,7 +17,7 @@ app.use(session({
     secret: 'counts',
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 1 * 60 * 1000}
+    cookie: {maxAge: 3 * 60 * 1000}
 }));
 app.use(exp_val());
 app.use(busboy());
