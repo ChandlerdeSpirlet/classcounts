@@ -81,6 +81,7 @@ body {
 .content {
     margin-left: .5px;
     margin-right: .5px;
+    
 }
 /* The sticky class is added to the header with JS when it reaches its scroll position */
 .sticky {
@@ -94,15 +95,12 @@ body {
     }
     table {
         border-collapse: collapse;
-        border: 1px solid #ddd;
     }
 th {
     background-color: blue;
     color: white;
     padding-top: 12px;
     padding-bottom: 12px;
-    border: 1px solid #ddd;
-    
 }
 tr:nth-child(even) {
     background-color: #f2f2f2;
@@ -118,9 +116,12 @@ tr:hover {
     }
     th,td {
         width: calc(598px /5);
-        text-align: left;
-        border: 1px solid #ddd;
+        text-align: center;
         padding: 8px;
+    }
+    th:first-child {
+        padding-left: 30px;
+        padding-right: 25px;
     }
     tr:nth-child(odd) {
         
@@ -226,38 +227,37 @@ tr:hover {
     <h1><%= title %></h1><!--Using if-check to see if an error occurred and displaying appropriate message-->
 </div>
 	<div>
-		
-            <div class="header" id="myHeader">
-			<!-- Header class and id work with javascript at bottom for sticky header -->
-                <table>
-				<!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
-				    <tr>
-					    <th>Name</th>
-					    <th>Card Number</th>
-					    <th>Regular Class</th>
-					    <th>Sparring Class</th>
-					    <th>SWAT Class</th>
-				    </tr>
-                </table>
-            </div>
-            <div class="content"> 
-			<!-- Content class and new table for the content that will be scrolling past the sticky header -->
-			<table >
-				<% if (data) { %>
-                    <!-- Using a for-loop to loop over each row in the database.
-                    The 'data' variable is passed from the store.js during the response.render function call -->
-                        <% data.forEach(function(item){ %>
-                            <tr>
-                                <td><%= item.bbname %></td>
-                                <td><%= item.barcode %></td>
-                                <td><%= item.regular %></td>
-                                <td><%= item.sparring %></td>
-                                <td><%= item.swats %></td>
-                            </tr>
-                        <% }) %>
-                    <% } %>
+        <div class="header" id="myHeader">
+        <!-- Header class and id work with javascript at bottom for sticky header -->
+            <table>
+            <!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
+                <tr>
+                    <th>Name</th>
+                    <th>Card Number</th>
+                    <th>Regular Class</th>
+                    <th>Sparring Class</th>
+                    <th>SWAT Class</th>
+                </tr>
             </table>
         </div>
+        <div class="content"> 
+        <!-- Content class and new table for the content that will be scrolling past the sticky header -->
+        <table >
+            <% if (data) { %>
+                <!-- Using a for-loop to loop over each row in the database.
+                The 'data' variable is passed from the store.js during the response.render function call -->
+                    <% data.forEach(function(item){ %>
+                        <tr>
+                            <td><%= item.bbname %></td>
+                            <td><%= item.barcode %></td>
+                            <td><%= item.regular %></td>
+                            <td><%= item.sparring %></td>
+                            <td><%= item.swats %></td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+        </table>
+    </div>
     </div><!--Including Footer Partial-->
     <script>
             window.onscroll = function() {myFunction()};
