@@ -79,7 +79,7 @@ app.get('/list2', function (request, response) {
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: rows
             })
@@ -87,7 +87,7 @@ app.get('/list2', function (request, response) {
         .catch(function (err) {
             // display error message in case an error
             request.flash('error', err);
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
@@ -126,7 +126,7 @@ app.get('/list3', function (request, response) {
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
                 data: rows
             })
@@ -134,7 +134,7 @@ app.get('/list3', function (request, response) {
         .catch(function (err) {
             // display error message in case an error
             request.flash('error', err);
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
                 data: ''
             })
