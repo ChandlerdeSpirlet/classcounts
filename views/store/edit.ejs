@@ -73,25 +73,39 @@
         background-color: blue;
         color: white;
     }
+    input:invalid+span:after {
+        content: '✖';
+        padding-left: 5px;
+    }
+
+    input:valid+span:after {
+        content: '✓';
+        padding-left: 5px;
+    }
 </style>
 <!--Create a form to take input from user-->
 <form action="/store/edit" method="post" name="form1">
     <table width="25%" border="0">
         <tr>
             <td>Barcode</td>
-            <td><input type="number" pattern="[0-9]*" name="barcode" min="0" max="9999999" value="<%= barcode %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="barcode" min="0" max="9999999" value="<%= barcode %>" required/>
+                <span class="validity"></span></td>
+            
         </tr>
         <tr>
             <td>Regular</td>
-            <td><input type="number" pattern="[0-9]*" name="reg" min="0" max="9999999" value="<%= reg %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="reg" min="0" max="9999999" value="<%= reg %>" required/>
+                <span class="validity"></span></td>
         </tr>
         <tr>
             <td>Sparring</td>
-            <td><input type="number" pattern="[0-9]*" name="spar" min="0" max="9999999" value="<%= spar %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="spar" min="0" max="9999999" value="<%= spar %>" required/>
+                <span class="validity"></span></td>
         </tr>
         <tr>
             <td>SWATs</td>
-            <td><input type="number" pattern="[0-9]*" name="swat" min="0" max="9999999" value="<%= swat %>"/></td>
+            <td><input type="number" pattern="[0-9]*" name="swat" min="0" max="9999999" value="<%= swat %>" required/>
+                <span class="validity"></span></td> 
         </tr>
         <tr>
             <td></td>
