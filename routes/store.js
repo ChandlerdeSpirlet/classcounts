@@ -17,7 +17,7 @@ app.use(session({
     secret: 'counts',
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 3 * 60 * 1000}
+    cookie: {maxAge: 3 * 60 * 1000} //3 minute cookie
 }));
 app.use(exp_val());
 app.use(busboy());
@@ -52,7 +52,7 @@ app.get('/', function (request, response) {
     db.any(query)
         .then(function (rows) {
         // render views/store/list.ejs template file
-        response.render('store/temp', {
+        response.render('store/home', {
             title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
             data: rows
         })
@@ -60,7 +60,7 @@ app.get('/', function (request, response) {
     .catch(function (err) {
         // display error message in case an error
         request.flash('error', err);
-        response.render('store/temp', {
+        response.render('store/home', {
             title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
             data: ''
         })
@@ -174,7 +174,7 @@ app.get('/file', function (request, response) {
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
                 data: rows
             })
@@ -182,7 +182,7 @@ app.get('/file', function (request, response) {
         .catch(function (err) {
             // display error message in case an error
             request.flash('error', err);
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
@@ -277,7 +277,7 @@ app.route('/file').post(function(req, res, next) {
 });
 app.get('/logout', function(req, res){
     req.session = null;
-    res.redirect('list.ejs');
+    res.redirect('home.ejs');
 });
 app.get('/changelog', function(req, res){
     if (!req.session.user){
@@ -287,7 +287,7 @@ app.get('/changelog', function(req, res){
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            res.render('store/list', {
+            res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
                 data: rows
             })
@@ -295,7 +295,7 @@ app.get('/changelog', function(req, res){
         .catch(function (err) {
             // display error message in case an error
             req.flash('error', err);
-            res.render('store/list', {
+            res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
@@ -422,7 +422,7 @@ app.get('/edit', function (request, response) {
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
                 data: rows
             })
@@ -430,7 +430,7 @@ app.get('/edit', function (request, response) {
         .catch(function (err) {
             // display error message in case an error
             request.flash('error', err);
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
@@ -508,7 +508,7 @@ app.get('/add', function (request, response) {
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
                 data: rows
             })
@@ -516,7 +516,7 @@ app.get('/add', function (request, response) {
         .catch(function (err) {
             // display error message in case an error
             request.flash('error', err);
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
@@ -642,7 +642,7 @@ app.get('/email2', function (request, response) {
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
                 data: rows
             })
@@ -650,7 +650,7 @@ app.get('/email2', function (request, response) {
         .catch(function (err) {
             // display error message in case an error
             request.flash('error', err);
-            response.render('store/list', {
+            response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
@@ -723,7 +723,7 @@ app.get('/del', function(req, res){
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            res.render('store/list', {
+            res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
                 data: rows
             })
@@ -731,7 +731,7 @@ app.get('/del', function(req, res){
         .catch(function (err) {
             // display error message in case an error
             req.flash('error', err);
-            res.render('store/list', {
+            res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
