@@ -300,7 +300,7 @@ app.get('/changelog', function(req, res){
                 data: ''
             })
         })
-    } else {
+    } else if (req.session.user == "admin"){
         var query = 'SELECT * FROM changelog order by ver desc';
 
         db.any(query)
@@ -322,6 +322,26 @@ app.get('/changelog', function(req, res){
                 version: '',
                 date: '',
                 change: '',
+                data: ''
+            })
+        })
+    } else {
+        req.flash('error', 'Admin credentials required');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
         })
