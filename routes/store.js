@@ -280,7 +280,7 @@ app.get('/logout', function(req, res){
     res.redirect('home.ejs');
 });
 app.get('/changelog', function(req, res){
-    if (!req.session.user && req.session.user != 'admin'){
+    if (!req.session.user || req.session.user != 'admin'){
         req.flash('error', 'Admin credentials required');
         var query = 'SELECT * FROM counts order by bbname';
         getDate();
