@@ -280,8 +280,8 @@ app.get('/logout', function(req, res){
     res.redirect('home.ejs');
 });
 app.get('/changelog', function(req, res){
-    if (!req.session.user){
-        req.flash('error', 'Login credentials required');
+    if (!req.session.user && req.session.user != 'admin'){
+        req.flash('error', 'Admin credentials required');
         var query = 'SELECT * FROM counts order by bbname';
         getDate();
         db.any(query)
@@ -603,7 +603,6 @@ app.post('/email', function (request, response) {
             text: request.sanitize('text').escape().trim()
         };
         version = getVersion();
-        console.log('in email -', global.versionGlobal);
         var opening = 'Version: ' + global.versionGlobal  + '\n' + 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
         var mailOptions = {
             from: 'classcountsema@gmail.com',

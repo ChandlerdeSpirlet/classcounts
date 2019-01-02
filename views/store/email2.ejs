@@ -90,22 +90,31 @@
         background-color: blue;
         color: white;
     }
-    <
+    input:invalid+span:after {
+        content: '✖';
+        color: black;
+        padding-left: 10px;
+        position: fixed;
+        padding-top: 15px;
+    }
 </style>
 <!--Create a form to take input from user-->
-<form action="/store/email2" method="post" name="form1">
+<form action="/store/email" method="post" name="form1">
     <table width="25%" border="0">
         <tr>
             <td>Name</td>
-            <td><input type="text" name="name" id="name" value="<%= name %>"/></td>
+            <td><input type="text" name="name" id="name" pattern="[A-z]{1,20}+"  min="1" maxlength="20" value="<%= name %>"/>
+                <span class="validity"></span></td>
         </tr>
         <tr>
             <td>Email</td>
-            <td><input type="email" name="email" id="email" value="<%= email %>"/></td>
+            <td><input type="email" name="email" id="email" pattern="\b[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}\b" min=" @ . " minlength="5" value="<%= email %>"/>
+                <span class="validity"></span></td>
         </tr>
         <tr>
             <td>Response</td>
-            <td><input type="textarea" name="text" value="<%= text %>"/></td>
+            <td><input type="textarea" name="text" min=" " minlength="1" value="<%= text %>"/>
+                <span class="validity"></span></td>
         </tr>
         <tr>
             <td></td>
@@ -114,5 +123,6 @@
     </table>
 </form>
 </head>
+
 <!--Including Footer partial-->
 <%- include ../layouts/footer.ejs %>
