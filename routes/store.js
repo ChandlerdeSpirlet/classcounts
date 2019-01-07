@@ -29,7 +29,7 @@ function getDate() {
         .then(function(data){
             var temp = data[0];
             global.globalDate = temp.refreshed;
-    });
+        })
 }
 function getVersion() {
     var query = 'select * from changelog order by ver desc';
@@ -38,10 +38,8 @@ function getVersion() {
             var version = data[0];
             global.versionGlobal = version.ver;
             console.log('in function - global.versionGlobal -', global.versionGlobal);
-        });
+        })
 }
-
-
 
 app.get('/', function (request, response) {
     
@@ -764,7 +762,7 @@ app.get('/del', function(req, res){
     }
 });
 app.post('/del', function(req, res){
-    req.assert('barcode', 'Barcode is required to prevent mistakes').notEmpty();
+    req.assert('barcode', 'Barcode is required to prevent mistakes.').notEmpty();
     var item = {
         barcode: req.sanitize('barcode').escape(),
         bbname: req.sanitize('bbname').escape()
@@ -773,8 +771,14 @@ app.post('/del', function(req, res){
     if (!errors){
         db.none('delete from counts where (barcode = $1) or (bbname = $2)', [item.barcode, item.bbname])
         .then(function(result){
-            req.flash('success', item.barcode, item.bbname, ' has been removed.');
-            res.redirect('list2');
+            if (item.bbname != ""){
+                req.flash('success', item.bbname, ' (' + item.barcode + ') ', 'has been removed.');
+                res.redirect('list2');
+            } else {
+                req.flash('success', item.barcode, item.bbname, ' has been removed.');
+                res.redirect('list2');
+            }
+            
         }).catch(function(err){
             req.flash('error', err, ' blackbelt could not be removed');
             res.redirect('list2');

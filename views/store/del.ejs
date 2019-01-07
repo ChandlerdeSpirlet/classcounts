@@ -74,6 +74,13 @@
         background-color: blue;
         color: white;
     }
+    input:invalid+span:after {
+        content: '✖';
+        color: black;
+        padding-left: 10px;
+        position: fixed;
+        padding-top: 15px;
+    }
 </style>
 <form action="/store/del" method="post" name="form1">
     <table width="25%" border="0">
@@ -82,11 +89,13 @@
         </tr>
         <tr>
             <td>Barcode</td>
-            <td><input type="number" pattern="[0-9]*" name="barcode" min="0" max="9999999" value="<%= barcode %>"/></td>
+            <td><input type="number" pattern="\b[0-9]{5}\b" min="0" max="99999" name="barcode" value="<%= barcode %>"/>
+                <span class="validity"></span></td></td>
         </tr>
         <tr>
             <td>Name</td>
-            <td><input type="text" name="bbname" id="name" value="<%= bbname %>"/></td>
+            <td><input type="text" name="bbname" pattern="[A-z]{1,20}+" min="1" maxlength="20" id="name" value="<%= bbname %>"/>
+                <span class="validity"></span></td></td>
         </tr>
         
         <tr>
