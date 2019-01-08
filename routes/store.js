@@ -42,7 +42,7 @@ function getVersion() {
 }
 
 app.get('/', function (request, response) {
-    
+    getVersion();
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     var query = 'SELECT * FROM counts order by bbname';
@@ -379,6 +379,10 @@ function setBool(code){
     var query = 'update counts set additional = true where barcode = $1'
     db.none(query, code)
 };
+function clearBool(){
+    var query = 'update counts set additional = false where barcode > 0'
+    db.none(query)
+};
 app.get('/additional', function(req, res){
     if (!req.session.user || req.session.user != 'admin'){
         req.flash('error', 'Admin credentials required');
@@ -493,6 +497,7 @@ app.post('/additionalADD', function(req, res){
     }
 });
 app.post('/additionalCLEAR', function(req, res){
+    clearBool();
     db.none('delete from inc where barcode > 0')
         .then(function (res) {
             req.flash('success', 'Stored classes removed');
