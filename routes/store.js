@@ -375,7 +375,281 @@ app.post('/changelog', function(req, res){
         })
     }
 });
+function setBool(code){
+    var query = 'update counts set additional = true where barcode = $1'
+    db.none(query, code)
+};
+app.get('/additional', function(req, res){
+    if (!req.session.user || req.session.user != 'admin'){
+        req.flash('error', 'Admin credentials required');
+        var query = 'SELECT * FROM inc order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
+    } else if (req.session.user == "admin"){
+        var query = 'SELECT * FROM inc order by bbname';
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/additional', {
+                title: 'Stored Classes',
+                bbname: '',
+                barcode: '',
+                regular: '',
+                spar: '',
+                swat: '',
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/additional', {
+                title: 'Stored Classes',
+                bbname: '',
+                barcode: '',
+                regular: '',
+                spar: '',
+                swat: '',
+                data: ''
+            })
+        })
+    } else {
+        req.flash('error', 'Admin credentials required');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
+    }
+});
+app.post('/additionalADD', function(req, res){
+    req.assert('bbname', 'Name is required').notEmpty();
+    req.assert('barcode', 'Barcode is required').notEmpty();
+    req.assert('regular', 'Regular is required').notEmpty();
+    req.assert('spar', 'Sparring is required').notEmpty();
+    req.assert('swat', 'Swats is required').notEmpty();
 
+    var errors = req.validationErrors();
+    if (!errors){
+        var item = {
+            bbname: req.sanitize('bbname').trim(),
+            barcode: req.sanitize('barcode').trim(),
+            regular: req.sanitize('regular').trim(),
+            spar: req.sanitize('spar').trim(),
+            swat: req.sanitize('swat').trim()
+        };
+        setBool(item.barcode);
+        console.log('In post -', item.bbname, item.barcode, item.regular, item.spar, item.swat);
+        db.none('insert into inc (barcode, bbname, regular, sparring, swat) values ($1, $2, $3, $4, $5)', [item.barcode, item.bbname, item.regular, item.spar, item.swat])
+        .then(function(res){
+            res.redirect('additional');
+            console.log('Successful');
+            req.flash('Added successfully');
+        }).catch(function(err){
+            console.log('Failed', err);
+            res.redirect('additional');
+            req.flash(err);
+        })
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        req.flash('error', error_msg);
+        res.render('store/additional', {
+            title: 'Stored Classes',
+            bbname: req.body.bbname,
+            barcode: req.body.barcode,
+            regular: req.body.regular,
+            spar: req.body.spar,
+            swat: req.body.spar,
+            data: ''
+        })
+    }
+});
+app.post('/additionalCLEAR', function(req, res){
+    db.none('delete from inc where barcode > 0')
+        .then(function (res) {
+            req.flash('success', 'Stored classes removed');
+            res.redirect('additional');
+    })
+    .catch(function (err) {
+            console.log('error', err);
+            res.redirect('additional');
+    })
+});
+app.get('/alter/(:barcode)', function(req, res) {
+    if (!req.session.user || req.session.user != 'admin'){
+        req.flash('error', 'Admin credentials required');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
+    }
+    else if (req.session.user == "admin"){
+        var code = req.params.barcode;
+        console.log('code is ', req.params.barcode);
+        var query = 'select * from inc where barcode = $1';
+        db.one(query, code)
+            .then(function (row) {
+                if (row.length === 0){
+                    req.flash('error', 'Black belt is not in this list');
+                    res.redirect('additional');
+                } else {
+                    console.log('In the else for .get alter');
+                    res.render('store/alter', {
+                        title: 'Edit Classes',
+                        bbname: row.bbname,
+                        barcode: row.barcode,
+                        regular: row.regular,
+                        spar: row.spar,
+                        swat: row.swat                       
+                    })
+                    
+                }
+            })
+            .catch(function (err) {
+                console.log('In .catch err for alter barcode .get');
+                req.flash('error', err);
+                res.render('store/additional', {
+                    title: 'Stored Classes',
+                    data: ''
+                })
+            })
+    } else {
+        req.flash('error', 'Admin credentials required');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
+    }
+});
+app.put('/alter/(:barcode)', function (req, res) {
+    req.assert('bbname', 'Name is required').notEmpty();
+    req.assert('barcode', 'Barcode is required').notEmpty();
+    req.assert('regular', 'Regular is required').notEmpty();
+    req.assert('spar', 'Sparring is required').notEmpty();
+    req.assert('swat', 'Swats is required').notEmpty();
+
+    var errors = req.validationErrors();
+    if (!errors){
+        var item = {
+            bbname: req.sanitize('bbname').escape().trim(),
+            barcode: req.sanitize('barcode').escape().trim(),
+            regular: req.sanitize('regular').escape().trim(),
+            spar: req.sanitize('spar').escape().trim(),
+            swat: req.sanitize('swat').escape().trim()
+        };
+        console.log('In the .put for alter');
+        console.log(item.bbname, item.barcode, item.regular, item.spar, item.swat);
+        db.none('update inc set bbname = $1, barcode = $2, regular = $3, sparring = $4, swat = $5 where barcode = $2', [item.bbname, item.barcode, item.regular, item.spar, item.swat])
+            .then(function() {
+                req.flash('success', 'Black belt classes updated.');
+                console.log('In the .then for updateQuery');
+                console.log('Testing redirect');
+                getDate();
+                // TODO: Initialize the query variable with a SQL query
+                // that returns all the rows and columns in the 'store' table
+                
+                var query = 'SELECT * FROM counts order by bbname';
+
+                db.any(query)
+                    .then(function (rows) {
+                    // render views/store/list.ejs template file
+                    res.render('store/list3', {
+                        title: 'Class Counts - Updated ' + globalDate,
+                        data: rows
+                    })
+                })
+                .catch(function (err) {
+                    // display error message in case an error
+                    req.flash('error', err);
+                    res.render('store/list3', {
+                        title: 'Class Counts - Updated ' + globalDate,
+                        data: ''
+                    })
+                })
+            })
+            .catch(function(err) {
+                console.log('In .catch err');
+                req.flash('error', err);
+                res.render('store/additional', {
+                    title: 'Stored Classes',
+                    bbname: req.body.bbname,
+                    barcode: req.params.barcode,
+                    regular: req.body.regular,
+                    spar: req.body.spar,
+                    swat: req.body.swat,
+                    data: ''
+                })
+            })
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        req.flash('error', error_msg);
+        res.render('store/additional', {
+            title: 'Stored Classes',
+                bbname: req.body.bbname,
+                barcode: req.body.barcode,
+                regular: req.body.regular,
+                spar: req.body.spar,
+                swat: req.body.swat,
+                data: ''
+        })
+    }
+});
 app.get('/login', function(req, res){
     res.render('store/login', {
         title: 'Login',
@@ -386,7 +660,7 @@ app.get('/login', function(req, res){
 app.get('/login2', function(req, res){
     if (!req.session.user){
         req.flash('error', 'Login credentials required');
-        rres.render('store/login', {
+        res.render('store/login', {
             title: 'Login',
             bbuser: '',
             bbpass: ''
