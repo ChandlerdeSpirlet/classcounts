@@ -7,6 +7,85 @@
 <% if (messages.success) { %>
     <p style="color:green"><%- messages.success %></p>
 <% } %>
+<style> 
+    body {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    }
+    input[type=text] {
+        width: 130px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+    
+    input[type=text]:focus {
+        width: 100%;
+    }
+    input[type=number] {
+        width: 130px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+    
+    input[type=number]:focus {
+        width: 100%;
+    }
+    [type=submit] {
+    background-color: blue; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    }
+
+    [type=submit] {
+        background-color: white; 
+        color: black; 
+        border: 2px solid blue;
+    }
+
+    [type=submit]:hover {
+        background-color: blue;
+        color: white;
+    }
+    input:invalid+span:after {
+        content: '✖';
+        color: black;
+        padding-left: 10px;
+        position: fixed;
+        padding-top: 15px;
+    }
+
+    input:valid+span:after {
+        content: '✓';
+        color: blue;
+        padding-left: 10px;
+        position: fixed;
+        padding-top: 15px;
+    }
+</style>
 <!-- The action attribute of the form refers to a item using its database id -->
 <form action="/store/alter/<%= barcode %>" method="post" name="form1">
     <table width="25%" border="0">
