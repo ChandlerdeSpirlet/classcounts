@@ -565,7 +565,7 @@ app.get('/alter/(:barcode)', function(req, res) {
                         bbname: row.bbname,
                         barcode: row.barcode,
                         regular: row.regular,
-                        spar: row.spar,
+                        spar: row.sparring,
                         swat: row.swat                       
                     })
                     
