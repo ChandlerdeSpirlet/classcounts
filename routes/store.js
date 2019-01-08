@@ -517,7 +517,7 @@ app.post('/additionalADD', function(req, res){
 });
 app.post('/additionalCLEAR', function(req, res){
     clearBool();
-    db.none('delete from inc where barcode > 0')
+    db.none('delete from inc where barcode > -1')
         .then(function (res) {
             req.flash('success', 'Stored classes removed');
             res.redirect('additional');
