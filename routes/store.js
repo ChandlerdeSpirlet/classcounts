@@ -17,7 +17,7 @@ app.use(session({
     secret: 'counts',
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 3 * 60 * 1000} //3 minute cookie
+    cookie: {maxAge: 5 * 60 * 1000} //5 minute cookie
 }));
 app.use(exp_val());
 app.use(busboy());
@@ -189,6 +189,24 @@ app.get('/file', function (request, response) {
         response.render('store/file', {title: 'Add Class File'})
     }
 });
+function addUpdate(){
+    var query = 'select * from inc'
+    db.any(query)
+        .then(function(rows) {
+            for (var x = 0; x < rows.length; x++){
+                var code = rows[x].barcode;
+                var reg = rows[x].regular;
+                var spar = rows[x].sparring;
+                var swat = rows[x].swat;
+                var dbQ = 'update counts set regular = ($1 + regular), sparring = ($2 + sparring), swats = ($3 + swats) where barcode = $4';
+                db.none(dbQ, [reg, spar, swat, code]);
+            }
+            console.log("DONE");
+        })
+        .catch(function(err){
+            console.log("In the function .catch", err);
+        })
+};
 
 function readData(area){
     var query = 'update "refresh" set refreshed = To_char(NOW() :: DATE, \'Mon dd, yyyy\')';
@@ -234,6 +252,7 @@ function readData(area){
                     db.none('update counts set sparring = (sparring + 1) where barcode = ' + csvData[x][1]);
                 }
             }
+            addUpdate();
         })
 };
 
