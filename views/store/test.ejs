@@ -24,7 +24,7 @@
 <style>
 .stuff {
     padding: 5px;
-    
+    border: white 10px;
 }
 ul {
     list-style-type: none;
@@ -187,28 +187,8 @@ tr:hover {
     }
 }
 @media (min-width: 1200px) {
-    body {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    th {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
     th,td {
         width: calc(1600px);
-    }
-    tr:nth-child(odd) {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    tr:nth-child(even) {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    tr:hover {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
     }
 }
 @media (min-width: 1600.02px) {
@@ -283,6 +263,9 @@ tr:hover {
                 header.classList.remove("sticky");
                 }
             }
+            $("li.dropdown").click(function() {
+  $("nav.navbar").toggleClass("open");
+});
             </script>
 </body>
 </html>
