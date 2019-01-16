@@ -65,6 +65,29 @@ app.get('/', function (request, response) {
     })
     
 });
+app.get('/test', function(request, response){
+    getVersion();
+    // TODO: Initialize the query variable with a SQL query
+    // that returns all the rows and columns in the 'store' table
+    var query = 'SELECT * FROM counts order by bbname';
+    getDate();
+    db.any(query)
+        .then(function (rows) {
+        // render views/store/list.ejs template file
+        response.render('store/test', {
+            title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
+            data: rows
+        })
+    })
+    .catch(function (err) {
+        // display error message in case an error
+        request.flash('error', err);
+        response.render('store/test', {
+            title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
+            data: ''
+        })
+    })
+});
 app.get('/list2', function (request, response) {
     
     // TODO: Initialize the query variable with a SQL query

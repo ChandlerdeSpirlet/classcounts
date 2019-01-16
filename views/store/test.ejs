@@ -103,10 +103,10 @@ th {
     padding-bottom: 12px;
 }
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: black;
 }
 tr:hover {
-    background-color: #ddd;
+    background-color: black;
 }
 @media (min-width: 300px) {
     th {
@@ -115,7 +115,7 @@ tr:hover {
         padding-bottom: 5px;
     }
     th,td {
-        width: calc(598px /5);
+        width: calc(598px);
         text-align: center;
         padding: 8px;
     }
@@ -162,7 +162,7 @@ tr:hover {
         /* If want a single color scheme remove all the background-color in the @media spots */
     }
     th,td {
-        width: calc(1024px / 5);
+        width: calc(1024px);
     }
     tr:nth-child(odd) {
         
@@ -179,7 +179,7 @@ tr:hover {
 }
 @media (min-width: 1024.02px) {
     th, td {
-        width: calc(1200px / 5);
+        width: calc(1200px);
     }
 }
 @media (min-width: 1200px) {
@@ -192,7 +192,7 @@ tr:hover {
         /* If want a single color scheme remove all the background-color in the @media spots */
     }
     th,td {
-        width: calc(1600px / 5);
+        width: calc(1600px);
     }
     tr:nth-child(odd) {
         
@@ -229,7 +229,6 @@ tr:hover {
             </div>
             </li>
             <li><a href="/store/email2">Contact</a></li>
-            <li><a href="/store/test">Test</a></li>
             <li><a href="/">Logout</a></li>
         </ul>
     </div>
@@ -242,30 +241,29 @@ tr:hover {
             <!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
                 <tr>
                     <th>Name</th>
-                    <th>Card Number</th>
-                    <th>Regular Class</th>
-                    <th>Sparring Class</th>
-                    <th>SWAT Class</th>
                 </tr>
             </table>
         </div>
-        <div class="content"> 
+        <div> 
         <!-- Content class and new table for the content that will be scrolling past the sticky header -->
-        <table >
             <% if (data) { %>
                 <!-- Using a for-loop to loop over each row in the database.
                 The 'data' variable is passed from the store.js during the response.render function call -->
                     <% data.forEach(function(item){ %>
-                        <tr>
-                            <td><%= item.bbname %></td>
-                            <td><%= item.barcode %></td>
-                            <td><%= item.regular %></td>
-                            <td><%= item.sparring %></td>
-                            <td><%= item.swats %></td>
-                        </tr>
+                            <ul>
+                                <li class="dropdown">
+                                    <td><a href="javascript:void(0)" class="dropbtn"><b>Name: </b><%= item.bbname %></a></td>
+                                        <div class="dropdown-content">
+                                            <b>Barcode: </b><%= item.barcode %>
+                                            <b>Regular: </b><%= item.regular %>
+                                            <b>Sparring: </b><%= item.sparring %>
+                                            <b>Swats: </b><%= item.swats %>
+                                        </div>
+                                </li>
+                            </ul>
                     <% }) %>
                 <% } %>
-        </table>
+        
     </div>
     </div><!--Including Footer Partial-->
     <script>
