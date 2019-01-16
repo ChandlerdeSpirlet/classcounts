@@ -22,6 +22,10 @@
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 </head>
 <style>
+.stuff {
+    padding: 5px;
+    
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -250,16 +254,16 @@ tr:hover {
                 <!-- Using a for-loop to loop over each row in the database.
                 The 'data' variable is passed from the store.js during the response.render function call -->
                     <% data.forEach(function(item){ %>
-                            <ul>
+                            <ul class="stuff">
                                 <li class="dropdown">
                                     <td><a href="javascript:void(0)" class="dropbtn"><b>Name: </b><%= item.bbname %></a></td>
                                         <div class="dropdown-content">
-                                            <b>Barcode: </b><%= item.barcode %>
-                                            <b>Regular: </b><%= item.regular %>
-                                            <b>Sparring: </b><%= item.sparring %>
+                                            <b>Barcode: </b><%= item.barcode %><br>
+                                            <b>Regular: </b><%= item.regular %><br>
+                                            <b>Sparring: </b><%= item.sparring %><br>
                                             <b>Swats: </b><%= item.swats %>
                                         </div>
-                                </li>
+                                </li><br>
                             </ul>
                     <% }) %>
                 <% } %>
