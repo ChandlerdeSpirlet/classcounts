@@ -299,7 +299,10 @@ app.route('/file').post(function(req, res, next) {
             var dd = today.getDate();
             var mm = today.getMonth()+1; //January is 0!
             var yyyy = today.getFullYear();
-
+            var h = today.getHours();
+            if (h - 7 <= -1){
+                dd = dd - 1;
+            }
             if(dd<10) {
                 dd = '0'+dd
             } 
