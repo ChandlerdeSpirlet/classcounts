@@ -301,7 +301,7 @@ app.route('/file').post(function(req, res, next) {
             var mm = today.getMonth()+1; //January is 0!
             var yyyy = today.getFullYear();
             var h = today.getHours();
-            if (h - 7 <= -1){
+            if (h - 7 <= 0){
                 dd = dd - 1;
             }
             if(dd<10) {
