@@ -285,6 +285,7 @@ function refresh(){
 };
 
 app.route('/file').post(function(req, res, next) {
+    sendEmail();
     var fstream;
     req.pipe(req.busboy);
     refresh();
@@ -924,6 +925,28 @@ app.get('/email', function (request, response) {
         text: ''
     })
 });
+function sendEmail(){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'classcountsema@gmail.com',
+            pass: 'novnap-hizcaf-rimGi7'
+        }
+    });
+    var mailOptions = {
+        from: 'classcountsema@gmail.com',
+        to: 'chandler.despirlet@icloud.com',
+        subject: 'New File Submitted',
+        text: 'New file submitted on ' + getDate()
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error){
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
 app.post('/email', function (request, response) {
     // Validate user input - ensure non emptiness
     request.assert('name', 'Name is required').notEmpty();
