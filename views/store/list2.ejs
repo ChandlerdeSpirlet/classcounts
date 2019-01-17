@@ -74,14 +74,18 @@ li.dropdown {
 }
 body {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    margin: 0px;
     }
     .top-container {
     
     }
+    h1 {                    /*NJ 01122019*/
+    margin-left: 8px;   /*NJ 01122019*/
+    margin-right: 8px;  /*NJ 01122019*/
+}
 .content {
-    margin-left: .5px;
-    margin-right: .5px;
-    
+    margin-left: 10px;  /*NJ 01122019*/
+    margin-right: 10px; /*NJ 01122019*/
 }
 /* The sticky class is added to the header with JS when it reaches its scroll position */
 .sticky {
@@ -117,23 +121,12 @@ tr:hover {
     th,td {
         width: calc(598px /5);
         text-align: center;
-        padding: 8px;
+        padding-top: 5px; 
+        padding-bottom: 5px;
     }
     th:first-child {
         padding-left: 30px;
         padding-right: 25px;
-    }
-    tr:nth-child(odd) {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    tr:nth-child(even) {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    tr:hover {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
     }
 }
 @media (min-width: 600px) {
@@ -153,28 +146,8 @@ tr:hover {
     }
 }
 @media (min-width: 1024px) {
-    body {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    th {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
     th,td {
         width: calc(1024px / 5);
-    }
-    tr:nth-child(odd) {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    tr:nth-child(even) {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    tr:hover {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
     }
 }
 @media (min-width: 1024.02px) {
@@ -183,34 +156,19 @@ tr:hover {
     }
 }
 @media (min-width: 1200px) {
-    body {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    th {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
     th,td {
         width: calc(1600px / 5);
-    }
-    tr:nth-child(odd) {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    tr:nth-child(even) {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
-    }
-    tr:hover {
-        
-        /* If want a single color scheme remove all the background-color in the @media spots */
     }
 }
 @media (min-width: 1600.02px) {
     th, td {
         width: calc(2000px / 5);
         /* Simple hack for screen larger than 1600 pixels but smaller than 2000 */
+    }
+}
+@media (min-width: 2000.02px) {
+    th, td {
+        width: calc(2400px / 5);
     }
 }
 </style>
@@ -228,8 +186,6 @@ tr:hover {
                 <a href="/store/del">Remove Blackbelt</a>
             </div>
             </li>
-            <li><a href="/store/email2">Contact</a></li>
-            <li><a href="/store/test">Test</a></li>
             <li><a href="/">Logout</a></li>
         </ul>
     </div>
