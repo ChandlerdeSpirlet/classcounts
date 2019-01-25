@@ -285,7 +285,7 @@ function refresh(){
 };
 
 app.route('/file').post(function(req, res, next) {
-    sendEmail();
+    sendEmail(req.session.user);
     var fstream;
     req.pipe(req.busboy);
     refresh();
@@ -925,7 +925,7 @@ app.get('/email', function (request, response) {
         text: ''
     })
 });
-function sendEmail(){
+function sendEmail(name){
     var transporter = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -937,7 +937,7 @@ function sendEmail(){
         from: 'classcountsema@gmail.com',
         to: 'chandler.despirlet@icloud.com',
         subject: 'New File Submitted',
-        text: 'New file submitted on ' + getDate()
+        text: 'New file submitted on ' + getDate() + ' by ' + name
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error){
