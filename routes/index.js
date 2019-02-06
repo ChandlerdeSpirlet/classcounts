@@ -20,7 +20,7 @@ app.get('/', function (request, response) {
         .then(function (rows) {
         // render views/store/list.ejs template file
         response.render('store/home', {
-            title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
+            title: 'Updated - ' + global.globalDate,
             data: rows
         })
     })
@@ -28,7 +28,7 @@ app.get('/', function (request, response) {
         // display error message in case an error
         request.flash('error', err);
         response.render('store/home', {
-            title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
+            title: 'Updated - ' + global.globalDate,
             data: ''
         })
     })

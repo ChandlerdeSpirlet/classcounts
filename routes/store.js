@@ -51,7 +51,7 @@ app.get('/', function (request, response) {
         .then(function (rows) {
         // render views/store/list.ejs template file
         response.render('store/home', {
-            title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
+            title: 'Updated - ' + global.globalDate,
             data: rows
         })
     })
@@ -59,7 +59,7 @@ app.get('/', function (request, response) {
         // display error message in case an error
         request.flash('error', err);
         response.render('store/home', {
-            title: 'Black Belt Class Counts' + '\n' + 'Updated - ' + global.globalDate,
+            title: 'Updated - ' + global.globalDate,
             data: ''
         })
     })
@@ -232,8 +232,21 @@ function addUpdate(){
 };
 
 function readData(area){
-    var query = 'update "refresh" set refreshed = To_char(NOW() :: DATE, \'Mon dd, yyyy\')';
-    db.none(query);
+    var options = {
+        timeZone: "America/Denver",
+        year: 'numeric', month: 'long', day: 'numeric'
+    };
+    var option2 = {
+        timeZone: "America/Denver",
+        hour: 'numeric', minute: 'numeric'
+    }
+    var formatter = new Intl.DateTimeFormat('en-us', options);
+    var localTime = formatter.format(new Date());
+    var form = new Intl.DateTimeFormat('en-us', option2);
+    var time = form.format(new Date());
+    var combined = localTime + " at " + time;
+    var query = 'update "refresh" set refreshed = $1';
+    db.none(query, [combined]);
     let readableStreamInput = fs.createReadStream(area);
     let csvData = [];
     fastcsv
@@ -296,23 +309,6 @@ app.route('/file').post(function(req, res, next) {
         file.pipe(fstream);
         fstream.on('close', function () {    
             console.log("Upload Finished of " + filename);  
-            var today = new Date();
-            var dd = today.getDate();
-            var mm = today.getMonth()+1; //January is 0!
-            var yyyy = today.getFullYear();
-            var h = today.getHours();
-            if (h - 7 <= 0){
-                dd = dd - 1;
-            }
-            if(dd<10) {
-                dd = '0'+dd
-            } 
-
-            if(mm<10) {
-                mm = '0'+mm
-            } 
-
-            today = mm + '/' + dd + '/' + yyyy; 
             req.flash('success', 'Classes added!');
             res.redirect('list2');        //where to go next
             readData(__dirname + '/files/' + filename);
