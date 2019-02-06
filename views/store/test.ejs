@@ -22,6 +22,10 @@
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 </head>
 <style>
+.stuff {
+    padding: 5px;
+    border: white 10px;
+}
 ul {
     list-style-type: none;
     margin: 0;
@@ -74,18 +78,14 @@ li.dropdown {
 }
 body {
     font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    margin: 0px;
     }
     .top-container {
     
     }
-    h1 {                    /*NJ 01122019*/
-    margin-left: 8px;   /*NJ 01122019*/
-    margin-right: 8px;  /*NJ 01122019*/
-}
 .content {
-    margin-left: 10px;  /*NJ 01122019*/
-    margin-right: 10px; /*NJ 01122019*/
+    margin-left: .5px;
+    margin-right: .5px;
+    
 }
 /* The sticky class is added to the header with JS when it reaches its scroll position */
 .sticky {
@@ -107,38 +107,10 @@ th {
     padding-bottom: 12px;
 }
 tr:nth-child(even) {
-    background-color: #f2f2f2;
+    background-color: black;
 }
 tr:hover {
-    background-color: #ddd;
-}
-@media (prefers-color-scheme: dark){
-    tr:nth-child(even){
-        background-color: #3d3c3c;
-    }
-    tr {
-        background-color: #333232;
-    }
-    tr:hover {
-        background-color: #282727;
-    }
-    body {
-        background-color: black;
-    }
-    h1 {
-        color: white;
-    }
-    td {
-        color: white;
-    }
-}
-@media (prefers-color-scheme: light){
-    tr:nth-child(even){
-        background-color: #f2f2f2;
-    }
-    tr:hover{
-        background-color: #ddd;
-    }
+    background-color: black;
 }
 @media (min-width: 300px) {
     th {
@@ -147,14 +119,25 @@ tr:hover {
         padding-bottom: 5px;
     }
     th,td {
-        width: calc(598px /5);
+        width: calc(598px);
         text-align: center;
-        padding-top: 5px; 
-        padding-bottom: 5px;
+        padding: 8px;
     }
     th:first-child {
         padding-left: 30px;
         padding-right: 25px;
+    }
+    tr:nth-child(odd) {
+        
+        /* If want a single color scheme remove all the background-color in the @media spots */
+    }
+    tr:nth-child(even) {
+        
+        /* If want a single color scheme remove all the background-color in the @media spots */
+    }
+    tr:hover {
+        
+        /* If want a single color scheme remove all the background-color in the @media spots */
     }
 }
 @media (min-width: 600px) {
@@ -174,18 +157,38 @@ tr:hover {
     }
 }
 @media (min-width: 1024px) {
+    body {
+        
+        /* If want a single color scheme remove all the background-color in the @media spots */
+    }
+    th {
+        
+        /* If want a single color scheme remove all the background-color in the @media spots */
+    }
     th,td {
-        width: calc(1024px / 5);
+        width: calc(1024px);
+    }
+    tr:nth-child(odd) {
+        
+        /* If want a single color scheme remove all the background-color in the @media spots */
+    }
+    tr:nth-child(even) {
+        
+        /* If want a single color scheme remove all the background-color in the @media spots */
+    }
+    tr:hover {
+        
+        /* If want a single color scheme remove all the background-color in the @media spots */
     }
 }
 @media (min-width: 1024.02px) {
     th, td {
-        width: calc(1200px / 5);
+        width: calc(1200px);
     }
 }
 @media (min-width: 1200px) {
     th,td {
-        width: calc(1600px / 5);
+        width: calc(1600px);
     }
 }
 @media (min-width: 1600.02px) {
@@ -194,29 +197,6 @@ tr:hover {
         /* Simple hack for screen larger than 1600 pixels but smaller than 2000 */
     }
 }
-@media (min-width: 2000.02px) {
-    th, td {
-        width: calc(2400px / 5);
-    }
-}
-tr:nth-child(even){
-        background-color: #3d3c3c;
-    }
-    tr {
-        background-color: #333232;
-    }
-    tr:hover {
-        background-color: #282727;
-    }
-    body {
-        background-color: black;
-    }
-    h1 {
-        color: white;
-    }
-    td {
-        color: white;
-    }
 </style>
 <body>
     <div class="top-container">
@@ -224,7 +204,6 @@ tr:nth-child(even){
     <div>
         <ul>
             <li><a href="/store/list2">Home</a></li>
-	        <li><a href="/store/email2">Contact</a></li>
             <li class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">Edit</a>
             <div class="dropdown-content">
@@ -233,6 +212,7 @@ tr:nth-child(even){
                 <a href="/store/del">Remove Blackbelt</a>
             </div>
             </li>
+            <li><a href="/store/email2">Contact</a></li>
             <li><a href="/">Logout</a></li>
         </ul>
     </div>
@@ -245,30 +225,29 @@ tr:nth-child(even){
             <!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
                 <tr>
                     <th>Name</th>
-                    <th>Card Number</th>
-                    <th>Regular Class</th>
-                    <th>Sparring Class</th>
-                    <th>SWAT Class</th>
                 </tr>
             </table>
         </div>
-        <div class="content"> 
+        <div> 
         <!-- Content class and new table for the content that will be scrolling past the sticky header -->
-        <table >
             <% if (data) { %>
                 <!-- Using a for-loop to loop over each row in the database.
                 The 'data' variable is passed from the store.js during the response.render function call -->
                     <% data.forEach(function(item){ %>
-                        <tr>
-                            <td><%= item.bbname %></td>
-                            <td><%= item.barcode %></td>
-                            <td><%= item.regular %></td>
-                            <td><%= item.sparring %></td>
-                            <td><%= item.swats %></td>
-                        </tr>
+                            <ul class="stuff">
+                                <li class="dropdown">
+                                    <td><a href="javascript:void(0)" class="dropbtn"><b>Name: </b><%= item.bbname %></a></td>
+                                        <div class="dropdown-content">
+                                            <b>Barcode: </b><%= item.barcode %><br>
+                                            <b>Regular: </b><%= item.regular %><br>
+                                            <b>Sparring: </b><%= item.sparring %><br>
+                                            <b>Swats: </b><%= item.swats %>
+                                        </div>
+                                </li><br>
+                            </ul>
                     <% }) %>
                 <% } %>
-        </table>
+        
     </div>
     </div><!--Including Footer Partial-->
     <script>
@@ -284,6 +263,9 @@ tr:nth-child(even){
                 header.classList.remove("sticky");
                 }
             }
+            $("li.dropdown").click(function() {
+  $("nav.navbar").toggleClass("open");
+});
             </script>
 </body>
 </html>

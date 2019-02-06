@@ -112,32 +112,19 @@ tr:nth-child(even) {
 tr:hover {
     background-color: #ddd;
 }
-@media (prefers-color-scheme: dark){
+@media (prefers-color-scheme: no-preference){
     tr:nth-child(even){
         background-color: #3d3c3c;
-    }
-    tr {
-        background-color: #333232;
     }
     tr:hover {
         background-color: #282727;
     }
-    body {
-        background-color: black;
-    }
+    background-color: black;
     h1 {
         color: white;
     }
     td {
         color: white;
-    }
-}
-@media (prefers-color-scheme: light){
-    tr:nth-child(even){
-        background-color: #f2f2f2;
-    }
-    tr:hover{
-        background-color: #ddd;
     }
 }
 @media (min-width: 300px) {
