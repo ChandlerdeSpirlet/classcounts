@@ -239,7 +239,7 @@ function readData(area){
     var option2 = {
         timeZone: "America/Denver",
         hour: 'numeric', minute: 'numeric'
-    }
+    };
     var formatter = new Intl.DateTimeFormat('en-us', options);
     var localTime = formatter.format(new Date());
     var form = new Intl.DateTimeFormat('en-us', option2);

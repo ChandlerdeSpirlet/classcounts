@@ -148,6 +148,21 @@ tr:hover {
         color: white;
     }
 }
+.dark, tr:nth-child(even) {
+    background-color: #3d3c3c;
+}
+.dark, tr {
+    background-color: #333232;
+}
+.dark, tr:hover {
+    background-color: #282727;
+}
+.dark, h1, h2, td {
+    color: white;
+}
+.dark, body {
+    background-color: black;
+}
 @media (min-width: 300px) {
     th {
         /* Since color is in min-width: 300px it will follow all the other sizes upwards */
@@ -209,6 +224,7 @@ tr:hover {
 }
 </style>
 <body>
+<div id="data">
     <div class="top-container">
 	<!-- top-container class helps with the Sticky header -->
     <div>
@@ -220,7 +236,7 @@ tr:hover {
     </div>
     <h1>Black Belt Class Counts</h1>
     <h2><%= title %></h2><!--Using if-check to see if an error occurred and displaying appropriate message-->
-</div>
+    </div>
 	<div>
         <div class="header" id="myHeader">
         <!-- Header class and id work with javascript at bottom for sticky header -->
@@ -254,20 +270,42 @@ tr:hover {
         </table>
     </div>
     </div><!--Including Footer Partial-->
+</div>
     <script>
-            window.onscroll = function() {myFunction()};
-            
-            var header = document.getElementById("myHeader");
-            var sticky = header.offsetTop;
-            
-            function myFunction() {
-                if (window.pageYOffset > sticky) {
-                header.classList.add("sticky");
-                } else {
-                header.classList.remove("sticky");
-                }
+        window.onscroll = function() {myFunction()};
+        
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+        
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+            } else {
+            header.classList.remove("sticky");
             }
-            </script>
+        }
+    </script>
+    <script>
+        var sun = require('sun-time');
+        var options = {
+            timeZone: "America/Denver",
+            hour: 'numeric', minute: 'numeric'
+        };
+        var formatter = new Intl.DateTimeFormat('en-us', options);
+        var localTime = formatter.format(newDate());
+        var dataStuff = document.getElementById("data");
+        if (localTime >= sun.rise('Denver', {format:"12h"}) && localTime < sun.set('Denver', {format:"12h"})){
+            dataStuff.classList.remove("dark");
+        }
+        else if (localTime >= sun.set('Denver', {format:"12h"})){
+            dataStuff.classList.add("dark");
+        }
+        else if (localTime < sun.rise('Denver', {format:"12h"})){
+            dataStuff.classList.add("dark");
+        } else {
+            dataStuff.classList.remove("dark");
+        }
+    </script>
 </body>
 </html>
 <%- include ../layouts/footer.ejs %>
