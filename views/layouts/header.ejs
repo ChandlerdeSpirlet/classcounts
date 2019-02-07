@@ -52,12 +52,29 @@ li.dropdown {
 }
 
 .dropdown-content a:hover {background-color: #f1f1f1}
+h1 {
+    margin-left:8px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
 
 .dropdown:hover .dropdown-content {
     display: block;
 }
+body {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    margin: 0px;
+}
+.dark, h1 {
+    color: white;
+}
+.dark, body {
+    background-color: black;
+}
+
 </style>
 </head>
+<div id="data">
 <body>
 <ul>
     <li><a href="/">Home</a></li>
@@ -74,4 +91,26 @@ li.dropdown {
 </ul>
 <h1><%= title %></h1>
 </body>
+</body>
 </html>
+<script>
+    var sun = require('sun-time');
+    var options = {
+        timeZone: "America/Denver",
+        hour: 'numeric', minute: 'numeric'
+    };
+    var formatter = new Intl.DateTimeFormat('en-us', options);
+    var localTime = formatter.format(newDate());
+    var dataStuff = document.getElementById("data");
+    if (localTime >= sun.rise('Denver', {format:"12h"}) && localTime < sun.set('Denver', {format:"12h"})){
+        dataStuff.classList.remove("dark");
+    }
+    else if (localTime >= sun.set('Denver', {format:"12h"})){
+        dataStuff.classList.add("dark");
+    }
+    else if (localTime < sun.rise('Denver', {format:"12h"})){
+        dataStuff.classList.add("dark");
+    } else {
+        dataStuff.classList.remove("dark");
+    }
+</script>
