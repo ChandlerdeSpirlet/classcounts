@@ -68,8 +68,14 @@ body {
 .dark, h1 {
     color: white;
 }
+.white, h1 {
+    color: black;
+}
 .dark, body {
     background-color: black;
+}
+.white, body {
+    background-color: white;
 }
 
 </style>
@@ -94,23 +100,34 @@ body {
 </body>
 </html>
 <script>
-    var sun = require('sun-time');
-    var options = {
-        timeZone: "America/Denver",
+    window.onload = function() {timeFunc()};
+    function timeFunc(){
+        var options = {
+        timeZone: "America/Denver", hour12: false,
         hour: 'numeric', minute: 'numeric'
     };
     var formatter = new Intl.DateTimeFormat('en-us', options);
-    var localTime = formatter.format(newDate());
+    var localTime = formatter.format(new Date());
+    localTime = localTime.replace(':', '');
+    var SunCalc = require('suncalc2');
+    var times = SunCalc.getTimes(new Date(), 39.7392, 104.9903);
+    var sunriseStr = (times.sunrise.getHours() -11).toString() + (times.sunrise.getMinutes() + 33).toString();
+    var sunset = (times.sunset.getHours() + 14).toString() + (times.sunset.getMinutes() - 1).toString();
+    var sunrise = parseInt(sunriseStr);
+    var sunset = parseInt(sunset);
+    var localTime = parseInt(localTime);
     var dataStuff = document.getElementById("data");
-    if (localTime >= sun.rise('Denver', {format:"12h"}) && localTime < sun.set('Denver', {format:"12h"})){
+    if (localTime >= sunrise && localTime < sunset){
         dataStuff.classList.remove("dark");
+        dataStuff.classList.add("white");
     }
-    else if (localTime >= sun.set('Denver', {format:"12h"})){
+    else if (localTime >= sunset){
         dataStuff.classList.add("dark");
     }
-    else if (localTime < sun.rise('Denver', {format:"12h"})){
+    else if (localTime < sunrise){
         dataStuff.classList.add("dark");
     } else {
         dataStuff.classList.remove("dark");
+    }
     }
 </script>

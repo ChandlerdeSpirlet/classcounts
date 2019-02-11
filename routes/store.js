@@ -22,7 +22,6 @@ app.use(session({
 app.use(exp_val());
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'store')));
-
 function getDate() {
     var query = 'select * from "refresh"';
     db.any(query)
@@ -40,7 +39,6 @@ function getVersion() {
             console.log('in function - global.versionGlobal -', global.versionGlobal);
         })
 }
-
 app.get('/', function (request, response) {
     getVersion();
     // TODO: Initialize the query variable with a SQL query

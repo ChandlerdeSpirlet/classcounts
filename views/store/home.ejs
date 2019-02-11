@@ -22,18 +22,31 @@
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 </head>
 <style>
-ul {
+body {
+    background-color: black;
+    color: white;
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    margin: 0px;
+}
+header {
+    text-align: center;
+    display: inline-block;
+    width: -webkit-fill-available;
+}
+header a {
+    color: white;
+    text-decoration: none;
+}
+header ul {
+    background-color: #333;
     list-style-type: none;
     margin: 0;
     padding: 0;
     overflow: hidden;
-    background-color: #333;
 }
-
-li {
+header li {
     float: left;
 }
-
 li a, .dropbtn {
     display: inline-block;
     color: white;
@@ -41,273 +54,190 @@ li a, .dropbtn {
     padding: 14px 16px;
     text-decoration: none;
 }
-
-li a:hover, .dropdown:hover .dropbtn {
+li a:hover, .dropdown:hover  .dropbtn {
     background-color: blue;
 }
-
-li.dropdown {
-    display: inline-block;
-}
-
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #f9f9f9;
+    background-color: #333;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
-
+.dropdown:hover .dropdown-content {
+    display: block;
+}
 .dropdown-content a {
+    display: block;
+    text-align: left;
+    padding: 12px 16px;
+}
+.student-card {
+    position: relative;
+    display: block;
+    text-align: -webkit-center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(255,255,255, .15);
+    box-shadow: 0px 4px 1rem rgba( 255,255,255, 0.9);
+    /* border-radius: 4px; */
+    color: white;
+    font-size: x-large;
+}
+.student-content {
+    display: none;
+    padding: 0.5rem;
+    /* background-color: #f9f9f9; */
+    background-color: rgba( 251,251,251, .95);
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    border-radius: 4px;
+    z-index: 1;
+    margin-top: 1rem;
+}
+.student-content div {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    text-align: left;
+    font-size: smaller;
 }
-
-.dropdown-content a:hover {background-color: #f1f1f1}
-
-.dropdown:hover .dropdown-content {
+.student-content a:hover {
+    background-color: #f1f1f1;
+    -webkit-appearance: button;
+    width: -webkit-fill-available;
+}
+.student-card:hover .student-content {
     display: block;
 }
-body {
-    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
-    margin: 0px;
-    }
-    .top-container {
-    
-    }
-    h1 {                    /*NJ 01122019*/
-    margin-left: 8px;   /*NJ 01122019*/
-    margin-right: 8px;
-    margin-bottom: 2px;
-    }
-    h2{
-        margin-left: 8px;
-        margin-right: 8px;
-        margin-top: 2px;
-    }
-.content {
-    margin-left: 10px;  /*NJ 01122019*/
-    margin-right: 10px; /*NJ 01122019*/
-}
-/* The sticky class is added to the header with JS when it reaches its scroll position */
-.sticky {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    }
-  /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-    .sticky + .content {
-    padding-top: 50px;
-    }
-    table {
-        border-collapse: collapse;
-    }
-th {
-    background-color: blue;
-    color: white;
-    padding-top: 12px;
-    padding-bottom: 12px;
-}
-tr:nth-child(even) {
-    background-color: #f2f2f2;
-}
-tr:hover {
-    background-color: #ddd;
-}
-@media (prefers-color-scheme: no-preference){
-    tr:nth-child(even){
-        background-color: #3d3c3c;
-    }
-    tr:hover {
-        background-color: #282727;
-    }
-    background-color: black;
-    h1 {
-        color: white;
-    }
-    td {
-        color: white;
-    }
-}
-@media (prefers-color-scheme: dark){
-    tr:nth-child(even){
-        background-color: #3d3c3c;
-    }
-    tr:hover {
-        background-color: #282727;
-    }
-    background-color: black;
-    h1 {
-        color: white;
-    }
-    td {
-        color: white;
-    }
-}
-.dark, tr:nth-child(even) {
-    background-color: #3d3c3c;
-}
-.dark, tr {
-    background-color: #333232;
-}
-.dark, tr:hover {
-    background-color: #282727;
-}
-.dark, h1, h2, td {
+.student-card:hover {
+    /* background-color: blue; */
+    background-color: rgba( 0,0,204, .8);
     color: white;
 }
-.dark, body {
-    background-color: black;
+div.student-card:hover a {
+    color: white;
 }
-@media (min-width: 300px) {
-    th {
-        /* Since color is in min-width: 300px it will follow all the other sizes upwards */
-        padding-top: 5px;
-        padding-bottom: 5px;
-    }
-    th,td {
-        width: calc(598px /5);
-        text-align: center;
-        padding-top: 5px; 
-        padding-bottom: 5px;
-    }
-    th:first-child {
-        padding-left: 30px;
-        padding-right: 25px;
-    }
+.student-content-defaults {
+    float: left;
+    margin: -0.5rem 0.5rem -0.5rem -0.5rem;
+    padding: .625rem .5rem .625rem;
+    font-size: .75rem;
+    font-weight: bold;
+    background: rgba( 0,0,255, 0.1);
+    color: blue;
 }
-@media (min-width: 600px) {
-    th, td {
-        width: calc(768px / 5);
-    }
+.barcode {
+    float: left;
+    width: 50%;
+}
+.barcode:before{
+    content: "Card Number";
+    float: left;
+    margin: -0.5rem 0.5rem -0.5rem -0.5rem;
+    padding: .625rem .5rem .625rem;
+    font-size: .75rem;
+    font-weight: bold;
+    background: rgba( 0,0,255, 0.1);
+    color: blue;
+    border-radius: 4px;
+}
+.regular::before {
+    content: "Regular Class";
+    float: left;
+    margin: -0.5rem 0.5rem -0.5rem -0.5rem;
+    padding: .625rem .5rem .625rem;
+    font-size: .75rem;
+    font-weight: bold;
+    background: rgba( 0,0,255, 0.1);
+    color: blue;
+    border-radius: 4px;
+}
+.sparring {
+    float: left;
+    width: 50%;
+}
+.sparring::before {
+    content: "Sparring Class";
+    float: left;
+    margin: -0.5rem 0.5rem -0.5rem -0.5rem;
+    padding: .625rem .5rem .625rem;
+    font-size: .75rem;
+    font-weight: bold;
+    background: rgba( 0,0,255, 0.1);
+    color: blue;
+    border-radius: 4px;
+}
+.swats::before {
+    content: "SWAT Class";
+    float: left;
+    margin: -0.5rem 0.5rem -0.5rem -0.5rem;
+    padding: .625rem .5rem .625rem;
+    font-size: .75rem;
+    font-weight: bold;
+    background: rgba( 0,0,255, 0.1);
+    color: blue;
+    border-radius: 4px;
+}
+.nameField {
+    all: unset; 
+    width: -webkit-fill-available;
 }
 
-@media (min-width: 768px) {
-    th,td {
-        width: calc(768px / 5);
-    }
+.day {
+    background-color: white;
+    color: black;
 }
-@media (min-width: 768.02px) {
-    th, td {
-        width: calc(1024px / 5);
-    }
-}
-@media (min-width: 1024px) {
-    th,td {
-        width: calc(1024px / 5);
-    }
-}
-@media (min-width: 1024.02px) {
-    th, td {
-        width: calc(1200px / 5);
-    }
-}
-@media (min-width: 1200px) {
-    th,td {
-        width: calc(1600px / 5);
-    }
-}
-@media (min-width: 1600.02px) {
-    th, td {
-        width: calc(2000px / 5);
-        /* Simple hack for screen larger than 1600 pixels but smaller than 2000 */
-    }
-}
-@media (min-width: 2000.02px) {
-    th, td {
-        width: calc(2400px / 5);
-    }
+.day .student-card {
+    background-color: #333;
+    box-shadow: 0px 4px 1rem rgba( 0,0,0, 0.9);
 }
 </style>
-<body>
-<div id="data">
-    <div class="top-container">
-	<!-- top-container class helps with the Sticky header -->
-    <div>
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/store/login">Login</a></li>
-            <li><a href="/store/email">Contact</a></li>
-        </ul>
-    </div>
-    <h1>Black Belt Class Counts</h1>
-    <h2><%= title %></h2><!--Using if-check to see if an error occurred and displaying appropriate message-->
-    </div>
-	<div>
-        <div class="header" id="myHeader">
-        <!-- Header class and id work with javascript at bottom for sticky header -->
-            <table>
-            <!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
-                <tr>
-                    <th>Name</th>
-                    <th>Card Number</th>
-                    <th>Regular Class</th>
-                    <th>Sparring Class</th>
-                    <th>SWAT Class</th>
-                </tr>
-            </table>
+<body id="body-content">
+        <header>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="/store/login">Login</a></li>
+                <li><a href="/store/email">Contact</a></li>
+            </ul>
+            <h1>Black Belt Class Counts</h1><br>
+            <h2><%= title %></h2>
+        </header>
+        <% if (data) { %>
+            <% data.forEach(function(item){ %>
+        <div class="student-card">
+            <button class="nameField"><%= item.bbname %></button>
+            <div class="student-content">
+                <div class="barcode"><%= item.barcode %></div>
+                <div class="regular"><%= item.regular %></div>
+                <div class="sparring"><%= item.sparring %></div>
+                <div class="swats"><%= item.swats %></div>
+            </div>
         </div>
-        <div class="content"> 
-        <!-- Content class and new table for the content that will be scrolling past the sticky header -->
-        <table >
-            <% if (data) { %>
-                <!-- Using a for-loop to loop over each row in the database.
-                The 'data' variable is passed from the store.js during the response.render function call -->
-                    <% data.forEach(function(item){ %>
-                        <tr>
-                            <td><%= item.bbname %></td>
-                            <td><%= item.barcode %></td>
-                            <td><%= item.regular %></td>
-                            <td><%= item.sparring %></td>
-                            <td><%= item.swats %></td>
-                        </tr>
-                    <% }) %>
-                <% } %>
-        </table>
-    </div>
-    </div><!--Including Footer Partial-->
-</div>
-    <script>
-        window.onscroll = function() {myFunction()};
-        
-        var header = document.getElementById("myHeader");
-        var sticky = header.offsetTop;
-        
-        function myFunction() {
-            if (window.pageYOffset > sticky) {
-            header.classList.add("sticky");
+                <% }) %>
+            <% } %>
+        <script>
+            var options = {
+                timeZone: "America/Denver", hour12: false,
+                hour: 'numeric'
+            };
+            var formatter = new Intl.DateTimeFormat('en-us', options);
+            var localTime = formatter.format(new Date());
+            localTime = localTime.replace(':', '');
+            var SunCalc = require('suncalc2');
+            var times = SunCalc.getTimes(new Date(), 39.7392, 104.9903);
+            var sunriseStr = (times.sunrise.getHours() -11).toString();
+            var sunset = (times.sunset.getHours() + 14).toString();
+            var sunrise = parseInt(sunriseStr);
+            var sunset = parseInt(sunset);
+            var localTime = parseInt(localTime);
+            if (localTime >= sunrise && localTime <= sunset) {
+                document.getElementById("body-content").classList.add('day');
             } else {
-            header.classList.remove("sticky");
+                console.log(y);
+                // document.getElementById("body-content").classList.add('dark');
             }
-        }
-    </script>
-    <script>
-        var sun = require('sun-time');
-        var options = {
-            timeZone: "America/Denver",
-            hour: 'numeric', minute: 'numeric'
-        };
-        var formatter = new Intl.DateTimeFormat('en-us', options);
-        var localTime = formatter.format(newDate());
-        var dataStuff = document.getElementById("data");
-        console.log('localTime is ', localTime);
-        console.log('sun.rise is ', sun.rise('Denver', {format:"12h"}))
-        if (localTime >= sun.rise('Denver', {format:"12h"}) && localTime < sun.set('Denver', {format:"12h"})){
-            dataStuff.classList.remove("dark");
-        }
-        else if (localTime >= sun.set('Denver', {format:"12h"})){
-            dataStuff.classList.add("dark");
-        }
-        else if (localTime < sun.rise('Denver', {format:"12h"})){
-            dataStuff.classList.add("dark");
-        } else {
-            dataStuff.classList.remove("dark");
-        }
-    </script>
-</body>
+        </script>  
+    </body>
 </html>
 <%- include ../layouts/footer.ejs %>
