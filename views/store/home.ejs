@@ -217,21 +217,18 @@ div.student-card:hover a {
                 <% }) %>
             <% } %>
         <script>
-            var options = {
-                timeZone: "America/Denver", hour12: false,
-                hour: 'numeric'
-            };
-            var formatter = new Intl.DateTimeFormat('en-us', options);
-            var localTime = formatter.format(new Date());
-            localTime = localTime.replace(':', '');
-            var SunCalc = require('suncalc2');
-            var times = SunCalc.getTimes(new Date(), 39.7392, 104.9903);
-            var sunriseStr = (times.sunrise.getHours() -11).toString();
-            var sunset = (times.sunset.getHours() + 14).toString();
-            var sunrise = parseInt(sunriseStr);
-            var sunset = parseInt(sunset);
-            var localTime = parseInt(localTime);
-            if (localTime >= sunrise && localTime <= sunset) {
+            var x = "True";
+            var y = "False";
+            var localTime = new Date();
+            // var localTime = new Date(2018, 11, 24, 10, 33);
+            var hours   = localTime.getHours();
+            var timeString = "" + hours;
+            
+            console.log('localTime is ', localTime);
+            console.log(timeString);
+    
+            if (timeString >= 7 && timeString <= 18) {
+                console.log(x);
                 document.getElementById("body-content").classList.add('day');
             } else {
                 console.log(y);
