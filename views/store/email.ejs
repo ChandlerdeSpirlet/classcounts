@@ -9,7 +9,7 @@
 <% } %>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" content="height=device-height">
 <style> 
     body {
         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
@@ -98,48 +98,70 @@
         position: fixed;
         padding-top: 15px;
     }
-    .dark, input:invalid+span:after {
+    .dark input:invalid+span:after {
         color: white;
     }
-    .white, input:invalid+span:after {
+    .white input:invalid+span:after {
         color: black;
     }
-    .dark, td {
+    .dark td {
         color: white;
     }
-    .white, td {
+    .white td {
         color: black;
     }
-    .dark, body {
+    .dark {
         background-color: black;
     }
-    .white, body {
+    .white {
         background-color: white;
     }
-    .dark, [type=submit] {
+    .dark [type=submit] {
         background-color: #333;
     }
-    .white, [type=submit] {
+    .white [type=submit] {
         background-color: white;
     }
-    .dark, [type=submit]:hover {
+    .dark [type=submit]:hover {
         color: white;
     }
-    .white, [type=submit] {
+    .white [type=submit] {
         color: black;
     }
-    .dark, input[type=email], input[type=textarea], input[type=text] {
+    .dark input[type=email] {
         background-color: #333;
         color: white;
         border: 2px solid white;
     }
-    .white, input[type=email], input[type=textarea], input[type=text] {
+    .dark input[type=textarea] {
+        background-color: #333;
+        color: white;
+        border: 2px solid white;
+    }
+    .dark input[type=text] {
+        background-color: #333;
+        color: white;
+        border: 2px solid white;
+    }
+    .white input[type=email] {
+        background-color: white;
+        color: black;
+        border: 2px solid black;
+    }
+    .white input[type=textarea] {
+        background-color: white;
+        color: black;
+        border: 2px solid black;
+    }
+    .white input[type=text] {
         background-color: white;
         color: black;
         border: 2px solid black;
     }
 </style>
 <!--Create a form to take input from user-->
+<html>
+    <body>
 <div id="data">
 <form action="/store/email" method="post" name="form1">
     <table width="25%" border="0">
@@ -166,6 +188,8 @@
 </form>
 </div>
 </head>
+</body>
+</html>
 <script>
     var x = "True";
     var y = "False";
