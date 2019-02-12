@@ -167,36 +167,24 @@
 </div>
 </head>
 <script>
-    window.onload = function() {timeFunc()};
-    function timeFunc(){
-        var options = {
-        timeZone: "America/Denver", hour12: false,
-        hour: 'numeric', minute: 'numeric'
-    };
-    var formatter = new Intl.DateTimeFormat('en-us', options);
-    var localTime = formatter.format(new Date());
-    localTime = localTime.replace(':', '');
-    var SunCalc = require('suncalc2');
-    var times = SunCalc.getTimes(new Date(), 39.7392, 104.9903);
-    var sunriseStr = (times.sunrise.getHours() -11).toString() + (times.sunrise.getMinutes() + 33).toString();
-    var sunset = (times.sunset.getHours() + 14).toString() + (times.sunset.getMinutes() - 1).toString();
-    var sunrise = parseInt(sunriseStr);
-    var sunset = parseInt(sunset);
-    var localTime = parseInt(localTime);
-    var dataStuff = document.getElementById("data");
-    if (localTime >= sunrise && localTime < sunset){
-        dataStuff.classList.remove("dark");
-        dataStuff.classList.add("white");
-    }
-    else if (localTime >= sunset){
-        dataStuff.classList.add("dark");
-    }
-    else if (localTime < sunrise){
-        dataStuff.classList.add("dark");
+    var x = "True";
+    var y = "False";
+    var localTime = new Date();
+    // var localTime = new Date(2018, 11, 24, 10, 33);
+    var hours   = localTime.getHours();
+    console.log(hours, ' -hours');
+    var timeString = "" + hours;
+    
+    console.log('localTime is ', localTime);
+    console.log(timeString);
+    if (hours >= 7 && hours <= 17) {
+        console.log(x);
+        document.getElementById("data").classList.add('white');
     } else {
-        dataStuff.classList.remove("dark");
+        console.log(y);
+        document.getElementById("data").classList.add('dark');
+        // document.getElementById("body-content").classList.add('dark');
     }
-    }
-    </script>
+</script>
 <!--Including Footer partial-->
 <%- include ../layouts/footer2.ejs %>
