@@ -270,6 +270,9 @@ function readData(area){
                 if (csvData[x][2] == 'Level 1'){
                     db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
                 }
+                if (csvData[x][2] == 'Level 1/2'){
+                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                }
                 if (csvData[x][2] == 'Level 2'){
                     db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
                 }
