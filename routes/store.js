@@ -63,6 +63,9 @@ app.get('/', function (request, response) {
     })
     
 });
+app.get('/calendar', function (req, res){
+    res.render('store/calendar')
+});
 app.get('/test', function(request, response){
     getVersion();
     // TODO: Initialize the query variable with a SQL query
