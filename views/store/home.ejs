@@ -12,15 +12,6 @@
 </script>
 <!DOCTYPE html>
 <html>
-<head>
-	<!-- The param which is passed from render-->
-    <title><%= title %></title>
-    
-	<!-- Here is the web page I referenced for the idea of sticky header. -->
-	<!-- https://www.w3schools.com/howto/howto_js_sticky_header.asp -->
-    <meta charset="UTF-8">
-	<meta content="width=device-width, initial-scale=1.0" name="viewport">
-</head>
 <style>
 body {
     background-color: black;
@@ -192,17 +183,35 @@ div.student-card:hover a {
     background-color: #333;
     box-shadow: 0px 4px 1rem rgba( 0,0,0, 0.9);
 }
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    }
+  /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+    .sticky + .content {
+    padding-top: 50px;
+    }
 </style>
+<head>
+	<!-- The param which is passed from render-->
+    <title><%= title %></title>
+    
+	<!-- Here is the web page I referenced for the idea of sticky header. -->
+	<!-- https://www.w3schools.com/howto/howto_js_sticky_header.asp -->
+    <meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+</head>
+<header>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="/store/login">Login</a></li>
+        <li><a href="/store/email">Contact</a></li>
+    </ul>
+    <h1>Black Belt Class Counts</h1><br>
+    <h2><%= title %></h2>
+</header>
 <body id="body-content">
-        <header>
-            <ul>
-                <li><a href="#">Home</a></li>
-                <li><a href="/store/login">Login</a></li>
-                <li><a href="/store/email">Contact</a></li>
-            </ul>
-            <h1>Black Belt Class Counts</h1><br>
-            <h2><%= title %></h2>
-        </header>
         <% if (data) { %>
             <% data.forEach(function(item){ %>
         <div class="student-card">
@@ -235,7 +244,7 @@ div.student-card:hover a {
                 console.log(y);
                 // document.getElementById("body-content").classList.add('dark');
             }
-        </script>  
+        </script> 
     </body>
 </html>
 <%- include ../layouts/footer.ejs %>
