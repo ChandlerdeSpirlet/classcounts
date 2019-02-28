@@ -64,7 +64,7 @@ app.get('/', function (request, response) {
     
 });
 app.get('/calendar', function (req, res){
-    var data =fs.readFileSync(__dirname + '/feb.pdf');
+    var data =fs.readFileSync(__dirname + '/sched.pdf');
     res.contentType("application/pdf");
     res.send(data);
 });
