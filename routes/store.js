@@ -64,7 +64,9 @@ app.get('/', function (request, response) {
     
 });
 app.get('/calendar', function (req, res){
-    res.render('store/calendar')
+    var data =fs.readFileSync(__dirname + '/feb.pdf');
+    res.contentType("application/pdf");
+    res.send(data);
 });
 app.get('/test', function(request, response){
     getVersion();
