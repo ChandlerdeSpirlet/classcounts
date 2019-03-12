@@ -982,6 +982,7 @@ app.post('/signup', function(req, res){
                 }
                 var temp = getDays();
                 console.log('getDays - ', temp);
+                sendCopy(item.name, temp);
                 req.flash(item.name, 'signed up to swat ', temp);
                 res.redirect('/');
             }).catch(function(err){
@@ -1181,6 +1182,28 @@ function sendEmail(name){
         to: 'chandler.despirlet@icloud.com',
         subject: 'New File Submitted',
         text: 'New file submitted on ' + getDate() + ' by ' + name
+    };
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error){
+            console.log(error);
+        } else {
+            console.log('Email sent: ' + info.response);
+        }
+    });
+}
+function sendCopy(name, days){
+    var transporter = nodemailer.createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'classcountsema@gmail.com',
+            pass: 'novnap-hizcaf-rimGi7'
+        }
+    });
+    var mailOptions = {
+        from: 'classcountsema@gmail.com',
+        to: 'chandler.despirlet@icloud.com',
+        subject: 'New Swatter for Spring Break Camp',
+        text: name + 'signed up to help on these days: ' + days;
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error){
