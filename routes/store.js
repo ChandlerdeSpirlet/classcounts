@@ -849,6 +849,150 @@ app.post('/login', function(request, response){
             })
     }
 });
+app.get('/adminView', function(req, res){
+    if (!req.session.user){
+        req.flash('error', 'Login credentials required');
+        getDate();
+        // TODO: Initialize the query variable with a SQL query
+        // that returns all the rows and columns in the 'store' table
+        
+        var query = 'SELECT * FROM counts order by bbname';
+
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + globalDate,
+                data: ''
+            })
+        })
+    } else {
+        var query = 'select * from signup';
+        db.any(query)
+            .then(function(rows){
+                res.render('store/adminView', {
+                    title: 'Spring Break',
+                    data: rows
+                })
+            })
+            .catch(function (err){
+                req.flash('error', err);
+                res.render('store/adminView', {
+                    title: 'Spring Break',
+                    data: ''
+                })
+            })
+        }
+});
+app.get('/signup', function(req, res){
+    res.render('store/signup', {
+        title: 'Spring Break Camp SWAT Signup',
+        bbname: '',
+        M: 'true',
+        Tu: 'true',
+        W: 'true',
+        Th: 'true',
+        F: 'true'
+    })
+});
+app.post('/signup', function(req, res){
+    req.assert('bbname', 'Name is required').notEmpty();
+    var errors = req.validationErrors();
+    if (!errors){
+        var item = {
+            bbname: req.sanitize('bbname').trim(),
+            M: req.body.M,
+            Tu: req.body.Tu,
+            W: req.body.W,
+            Th: req.body.Th,
+            F: req.body.F
+        }
+        var days = [];
+        console.log('testing days');
+        if (item.M == 'true'){
+            days.push(true);
+        }
+        else{
+            days.push(false);
+        }
+        if (item.Tu == 'true'){
+            days.push(true);
+        }
+        else{
+            days.push(false);
+        }
+        if (item.W == 'true'){
+            days.push(true);
+        }
+        else{
+            days.push(false);
+        }
+        if (item.Th == 'true'){
+            days.push(true);
+        }
+        else{
+            days.push(false);
+        }
+        if (item.F == 'true'){
+            days.push(true);
+        }
+        else{
+            days.push(false);
+        }
+        console.log('days = ', days);
+        db.none('insert into signup (bbname, mon, tues, wed, thurs, fri) values ($1, $2, $3, $4, $5, $6)', [item.bbname, days[0], days[1], days[2], days[3], days[4]])
+            .then(function(result){
+                function getDays(){
+                    var temp = []
+                    for (x = 0; x < days.length; x++){
+                        if (days[x] == true){
+                            if (x == 0){
+                                temp.push('Monday');
+                            }
+                            if (x == 1){
+                                temp.push('Tuesday');
+                            }
+                            if (x == 2){
+                                temp.push('Wednesday');
+                            }
+                            if (x == 3){
+                                temp.push('Thursday');
+                            }
+                            if (x == 4){
+                                temp.push('Friday');
+                            }
+                        }
+                    }
+                    console.log('in db func, testing the temp array');
+                    console.log('temp - ', temp);
+                    return temp;
+                }
+                var temp = getDays();
+                console.log('getDays - ', temp);
+                req.flash(item.name, 'signed up to swat ', temp);
+                res.redirect('/');
+            }).catch(function(err){
+                req.flash('error', err);
+                res.render('store/signup', {
+                    title: 'Spring Break Camp SWAT Signup',
+                    bbname: '',
+                    M: 'true',
+                    Tu: 'true',
+                    W: 'true',
+                    Th: 'true',
+                    F: 'true'
+                })
+            })
+    }
+});
 
 app.get('/edit', function (request, response) {
     // render views/store/add.ejs

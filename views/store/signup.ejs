@@ -1,0 +1,166 @@
+<%- include ../layouts/header.ejs %>
+
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:green"><%- messages.success %></p>
+<% } %>
+<!--Create a form to take input from user-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style> 
+    body {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    }
+    input[type=text] {
+        width: 130px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+    }
+    
+    input[type=text]:focus {
+        width: 100%;
+    }
+    input[type=password] {
+        width: 130px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+    
+    input[type=password]:focus {
+        width: 100%;
+    }
+    [type=submit] {
+    background-color: blue; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    }
+
+    [type=submit] {
+        background-color: white; 
+        color: black; 
+        border: 2px solid blue;
+    }
+
+    [type=submit]:hover {
+        background-color: blue;
+        color: white;
+    }
+    .dark td {
+        color: white;
+    }
+    .white td {
+        color: black;
+    }
+    .dark {
+        height: 100%;
+        background-color: black;
+        color: white;
+    }
+    .white {
+        height: 100%;
+        background-color: white;
+        color: black;
+    }
+    .white body {
+        background-color: white;
+    }
+    .dark [type=submit] {
+        background-color: #333;
+    }
+    .white [type=submit] {
+        background-color: white;
+    }
+    .dark [type=submit]:hover {
+        color: white;
+    }
+    .white [type = submit]:hover {
+        color: white;
+    }
+    .dark input[type=text]{
+        background-color: #333;
+        color: white;
+        border: 2px solid white;
+    }
+    .dark input[type=password]{
+        background-color: #333;
+        color: white;
+        border: 2px solid white;
+    }
+    .white input[type=text] {
+        background-color: white;
+        color: black;
+        border: 2px solid black;
+    }
+    .white input[type=password]{
+        background-color: white;
+        color: black;
+        border: 2px solid black;
+    }
+</style>
+<div id="data">
+<form action="/store/signup" method="post" name="form">
+        Name: <input type="text" id="bbname" name="bbname" value="<%= bbname %>"/>
+        <br>
+        Monday(x): <input type="checkbox" id="M" name="M" value="<%= M %>"/>
+        <br>
+        Tuesday(x): <input type="checkbox" id="Tu" name="Tu" value="<%= Tu %>"/>
+        <br>
+        Wednesday(x): <input type="checkbox" id="W" name="W" value="<%= W %>"/>
+        <br>
+        Thursday(x): <input type="checkbox" id="Th" name="Th" value="<%= Th %>"/>
+        <br>
+        Friday(x): <input type="checkbox" id="F" name="F" value="<%= F %>"/>
+        <br>
+    <input type="submit" name="Submit" value="Sign Up"/>
+</form>
+</head>
+</div>
+<script>
+    var x = "True";
+    var y = "False";
+    var localTime = new Date();
+    // var localTime = new Date(2018, 11, 24, 10, 33);
+    var hours   = localTime.getHours();
+    console.log(hours, ' -hours');
+    var timeString = "" + hours;
+    
+    console.log('localTime is ', localTime);
+    console.log(timeString);
+
+    if (hours >= 7 && hours <= 17) {
+        console.log(x);
+        document.getElementById("data").classList.add('white');
+    } else {
+        console.log(y);
+        document.getElementById("data").classList.add('dark');
+        // document.getElementById("body-content").classList.add('dark');
+    }
+</script>
+<!--Including Footer partial-->
+<%- include ../layouts/footer2.ejs %>
