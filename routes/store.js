@@ -950,7 +950,7 @@ app.post('/signup', function(req, res){
             days.push(false);
         }
         console.log('days = ', days);
-        db.none('insert into signup (bbname, mon, tues, wed, thurs, fri) values ($1, $2, $3, $4, $5, $6)', [item.bbname, days[0], days[1], days[2], days[3], days[4]])
+        db.none('insert into signup (bbname, mon, tues, wed, thurs, fri, barcode) values ($1, $2, $3, $4, $5, $6, (select barcode from counts where bbname like $7%))', [item.bbname, days[0], days[1], days[2], days[3], days[4], item.bbname])
             .then(function(result){
                 function getDays(){
                     var temp = []
