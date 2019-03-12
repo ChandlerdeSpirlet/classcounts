@@ -29,18 +29,8 @@
     input[type=text]:focus {
         width: 100%;
     }
-    input[type=password] {
-        width: 130px;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-        background-color: white;
-        background-position: 10px 10px; 
-        background-repeat: no-repeat;
-        padding: 12px 20px 12px 40px;
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
+    input[type=checkbox] {
+        
     }
     
     input[type=password]:focus {
@@ -122,22 +112,26 @@
         color: black;
         border: 2px solid black;
     }
+
 </style>
 <div id="data">
 <form action="/store/signup" method="post" name="form">
+    <fieldset>
+            <legend>Signup:</legend>
         Name: <input type="text" id="bbname" name="bbname" value="<%= bbname %>"/>
         <br>
-        Monday(x): <input type="checkbox" id="M" name="M" value="<%= M %>"/>
+        Monday - Game Day: <input type="checkbox" id="M" name="M" value="<%= M %>"/>
         <br>
-        Tuesday(x): <input type="checkbox" id="Tu" name="Tu" value="<%= Tu %>"/>
+        Tuesday - Karate Olympics: <input type="checkbox" id="Tu" name="Tu" value="<%= Tu %>"/>
         <br>
-        Wednesday(x): <input type="checkbox" id="W" name="W" value="<%= W %>"/>
+        Wednesday - Nerf Wars: <input type="checkbox" id="W" name="W" value="<%= W %>"/>
         <br>
-        Thursday(x): <input type="checkbox" id="Th" name="Th" value="<%= Th %>"/>
+        Thursday - Marker Sparring Day: <input type="checkbox" id="Th" name="Th" value="<%= Th %>"/>
         <br>
-        Friday(x): <input type="checkbox" id="F" name="F" value="<%= F %>"/>
+        Friday - Water Fight Day (Subject to weather): <input type="checkbox" id="F" name="F" value="<%= F %>"/>
         <br>
     <input type="submit" name="Submit" value="Sign Up"/>
+    </fieldset>
 </form>
 </head>
 </div>
