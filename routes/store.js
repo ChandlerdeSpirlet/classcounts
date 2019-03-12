@@ -950,8 +950,10 @@ app.post('/signup', function(req, res){
             days.push(false);
         }
         console.log('days = ', days);
-        var like = item.bbname + '%';
-        db.none('insert into signup (bbname, mon, tues, wed, thurs, fri, barcode) values ($1, $2, $3, $4, $5, $6, (select barcode from counts where bbname like $7))', [item.bbname, days[0], days[1], days[2], days[3], days[4], like])
+        //OLD = "insert into signup (bbname, mon, tues, wed, thurs, fri, barcode) values ($1, $2, $3, $4, $5, $6, (select barcode from counts where bbname like '$1%'))", [item.bbname, days[0], days[1], days[2], days[3], days[4]]
+        var query = "insert into signup (bbname, mon, tues, wed, thurs, fri, barcode) values ('" + item.bbname + "', " + days[0] + ", " + days[1] + ", " + days[2] + ", " + days[3] + ", " + days[4] + ", (select barcode from counts where bbname like '" + item.bbname + "%" + "'));";
+        console.log('query', query);
+        db.none(query)
             .then(function(result){
                 function getDays(){
                     var temp = []
