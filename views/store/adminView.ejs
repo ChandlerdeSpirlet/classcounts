@@ -277,6 +277,7 @@ tr:hover {
             <!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
                 <tr>
                     <th>Name</th>
+		    <th>Barcode</th>
                     <th>Monday</th>
                     <th>Tuesday</th>
                     <th>Wednesday</th>
@@ -294,6 +295,7 @@ tr:hover {
                     <% data.forEach(function(item){ %>
                         <tr>
                             <td><%= item.bbname %></td>
+			    <td><%= item.barcode %></td>
                             <td><%= item.mon %></td>
                             <td><%= item.tues %></td>
                             <td><%= item.wed %></td>
