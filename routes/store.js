@@ -43,11 +43,13 @@ app.get('/', function (request, response) {
     getVersion();
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
-    var query = 'SELECT * FROM counts order by bbname';
+    //var query = 'SELECT * FROM counts order by bbname';
+    var query = 'select Z.*, S.mon, S.tues, S.wed, S.thurs, S.fri from counts Z, signup S where Z.bbname like S.bbname';
     getDate();
     db.any(query)
         .then(function (rows) {
         // render views/store/list.ejs template file
+        console.log('rows: \n', rows);
         response.render('store/home', {
             title: 'Updated - ' + global.globalDate,
             data: rows
