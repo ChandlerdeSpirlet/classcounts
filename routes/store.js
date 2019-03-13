@@ -1203,7 +1203,7 @@ function sendCopy(name, days){
         from: 'classcountsema@gmail.com',
         to: 'chandler.despirlet@icloud.com',
         subject: 'New Swatter for Spring Break Camp',
-        text: name + 'signed up to help on these days: ' + days;
+        text: name + 'signed up to help on these days: ' + days
     };
     transporter.sendMail(mailOptions, function(error, info){
         if (error){
