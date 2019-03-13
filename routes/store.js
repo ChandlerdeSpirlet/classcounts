@@ -982,7 +982,7 @@ app.post('/signup', function(req, res){
                 }
                 var temp = getDays();
                 console.log('getDays - ', temp);
-                sendCopy(item.name, temp);
+                sendCopy(item.bbname, temp);
                 req.flash(item.name, 'signed up to swat ', temp);
                 res.redirect('/');
             }).catch(function(err){
