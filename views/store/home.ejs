@@ -144,6 +144,16 @@ div.student-card:hover a {
     color: blue;
     border-radius: 4px;
 }
+
+.camp::before{
+    float: left;
+    margin: -0.5rem 0.5rem -0.5rem -0.5rem;
+    padding: .625rem .5rem .625rem;
+    font-size: .75rem;
+    font-weight: bold;
+    background: rgba( 0,0,255, 0.1);
+    color: blue;
+}
 .sparring {
     float: left;
     width: 50%;
@@ -213,6 +223,7 @@ div.student-card:hover a {
                 <div class="regular"><%= item.regular %></div>
                 <div class="sparring"><%= item.sparring %></div>
                 <div class="swats"><%= item.swats %></div>
+                <div class="camp"><a href='/store/camp/<%= item.barcode %>'>Camp Days</a></div>
             </div>
         </div>
                 <% }) %>
@@ -229,7 +240,7 @@ div.student-card:hover a {
             console.log('localTime is ', localTime);
             console.log(timeString);
     
-            if (hours >= 7 && hours <= 17) {
+            if (hours >= 7 && hours <= 19) {
                 console.log(x);
                 document.getElementById("body-content").classList.add('day');
             } else {

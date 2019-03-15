@@ -650,6 +650,37 @@ app.post('/additionalCLEAR', function(req, res){
             res.redirect('additional');
     })
 });
+app.get('/camp/(:barcode)', function(req, res){
+        var code = req.params.barcode;
+        console.log('code is ', req.params.barcode);
+        var query = 'select * from signup where barcode = $1';
+        db.one(query, code)
+            .then(function (row) {
+                console.log('row is', row);
+                if (row.length === 0){
+                    req.flash('error', 'Black belt is not signed up to help. If you believe this is an issue, please contact a system admin');
+                    res.redirect('home');
+                }
+                console.log(row);
+                res.render('store/camp', {
+                    title: 'Spring Break Camp',
+                    data: row                 
+                })
+            })
+            .catch(function (err) {
+                console.log('hi');
+                req.flash('error', 'Black belt is not signed up to help. If you believe this is an error, please contact a system admin.');
+                res.render('store/signup', {
+                    title: 'Spring Break Camp Signup',
+                    bbname: '',
+                    M: 'true',
+                    Tu: 'true',
+                    W: 'true',
+                    Th: 'true',
+                    F: 'true'
+                });
+            })
+});
 app.get('/alter/(:barcode)', function(req, res) {
     if (!req.session.user || req.session.user != 'admin'){
         req.flash('error', 'Admin credentials required');
