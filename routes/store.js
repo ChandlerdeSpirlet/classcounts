@@ -1014,8 +1014,8 @@ app.post('/signup', function(req, res){
                 var temp = getDays();
                 console.log('getDays - ', temp);
                 sendCopy(item.bbname, temp);
-                var days = item.name + ' successfully signed up to swat ' + temp;
-                req.flash('success', days);
+                var daysSignedup = item.name + ' successfully signed up to swat ' + temp;
+                req.flash('success', daysSignedup);
                 res.redirect('/');
             }).catch(function(err){
                 req.flash('error', err);
