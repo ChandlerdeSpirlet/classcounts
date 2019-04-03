@@ -21,7 +21,6 @@ app.get('/', function (request, response) {
         // render views/store/list.ejs template file
         response.render('store/home', {
             title: 'Updated - ' + global.globalDate,
-            result: '',
             data: rows
         })
     })
@@ -30,7 +29,6 @@ app.get('/', function (request, response) {
         request.flash('error', err);
         response.render('store/home', {
             title: 'Updated - ' + global.globalDate,
-            result: '',
             data: ''
         })
     })

@@ -49,9 +49,9 @@ app.get('/', function (request, response) {
     db.any(query)
         .then(function (rows) {
         // render views/store/list.ejs template file
+        console.log('rows: \n', rows);
         response.render('store/home', {
             title: 'Updated - ' + global.globalDate,
-            result: '',
             data: rows
         })
     })
@@ -60,68 +60,10 @@ app.get('/', function (request, response) {
         request.flash('error', err);
         response.render('store/home', {
             title: 'Updated - ' + global.globalDate,
-            result: '',
             data: ''
         })
     })
-});
-app.get('/home', function(request, response) {
-    getVersion();
-    // TODO: Initialize the query variable with a SQL query
-    // that returns all the rows and columns in the 'store' table
-    var query = 'SELECT * FROM counts order by bbname';
-    //var query = 'select Z.*, S.mon, S.tues, S.wed, S.thurs, S.fri from counts Z, signup S where Z.bbname like S.bbname';
-    getDate();
-    db.any(query)
-        .then(function (rows) {
-        // render views/store/list.ejs template file
-        response.render('store/home', {
-            title: 'Updated - ' + global.globalDate,
-            result: '',
-            data: rows
-        })
-    })
-    .catch(function (err) {
-        // display error message in case an error
-        request.flash('error', err);
-        response.render('store/home', {
-            title: 'Updated - ' + global.globalDate,
-            result: '',
-            data: ''
-        })
-    })
-});
-app.post('/search', function (req, res){
-    req.assert('error', 'Name is required').notEmpty();
-    console.log('from form', req.body.result);
-    var item = {
-        name: req.sanitize('result').trim()
-    };
-    var query = 'select * from counts where bbname = $1';
-    console.log('The Name is', item.name);
-    db.one(query, [req.body.result])
-        .then(function (row) {
-            console.log(row);
-            if (row.length === 0){
-                req.flash('error', 'Blackbelt not found');
-                res.redirect('/');
-            } else {
-                res.render('store/search', {
-                    title: 'Classes for ' + item.name,
-                    data: row
-                })
-            }
-        })
-        .catch(function(err){
-            req.flash('error', err);
-            res.redirect('home');
-        })
-});
-app.get('/search', function(req, res){
-    res.render('store/search', {
-        title: 'Classes for',
-        data: ''
-    })
+    
 });
 app.get('/schedule', function (req, res){
     var data =fs.readFileSync(__dirname + '/storedFiles/sched.pdf');
@@ -265,7 +207,6 @@ app.get('/list2', function (request, response) {
             // render views/store/list.ejs template file
             response.render('store/list2', {
                 title: 'Class Counts - Updated ' + global.globalDate,
-                bbname: '',
                 data: rows
             })
         })
@@ -1073,7 +1014,7 @@ app.post('/signup', function(req, res){
                 var temp = getDays();
                 console.log('getDays - ', temp);
                 sendCopy(item.bbname, temp);
-                var daysSignedup = item.name + ' successfully signed up to swat ' + temp;
+                var daysSignedup = item.bbname + ' successfully signed up to swat ' + temp;
                 req.flash('success', daysSignedup);
                 res.redirect('/');
             }).catch(function(err){
