@@ -15,9 +15,6 @@
 <head>
 	<!-- The param which is passed from render-->
     <title><%= title %></title>
-    
-	<!-- Here is the web page I referenced for the idea of sticky header. -->
-	<!-- https://www.w3schools.com/howto/howto_js_sticky_header.asp -->
     <meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 </head>
@@ -200,17 +197,10 @@ tr:hover {
 	<!-- top-container class helps with the Sticky header -->
     <div>
         <ul>
-            <li><a href="/store/list2">Home</a></li>
-            <li><a href="/store/email2">Contact</a></li>
-            <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Edit</a>
-            <div class="dropdown-content">
-                <a href="/store/file">Add File</a>
-                <a href="/store/add">Add Blackbelt</a>
-                <a href="/store/del">Remove Blackbelt</a>
-            </div>
-            </li>
-            <li><a href="/">Logout</a></li>
+            <li><a href="/">Home</a></li>
+            <li><a href="/store/login">Login</a></li>
+            <li><a href="/store/email">Contact</a></li>
+            <li><a href="/store/signup">Spring Break Camp Signup</a></li>
         </ul>
     </div>
     <h1>Black Belt Class Counts</h1>
@@ -236,15 +226,13 @@ tr:hover {
             <% if (data) { %>
                 <!-- Using a for-loop to loop over each row in the database.
                 The 'data' variable is passed from the store.js during the response.render function call -->
-                    <% data.forEach(function(item){ %>
                         <tr>
-                            <td><%= item.bbname %></td>
-                            <td><%= item.barcode %></td>
-                            <td><%= item.regular %></td>
-                            <td><%= item.sparring %></td>
-                            <td><%= item.swats %></td>
+                            <td><%= data.bbname %></td>
+                            <td><%= data.barcode %></td>
+                            <td><%= data.regular %></td>
+                            <td><%= data.sparring %></td>
+                            <td><%= data.swats %></td>
                         </tr>
-                    <% }) %>
                 <% } %>
         </table>
     </div>
@@ -278,7 +266,7 @@ tr:hover {
     
             if (hours <= 7 && hours >= 19) {
                 console.log(x);
-                document.getElementById("body-content").classList.add('dark');
+                document.getElementsByClassName("content").classList.add('dark');
             } else {
                 console.log(y);
                 // document.getElementById("body-content").classList.add('dark');
