@@ -1,5 +1,5 @@
 <!-- Include Header Partial -->
-<%- include ../layouts/header3.ejs %>
+<%- include ../layouts/header2.ejs %>
 
 <% if (messages.error) { %>
     <p style="color:red"><%- messages.error %></p>
@@ -87,7 +87,7 @@
     }
 </style>
 <!-- The action attribute of the form refers to a item using its database id -->
-<form action="/store/alter/<%= barcode %>" method="post" name="form1">
+<form action="/store/barcode/<%= bbname %>" method="post" name="form1">
     <table width="25%" border="0">
         <tr>
             <td>Name</td>
@@ -96,18 +96,6 @@
         <tr>
             <td>Barcode</td>
             <td><input type="number" pattern="\b[0-9]{5}\b" name="barcode" min="0" max="99999" value="<%= barcode %>" required/></td>
-        </tr>
-        <tr>
-            <td>Regular</td>
-            <td><input type="number" pattern="\b[0-9]{5}\b" name="regular" min="0" max="99999" value="<%= regular %>" required/></td>
-        </tr>
-        <tr>
-            <td>Sparring</td>
-            <td><input type="number" pattern="\b[0-9]{5}\b" name="spar" min="0" max="99999" value="<%= spar %>" required/></td>
-        </tr>
-        <tr>
-            <td>Swats</td>
-            <td><input type="number" pattern="\b[0-9]{5}\b" name="swat" min="0" max="99999" value="<%= swat %>" required/></td>
         </tr>
         <tr>
             <td></td>

@@ -246,6 +246,7 @@ app.get('/list2', function (request, response) {
             // render views/store/list.ejs template file
             response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -254,6 +255,7 @@ app.get('/list2', function (request, response) {
             request.flash('error', err);
             response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -293,6 +295,7 @@ app.get('/list3', function (request, response) {
             // render views/store/list.ejs template file
             response.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -301,6 +304,7 @@ app.get('/list3', function (request, response) {
             request.flash('error', err);
             response.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -341,6 +345,7 @@ app.get('/file', function (request, response) {
             // render views/store/list.ejs template file
             response.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -349,6 +354,7 @@ app.get('/file', function (request, response) {
             request.flash('error', err);
             response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
     })
@@ -488,6 +494,7 @@ app.get('/changelog', function(req, res){
             // render views/store/list.ejs template file
             res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -496,6 +503,7 @@ app.get('/changelog', function(req, res){
             req.flash('error', err);
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -533,6 +541,7 @@ app.get('/changelog', function(req, res){
             // render views/store/list.ejs template file
             res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -541,6 +550,7 @@ app.get('/changelog', function(req, res){
             req.flash('error', err);
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -594,6 +604,7 @@ app.get('/additional', function(req, res){
             // render views/store/list.ejs template file
             res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -602,6 +613,7 @@ app.get('/additional', function(req, res){
             req.flash('error', err);
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -642,6 +654,7 @@ app.get('/additional', function(req, res){
             // render views/store/list.ejs template file
             res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -650,6 +663,7 @@ app.get('/additional', function(req, res){
             req.flash('error', err);
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -750,6 +764,7 @@ app.get('/alter/(:barcode)', function(req, res) {
             // render views/store/list.ejs template file
             res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -758,6 +773,7 @@ app.get('/alter/(:barcode)', function(req, res) {
             req.flash('error', err);
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -801,6 +817,7 @@ app.get('/alter/(:barcode)', function(req, res) {
             // render views/store/list.ejs template file
             res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -809,6 +826,7 @@ app.get('/alter/(:barcode)', function(req, res) {
             req.flash('error', err);
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -887,6 +905,145 @@ app.put('/alter/(:barcode)', function (req, res) {
         })
     }
 });
+app.get('/barcode/(:bbname)', function(req, res) {
+    if (!req.session.user){
+        req.flash('error', 'Login credentials required');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: ''
+            })
+        })
+    }
+    else {
+        var code = req.params.bbname;
+        console.log('name is ', req.params.bbname);
+        var query = 'select * from counts where bbname = $1';
+        db.one(query, code)
+            .then(function (row) {
+                if (row.length === 0){
+                    req.flash('error', 'Black belt is not in this list');
+                    res.redirect('home');
+                } else {
+                    console.log('In the else for .get alter');
+                    res.render('store/barcode', {
+                        title: 'Change Barcode',
+                        bbname: row.bbname,
+                        barcode: row.barcode                    
+                    })
+                    
+                }
+            })
+            .catch(function (err) {
+                console.log('In .catch err for alter barcode .get');
+                req.flash('error', err);
+                res.render('store/home', {
+                    title: 'Black Belt Class Counts',
+                    result: '',
+                    data: ''
+                })
+            })
+    }
+});
+app.put('/barcode/(:bbname)', function (req, res) {
+    req.assert('bbname', 'Name is required').notEmpty();
+    req.assert('barcode', 'Barcode is required').notEmpty();
+    var errors = req.validationErrors();
+    if (!errors){
+        var item = {
+            bbname: req.sanitize('bbname').escape().trim(),
+            barcode: req.sanitize('barcode').escape().trim(),
+        };
+        db.one('select * from counts where bbname = $1', [item.bbname])
+            .then(function(result){
+                db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
+                    .then(function() {
+                        db.one('select * from inc where barcode = $1', [item.barcode])
+                            .then(function(row){
+                                console.log(item.bbname, item.barcode, result.barcode, 'name, submitted, from db');
+                                if (row.length === 1){
+                                    db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
+                                        .then(function() {
+                                            req.flash('success', 'Black belt classes updated.');
+                                            console.log('In the .then for updateQuery');
+                                            console.log('Testing redirect');
+                                            getDate();
+                                            // TODO: Initialize the query variable with a SQL query
+                                            // that returns all the rows and columns in the 'store' table
+                                            
+                                            var query = 'SELECT * FROM counts order by bbname';
+
+                                            db.any(query)
+                                                .then(function (rows) {
+                                                // render views/store/list.ejs template file
+                                                res.render('store/list2', {
+                                                    title: 'Class Counts - Updated ' + globalDate,
+                                                    data: rows
+                                                })
+                                            })
+                                        })
+                                        .catch(function() {
+                                            req.flash('error', err);
+                                            res.render('store/list2', {
+                                            title: 'Class Counts - Updated ' + globalDate,
+                                            data: ''
+                                        })
+                                        })
+                                } else {
+                                    req.flash('success', 'Black belt classes updated.');
+                                            console.log('In the .then for updateQuery');
+                                            console.log('Testing redirect');
+                                            getDate();
+                                            // TODO: Initialize the query variable with a SQL query
+                                            // that returns all the rows and columns in the 'store' table
+                                            
+                                            var query = 'SELECT * FROM counts order by bbname';
+
+                                            db.any(query)
+                                                .then(function (rows) {
+                                                // render views/store/list.ejs template file
+                                                res.render('store/list2', {
+                                                    title: 'Class Counts - Updated ' + globalDate,
+                                                    data: rows
+                                                })
+                                            })
+                                }
+                            })
+                    })
+                    .catch(function(err) {
+                        console.log('In .catch err');
+                        req.flash('error', err);
+                        res.render('store/home', {
+                            title: 'Black Belt Class Counts',
+                            result: '',
+                            data: ''
+                        })
+                    })
+                    })
+    } else {
+        var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
+        req.flash('error', error_msg);
+        res.render('store/home', {
+            title: 'Stored Classes',
+            result: '',
+            data: ''
+        })
+    }
+});
 app.get('/login', function(req, res){
     res.render('store/login', {
         title: 'Login',
@@ -955,6 +1112,7 @@ app.get('/adminView', function(req, res){
             // render views/store/list.ejs template file
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -963,6 +1121,7 @@ app.get('/adminView', function(req, res){
             req.flash('error', err);
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
+                resutl: '',
                 data: ''
             })
         })
@@ -1102,6 +1261,7 @@ app.get('/edit', function (request, response) {
             // render views/store/list.ejs template file
             response.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -1110,6 +1270,7 @@ app.get('/edit', function (request, response) {
             request.flash('error', err);
             response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -1188,6 +1349,7 @@ app.get('/add', function (request, response) {
             // render views/store/list.ejs template file
             response.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -1196,6 +1358,7 @@ app.get('/add', function (request, response) {
             request.flash('error', err);
             response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -1365,6 +1528,7 @@ app.get('/email2', function (request, response) {
             // render views/store/list.ejs template file
             response.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -1373,6 +1537,7 @@ app.get('/email2', function (request, response) {
             request.flash('error', err);
             response.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
@@ -1446,6 +1611,7 @@ app.get('/del', function(req, res){
             // render views/store/list.ejs template file
             res.render('store/home', {
                 title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: rows
             })
         })
@@ -1454,6 +1620,7 @@ app.get('/del', function(req, res){
             req.flash('error', err);
             res.render('store/home', {
                 title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
                 data: ''
             })
         })
