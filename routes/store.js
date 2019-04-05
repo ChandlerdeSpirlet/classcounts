@@ -939,7 +939,7 @@ app.get('/barcode/(:bbname)', function(req, res) {
                     req.flash('error', 'Black belt is not in this list');
                     res.redirect('home');
                 } else {
-                    console.log('In the else for .get alter');
+                    console.log('In the else for .get barcode');
                     res.render('store/barcode', {
                         title: 'Change Barcode',
                         bbname: row.bbname,
@@ -970,12 +970,18 @@ app.put('/barcode/(:bbname)', function (req, res) {
         };
         db.one('select * from counts where bbname = $1', [item.bbname])
             .then(function(result){
-                db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
-                    .then(function() {
-                        db.one('select * from inc where barcode = $1', [item.barcode])
+                console.log(item.bbname, item.barcode, result.barcode, 'name, submitted, from db');
+                        db.one('select * from inc where bbname = $1', [item.bbname])
                             .then(function(row){
                                 console.log(item.bbname, item.barcode, result.barcode, 'name, submitted, from db');
                                 if (row.length === 1){
+                                    db.none('update inc set barcode = $1 where barcode = $2', [item.barcode, result.barcode])
+                                        .then(function() {
+                                            console.log('updated inc barcode to ', item.barcode, ' from ', result.barcode);
+                                        })
+                                        .catch(function() {
+                                            console.log('didnt work');
+                                        })
                                     db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
                                         .then(function() {
                                             req.flash('success', 'Black belt classes updated.');
@@ -1004,7 +1010,9 @@ app.put('/barcode/(:bbname)', function (req, res) {
                                         })
                                         })
                                 } else {
-                                    req.flash('success', 'Black belt classes updated.');
+                                    db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
+                                        .then(function() {
+                                            req.flash('success', 'Black belt classes updated.');
                                             console.log('In the .then for updateQuery');
                                             console.log('Testing redirect');
                                             getDate();
@@ -1021,7 +1029,44 @@ app.put('/barcode/(:bbname)', function (req, res) {
                                                     data: rows
                                                 })
                                             })
+                                        })
+                                        .catch(function() {
+                                            req.flash('error', err);
+                                            res.render('store/list2', {
+                                            title: 'Class Counts - Updated ' + globalDate,
+                                            data: ''
+                                        })
+                                        })
                                 }
+                            })
+                            .catch(function(err){
+                                db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
+                                        .then(function() {
+                                            req.flash('success', 'Black belt classes updated.');
+                                            console.log('In the .then for updateQuery');
+                                            console.log('Testing redirect');
+                                            getDate();
+                                            // TODO: Initialize the query variable with a SQL query
+                                            // that returns all the rows and columns in the 'store' table
+                                            
+                                            var query = 'SELECT * FROM counts order by bbname';
+
+                                            db.any(query)
+                                                .then(function (rows) {
+                                                // render views/store/list.ejs template file
+                                                res.render('store/list2', {
+                                                    title: 'Class Counts - Updated ' + globalDate,
+                                                    data: rows
+                                                })
+                                            })
+                                        })
+                                        .catch(function() {
+                                            req.flash('error', err);
+                                            res.render('store/list2', {
+                                            title: 'Class Counts - Updated ' + globalDate,
+                                            data: ''
+                                        })
+                                        })
                             })
                     })
                     .catch(function(err) {
@@ -1033,7 +1078,7 @@ app.put('/barcode/(:bbname)', function (req, res) {
                             data: ''
                         })
                     })
-                    })
+                    
     } else {
         var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
         req.flash('error', error_msg);
