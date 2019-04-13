@@ -279,6 +279,12 @@ input[type=submit] {
   background-color: blue !important; 
   color: white; 
 }
+@media only screen and (max-width: 413px){
+    .barcode, .sparring {
+        width: unset;
+        float: unset;
+    }
+}
 </style>
 <head>
 	<!-- The param which is passed from render-->
@@ -301,7 +307,7 @@ input[type=submit] {
 </header>
 <form autocomplete="off" action="/store/search" method="post" name="form1">
     <div class="autocomplete" style="width:70%;">
-        <input id="result" name="result" type="text" placeholder="Black Belt Name" value="<%= result %>"/>
+        <input id="result" name="result" type="text" placeholder="Black Belt First Name" value="<%= result %>"/>
     </div>
     <input type="submit" value="Search"/>
 </form>
@@ -441,7 +447,7 @@ input[type=submit] {
         </script>
         <script>
                 autocomplete(document.getElementById("result"), names);
-                </script>
+        </script>
     </body>
 </html>
 <%- include ../layouts/footer.ejs %>
