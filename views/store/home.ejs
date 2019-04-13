@@ -11,7 +11,7 @@
     console.log(err);
 </script>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <style>
 body {
     background-color: black;
@@ -88,7 +88,7 @@ li a:hover, .dropdown:hover  .dropbtn {
 }
 .student-content div {
     color: black;
-    padding: 12px 16px;
+    padding: 12px;
     text-decoration: none;
     display: block;
     font-size: smaller;
@@ -279,14 +279,15 @@ input[type=submit] {
   background-color: blue !important; 
   color: white; 
 }
+.barcode::before, .sparring::before, .regular::before, .swats::before {
+    width: 85px;
+}
 @media only screen and (max-width: 413px){
     .barcode, .sparring {
         width: unset;
         float: unset;
     }
-    .barcode::before, .sparring::before, .regular::before, .swats::before {
-        width: 100px;
-    }
+
 }
 </style>
 <head>
@@ -312,7 +313,7 @@ input[type=submit] {
     <div class="autocomplete" style="width:70%;">
         <input id="result" name="result" type="text" placeholder="Black Belt First Name" value="<%= result %>"/>
     </div>
-    <input type="submit" value="Search"/>
+    <input type="submit" value="Search" name="Submit"/>
 </form>
 <body id="body-content">
         <% if (data) { %>
