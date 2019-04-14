@@ -22,6 +22,7 @@ app.use(session({
 app.use(exp_val());
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'store')));
+
 function getDate() {
     var query = 'select * from "refresh"';
     db.any(query)
@@ -65,6 +66,57 @@ app.get('/', function (request, response) {
         })
     })
     
+});
+function addClass(code, name){
+    if (name == 'SWAT'){
+        db.none('update counts set swats = (swats + 1) where barcode = ' + code);
+    }
+    if (name == 'Black Belt'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+    }
+    if (name == 'Basic'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+    }
+    if (name == 'Level 1'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+    }
+    if (name == 'Level 1/2'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+    }
+    if (name == 'Level 2'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+    }
+    if (name == 'Level 3'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+    }
+    if (name == 'Lvl 3/Prep/Cond'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+    }
+    if (name == 'Prep/Cond'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+    }
+    if (name == 'Spar-3/Prep/Cond/Black'){
+        db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+    }
+    if (name == 'Spar-Cond/Black'){
+        db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+    }
+    if (name == 'Spar-Level 3'){
+        db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+    }
+    if (name == 'Spar - Level 2'){
+        db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+    }
+    if (name == 'Women\'s Sparring'){
+        db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+    }
+}
+app.post('/data', function(req, res){
+    addClass(req.body.barCodeId, req.body.name);
+    res.json({
+        message: 'Data received'
+    });
+    console.log('done');
 });
 app.get('/home', function(request, response) {
     getVersion();
