@@ -17,7 +17,7 @@
             border-top: solid black 1px;
         }
     </style>
-    <div id="footer">
+    <div id="data">
     <footer>Intellectual property of Chandler de Spirlet.<br>
             Design contributions graciously made by Nick Jantz.</footer>
     </div>
@@ -27,7 +27,7 @@
     var y = "False";
     var localTime = new Date();
     // var localTime = new Date(2018, 11, 24, 10, 33);
-    var hours   = localTime.getHours();
+    var hours = localTime.getHours();
     console.log(hours, ' -hours');
     var timeString = "" + hours;
     
@@ -36,10 +36,10 @@
 
     if (hours >= 7 && hours <= 17) {
         console.log(x);
-        document.getElementById("footer").classList.add('white');
+        document.getElementById("data").classList.add('white');
     } else {
         console.log(y);
-        document.getElementById("footer").classList.add('dark');
+        document.getElementById("data").classList.add('dark');
         // document.getElementById("body-content").classList.add('dark');
     }
     </script>
