@@ -240,9 +240,21 @@ tr:hover {
                         <tr>
                             <td><%= item.bbname %></td>
                             <td><%= item.barcode %></td>
-                            <td><%= item.regular %></td>
-                            <td><%= item.sparring %></td>
-                            <td><%= item.swats %></td>
+			    <% if(item.regular < 10) { %>
+                            <td style="color:red;"><%= item.regular %></td>
+			    <% } else { %>
+			    <td style="color:green;"><%= item.regular %></td>
+			    <% } %>
+			    <% if(item.sparring < 10) { %>
+                            <td style="color:red;"><%= item.sparring %></td>
+			    <% } else { %>
+			    <td style="color:green;"><%= item.sparring %></td>
+			    <% } %>
+                            <% if(item.swats < 16) { %>
+                            <td style="color:red;"><%= item.swats %></td>
+			    <% } else { %>
+			    <td style="color:green;"><%= item.swats %></td>
+			    <% } %>
                             <td><a style="color:white" href='/store/barcode/<%= item.bbname %>'>Change Barcode</a> &nbsp;</td>
                         </tr>
                     <% }) %>
