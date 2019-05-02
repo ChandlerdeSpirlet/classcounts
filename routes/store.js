@@ -67,52 +67,75 @@ app.get('/', function (request, response) {
     })
     
 });
-function addClass(code, name){
+function addType(code, name, type, time){
+    db.none('insert into history (barcode, classname, classdate, classtype) values ($1, $2, $3, $4)', [code, name, time, type]);
+};
+function addClass(code, name, time){
     if (name == 'SWAT'){
         db.none('update counts set swats = (swats + 1) where barcode = ' + code);
+        addType(code, name, 'SWAT', time);
     }
     if (name == 'Black Belt'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time);
     }
     if (name == 'Basic'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time);
     }
     if (name == 'Level 1'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time);
     }
     if (name == 'Level 1/2'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time);
     }
     if (name == 'Level 2'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time);
     }
     if (name == 'Level 3'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time);
     }
     if (name == 'Lvl 3/Prep/Cond'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time);
     }
     if (name == 'Prep/Cond'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time);
     }
     if (name == 'Spar-3/Prep/Cond/Black'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+        addType(code, name, 'Sparring', time);
     }
     if (name == 'Spar-Cond/Black'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+        addType(code, name, 'Sparring', time);
     }
     if (name == 'Spar-Level 3'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+        addType(code, name, 'Sparring', time);
     }
     if (name == 'Spar - Level 2'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+        addType(code, name, 'Sparring', time);
     }
     if (name == 'Women\'s Sparring'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+        addType(code, name, 'Sparring', time);
     }
 }
 app.post('/data', function(req, res){
-    addClass(req.body.barCodeId, req.body.name);
+    var set = {
+        timeZone: "America/Denver",
+        year: 'numeric', month: 'long', day: 'numeric'
+    };
+    var format = new Intl.DateTimeFormat('en-us', set);
+    var classTime = format.format(req.body.timestamp);
+    addClass(req.body.barCodeId, req.body.name, classTime);
     res.json({
         message: 'Data received'
     });
@@ -190,6 +213,21 @@ app.get('/search', function(req, res){
         title: 'Classes for',
         data: ''
     })
+});
+app.get('/history/(:barcode)', function(req, res){
+    var code = req.params.barcode;
+    var query = 'select * from history where barcode = $1';
+    db.any(query, code)
+        .then(function(rows){
+            res.render('store/history', {
+                title: 'Class History',
+                data: rows
+            })
+        })
+        .catch(function(err){
+            req.flash('error', 'That black belt is not registered with this website. Contact a system admin using the Contact Us page with your name.');
+            res.redirect('home');
+        })
 });
 app.get('/schedule', function (req, res){
     var data =fs.readFileSync(__dirname + '/storedFiles/sched.pdf');
