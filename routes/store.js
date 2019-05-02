@@ -538,46 +538,46 @@ function readData(area){
         }).on('end', () => {
             for (var x = 2; x < csvData.length; x++){
                 if (csvData[x][2] == 'SWAT'){
-                    db.none('update counts set swats = (swats + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Black Belt'){
-                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Basic'){
-                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Level 1'){
-                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Level 1/2'){
-                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Level 2'){
-                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Level 3'){
-                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Lvl 3/Prep/Cond'){
-                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Prep/Cond'){
-                    db.none('update counts set regular = (regular + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Spar-3/Prep/Cond/Black'){
-                    db.none('update counts set sparring = (sparring + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Spar-Cond/Black'){
-                    db.none('update counts set sparring = (sparring + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Spar-Level 3'){
-                    db.none('update counts set sparring = (sparring + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Spar - Level 2'){
-                    db.none('update counts set sparring = (sparring + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Women\'s Sparring'){
-                    db.none('update counts set sparring = (sparring + 1) where barcode = ' + csvData[x][1]);
+                    addClass(csvData[x][1], csvData[x][2], localTime);
                 }
             }
         })
