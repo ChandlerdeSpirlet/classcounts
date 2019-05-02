@@ -129,6 +129,7 @@ function addClass(code, name, time){
     }
 }
 app.post('/data', function(req, res){
+    console.log('date is', req.body.timestamp);
     var set = {
         timeZone: "America/Denver",
         year: 'numeric', month: 'long', day: 'numeric'
