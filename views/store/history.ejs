@@ -70,34 +70,49 @@ body {
     table {
         border-collapse: collapse;
     }
+
 th {
+    background-color: blue;
+    color: black;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+tr:nth-child(even) {
+    background-color: #3d3c3c;
+}
+tr {
+    background-color: #333232;
+}
+tr:hover {
+    background-color: #282727;
+}
+h1, h4, td {
+    color: white;
+}
+body {
+    background-color: black;
+}
+.day, body{
+    background-color: white;
+}
+.day, tr {
+    background-color:  #8a8787;
+}
+.day, tr:nth-child(even) {
+    background-color: #d6d5d5;
+}
+.day, tr:hover {
+    background-color: #ddd;
+}
+.day, th {
     background-color: blue;
     color: white;
     padding-top: 12px;
     padding-bottom: 12px;
 }
-tr:nth-child(even) {
-    background-color: #f2f2f2;
+.day, h1, h4, td{
+    color: black;
 }
-tr:hover {
-    background-color: #ddd;
-}
-.dark, tr:nth-child(even) {
-    background-color: #3d3c3c;
-}
-.dark, tr {
-    background-color: #333232;
-}
-.dark, tr:hover {
-    background-color: #282727;
-}
-.dark, h1, h2, td {
-    color: white;
-}
-.dark, body {
-    background-color: black;
-}
-
 @media (min-width: 300px) {
     th {
         /* Since color is in min-width: 300px it will follow all the other sizes upwards */
@@ -226,10 +241,7 @@ tr:hover {
     
             if (hours <= 7 && hours >= 19) {
                 console.log(x);
-                document.getElementById("body-content").classList.add('dark');
-            } else {
-                console.log(y);
-                // document.getElementById("body-content").classList.add('dark');
+                document.getElementById("data").classList.add('day');
             }
     </script>
 </body>
