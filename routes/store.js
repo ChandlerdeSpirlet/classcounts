@@ -128,15 +128,54 @@ function addClass(code, name, time){
         addType(code, name, 'Sparring', time);
     }
 }
+function getMonth(month){
+    if (month == "01"){
+        return ("January");
+    }
+    if (month == "02"){
+        return ("February");
+    }
+    if (month == "03"){
+        return ("March");
+    }
+    if (month == "04"){
+        return ("April");
+    }
+    if (month == "05"){
+        return ("May");
+    }
+    if (month == "06"){
+        return ("June");
+    }
+    if (month == "07"){
+        return ("July");
+    }
+    if (month == "08"){
+        return ("August");
+    }
+    if (month == "09"){
+        return ("September");
+    }
+    if (month == "10"){
+        return ("October");
+    }
+    if (month == "11"){
+        return ("November");
+    }
+    if (month == "12"){
+        return ("December");
+    }
+};
+function setDate(date){
+    var year = date.substring(0, 4);
+    var month = date.substring(5, 7);
+    var day = date.substring(8, 10);
+    var strMonth = getMonth(month);
+    return (strMonth + " " + day + ", " + year);
+};
 app.post('/data', function(req, res){
-    console.log('date is', req.body.timestamp);
-    var set = {
-        timeZone: "America/Denver",
-        year: 'numeric', month: 'long', day: 'numeric'
-    };
-    var format = new Intl.DateTimeFormat('en-us', set);
-    var classTime = format.format(req.body.timestamp);
-    addClass(req.body.barCodeId, req.body.name, classTime);
+    console.log('date is', setDate(req.body.timestamp));
+    addClass(req.body.barCodeId, req.body.name, setDate(req.body.timestamp));
     res.json({
         message: 'Data received'
     });
