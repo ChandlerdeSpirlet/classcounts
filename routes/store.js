@@ -127,6 +127,10 @@ function addClass(code, name, time){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
         addType(code, name, 'Sparring', time);
     }
+    if (name == 'Spar-Black Belt'){
+        db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
+        addType(code, name, 'Sparring', time);
+    }
 }
 function getMonth(month){
     if (month == "01"){
@@ -577,6 +581,9 @@ function readData(area){
                     addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == 'Women\'s Sparring'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Spar-Black Belt'){
                     addClass(csvData[x][1], csvData[x][2], localTime);
                 }
             }
