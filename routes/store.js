@@ -260,7 +260,7 @@ app.get('/search', function(req, res){
 });
 app.get('/history/(:barcode)', function(req, res){
     var code = req.params.barcode;
-    var query = 'select * from history where barcode = $1';
+    var query = 'select * from history where barcode = $1 order by classdate desc';
     db.any(query, code)
         .then(function(rows){
             res.render('store/history', {
