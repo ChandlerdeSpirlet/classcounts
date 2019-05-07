@@ -170,7 +170,7 @@ tr:hover {
         padding-bottom: 5px;
     }
     th,td {
-        width: calc(598px /5);
+        width: calc(598px /6);
         text-align: center;
         padding-top: 5px; 
         padding-bottom: 5px;
@@ -182,44 +182,44 @@ tr:hover {
 }
 @media (min-width: 600px) {
     th, td {
-        width: calc(768px / 5);
+        width: calc(768px / 6);
     }
 }
 
 @media (min-width: 768px) {
     th,td {
-        width: calc(768px / 5);
+        width: calc(768px / 6);
     }
 }
 @media (min-width: 768.02px) {
     th, td {
-        width: calc(1024px / 5);
+        width: calc(1024px / 6);
     }
 }
 @media (min-width: 1024px) {
     th,td {
-        width: calc(1024px / 5);
+        width: calc(1024px / 6);
     }
 }
 @media (min-width: 1024.02px) {
     th, td {
-        width: calc(1200px / 5);
+        width: calc(1200px / 6);
     }
 }
 @media (min-width: 1200px) {
     th,td {
-        width: calc(1600px / 5);
+        width: calc(1600px / 6);
     }
 }
 @media (min-width: 1600.02px) {
     th, td {
-        width: calc(2000px / 5);
+        width: calc(2000px / 6);
         /* Simple hack for screen larger than 1600 pixels but smaller than 2000 */
     }
 }
 @media (min-width: 2000.02px) {
     th, td {
-        width: calc(2400px / 5);
+        width: calc(2400px / 6);
     }
 }
 </style>
@@ -238,7 +238,6 @@ tr:hover {
                 <a href="/store/add">Add Blackbelt</a>
                 <a href="/store/del">Remove Blackbelt</a>
                 <a href="/store/edit">Change Counts</a>
-                <a href="/store/additional">Store Classes</a>
             </div>
             </li>
             <li class="dropdown">
@@ -264,6 +263,7 @@ tr:hover {
                 </div>
                 </li>
             <li><a href="/store/changelog">Change Log</a></li>
+            
             <li><a href="/">Logout</a></li>
         </ul>
     </div>
@@ -281,6 +281,7 @@ tr:hover {
                     <th>Regular Class</th>
                     <th>Sparring Class</th>
                     <th>SWAT Class</th>
+                    <th>Store Classes</th>
                 </tr>
             </table>
         </div>
@@ -297,6 +298,7 @@ tr:hover {
                             <td><%= item.regular %></td>
                             <td><%= item.sparring %></td>
                             <td><%= item.swats %></td>
+                            <td><a style="color:white" href='/store/adjust/<%= item.barcode %>'> Adjust Classes</a> &nbsp;</td>
                         </tr>
                     <% }) %>
                 <% } %>

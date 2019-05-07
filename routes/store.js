@@ -802,6 +802,87 @@ app.get('/additional', function(req, res){
         })
     }
 });
+app.post('/adjust/(:barcode)', function(req, res){
+    var item = {
+        barcode: req.sanitize('barcode').trim(),
+        reg: req.sanitize('regular').trim(),
+        spar: req.sanitize('spar').trim(),
+        swat: req.sanitize('swat').trim(),
+        datestring: req.sanitize('datestring').trim(),
+        type: req.sanitize('type').trim(),
+        classname: req.sanitize('classname').trim()
+    }
+    addType(item.barcode, item.classname, item.type, item.datestring);
+    var query = 'update counts set regular = (regular + $1), sparring = (sparring + $2), swats = (swats + $3) where barcode = $4';
+    db.none(query, [item.reg, item.spar, item.swat, item.barcode])
+        .then(function(res){
+            res.redirect('list3');
+            req.flash('success', 'Successfully updated classes for barcode ' + item.barcode);
+        })
+        .catch(function(err){
+            res.redirect('list3');
+            req.flash('error', 'An error occurred for barcode ' + item.barcode);
+        })
+});
+app.get('/adjust/(:barcode)', function(req, res){
+    var code = req.params.barcode;
+    if (!req.session.user || req.session.user != 'admin'){
+        req.flash('error', 'Admin credentials required');
+        var query = 'SELECT * FROM inc order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: ''
+            })
+        })
+    } else if (req.session.user == "admin"){
+        res.render('store/adjust', {
+            title: 'Adjust classes for ' + code,
+            barcode: code,
+            regular: '0',
+            spar: '0',
+            swat: '0',
+            datestring: '',
+            type: '',
+            classname: ''
+        })
+    } else {
+        req.flash('error', 'Admin credentials required');
+        var query = 'SELECT * FROM counts order by bbname';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: ''
+            })
+        })
+    }
+});
 app.post('/additionalADD', function(req, res){
     req.assert('bbname', 'Name is required').notEmpty();
     req.assert('barcode', 'Barcode is required').notEmpty();
