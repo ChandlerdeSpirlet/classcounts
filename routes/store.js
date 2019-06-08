@@ -1926,6 +1926,7 @@ app.post('/del', function(req, res){
 
 app.delete('/delete', function (req, res) {
     var deleteQuery = 'update counts set regular = 0, sparring = 0, swats = 0 where barcode > 0';
+    var refreshQuery = 'delete from history where barcode > 0'
     db.none(deleteQuery)
         .then(function (result) {
                     req.flash('success', 'Successfully refreshed classes');
@@ -1934,5 +1935,34 @@ app.delete('/delete', function (req, res) {
         .catch(function (err) {
                     req.flash('error', err);
                     res.redirect('file');
+        })
+        db.none(refreshQuery)
+        .then(function (result) {
+                    req.flash('success', 'Successfully refreshed history');
+                    res.redirect('file');
+        })
+        .catch(function (err) {
+                    req.flash('error', err);
+                    res.redirect('file');
+        })
+});
+app.post('/delete', function(req, res){
+    var deleteQuery = 'update counts set regular = 0, sparring = 0, swats = 0 where barcode > 0';
+    var refreshQuery = 'delete from history where barcode > 0';
+    db.none(deleteQuery)
+        .then(function (result){
+            req.flash('success', 'Refreshed Classes');
+        })
+        .catch(function(err){
+            req.flash('error', 'Unable to refresh classes');
+        })
+    db.none(refreshQuery)
+        .then(function(result){
+            req.flash('success', 'Refreshed History');
+            res.redirect('list3');
+        })
+        .catch(function(err){
+            req.flash('error', 'Unable to refresh history');
+            res.redirect('list3');
         })
 });

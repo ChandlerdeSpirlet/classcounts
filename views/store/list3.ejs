@@ -268,7 +268,10 @@ tr:hover {
         </ul>
     </div>
     <h1>Black Belt Class Counts</h1>
-    <h2><%= title %></h2><!--Using if-check to see if an error occurred and displaying appropriate message-->
+    <h2><%= title %></h2>
+    <form action="/store/delete" method="post">
+        <input type="submit" name="delete" value="Refresh Data">
+    </form><!--Using if-check to see if an error occurred and displaying appropriate message-->
     </div>
 	<div>
         <div class="header" id="myHeader">
