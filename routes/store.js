@@ -823,6 +823,21 @@ app.post('/adjust/(:barcode)', function(req, res){
             res.redirect('list3');
             req.flash('error', 'An error occurred for barcode ' + item.barcode);
         })
+    var options = {
+        timeZone: "America/Denver",
+        year: 'numeric', month: 'long', day: 'numeric'
+    };
+    var option2 = {
+        timeZone: "America/Denver",
+        hour: 'numeric', minute: 'numeric'
+    };
+    var formatter = new Intl.DateTimeFormat('en-us', options);
+    var localTime = formatter.format(new Date());
+    var form = new Intl.DateTimeFormat('en-us', option2);
+    var time = form.format(new Date());
+    var combined = localTime + " at " + time;
+    var query = 'update "refresh" set refreshed = $1';
+    db.none(query, [combined]);
 });
 app.get('/adjust/(:barcode)', function(req, res){
     var code = req.params.barcode;
