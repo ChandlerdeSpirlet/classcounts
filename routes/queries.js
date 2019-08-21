@@ -1,6 +1,8 @@
-var db = require('../database');
+const Pool = require('pg').Pool
+var dbConfig = process.env.DATABASE_URL;
+const pool = new Pool(dbConfig);
 const getUsers = (req, res) => {
-    db.query('select barcode, bbname, regular, sparring, swats from counts', (error, results) => {
+    pool.query('select barcode, bbname, regular, sparring, swats from counts', (error, results) => {
         if (error){
             throw error
         }

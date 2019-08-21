@@ -29,6 +29,7 @@ app.use(
         extended: true,
     })
 )
+app.use(bodyParser.json())
 
 function getDate() {
     var query = 'select * from "refresh"';
