@@ -9,6 +9,8 @@ var nodemailer = require('nodemailer');
 var session = require("express-session");
 var cookieParser = require("cookie-parser");
 var exp_val = require('express-validator');
+const bodyParser = require('body-parser');
+const api = require('./queries');
 
 
 module.exports = app;
@@ -22,6 +24,11 @@ app.use(session({
 app.use(exp_val());
 app.use(busboy());
 app.use(express.static(path.join(__dirname, 'store')));
+app.use(
+    bodyParser.urlencoded({
+        extended: true,
+    })
+)
 
 function getDate() {
     var query = 'select * from "refresh"';
@@ -40,6 +47,7 @@ function getVersion() {
             console.log('in function - global.versionGlobal -', global.versionGlobal);
         })
 }
+app.get('/users', api.getUsers)
 app.get('/', function (request, response) {
     getVersion();
     // TODO: Initialize the query variable with a SQL query
@@ -67,6 +75,7 @@ app.get('/', function (request, response) {
     })
     
 });
+
 function addType(code, name, type, time){
     db.none('insert into history (barcode, classname, classdate, classtype) values ($1, $2, $3, $4)', [code, name, time, type]);
 };
