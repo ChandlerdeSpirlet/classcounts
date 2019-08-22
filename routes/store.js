@@ -61,7 +61,6 @@ function getVersion() {
             console.log('in function - global.versionGlobal -', global.versionGlobal);
         })
 }
-app.get('/users', api.getUsers);
 app.get('/', function (request, response) {
     getVersion();
     // TODO: Initialize the query variable with a SQL query
