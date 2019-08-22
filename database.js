@@ -11,20 +11,10 @@ const dbConfig = {
 var db = pgp(dbConfig);
 module.exports = db;
 */
-/*
+
 var pgp = require('pg-promise')();
 
 var dbConfig = process.env.DATABASE_URL;
 var db = pgp(dbConfig);
 
 module.exports = db;
-*/
-const {Pool} = require('pg');
-const isProduction = process.env.NODE_ENV === 'production'
-const connectionString = process.env.DATABASE_URL;
-const pool = new Pool({
-    connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-    ssl: isProduction,
-})
-
-module.exports = {pool}
