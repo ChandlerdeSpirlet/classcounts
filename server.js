@@ -21,7 +21,7 @@ app.use(methodOverride(function (req, res) {
 }));
 
 const getData = (req, res) => {
-    query = 'SELECT * FROM counts';
+    query = 'SELECT barcode, bbname, regular, sparring, swats FROM counts';
     db.any(query)
         .then(function(rows){
             res.status(200).json(rows);
