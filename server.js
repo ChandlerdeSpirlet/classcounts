@@ -21,12 +21,14 @@ app.use(methodOverride(function (req, res) {
 }));
 
 const getData = (req, res) => {
-    db.query('SELECT * from counts', (error, results) => {
-        if (error){
-            throw error
-        }
-        res.status(200).json(results.rows)
-    })
+    query = 'SELECT * FROM counts';
+    db.any(query)
+        .then(function(rows){
+            res.status(200).json(rows);
+        })
+        .catch(function(err){
+            console.log("ERROR " + err);
+        })
 }
 app
     .route('/data')
