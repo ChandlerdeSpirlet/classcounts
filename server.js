@@ -1,11 +1,14 @@
 var express = require('express');
+const db = require('./database');
 var app = express();
 app.set('view engine', 'ejs');
 var expressValidator = require('express-validator');
 app.use(expressValidator());
 var bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({extended: true}));
+const cors = require('cors');
 app.use(bodyParser.json());
+app.use(cors());
 var multer = require('multer');
 var multerupload = multer({dest: 'files/'})
 var methodOverride = require('method-override');
@@ -17,6 +20,17 @@ app.use(methodOverride(function (req, res) {
     }
 }));
 
+const getData = (req, res) => {
+    db.query('SELECT * from counts', (error, results) => {
+        if (error){
+            throw error
+        }
+        res.status(200).json(results.rows)
+    })
+}
+app
+    .route('/data')
+    .get(getData)
 var flash = require('express-flash');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
@@ -32,8 +46,10 @@ var index = require('./routes/index');
 var store = require('./routes/store');
 app.use('/', index);
 app.use('/store', store);
-//var port = 5000;
-var port = process.env.PORT;
+var port = 5000;
+//var port = process.env.PORT;
+
+
 app.listen(port, function() {
     console.log('Server running on http://localhost:' + port)
 });
