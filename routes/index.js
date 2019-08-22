@@ -1,25 +1,7 @@
 var express = require('express');
 var db = require('../database');
-const bodyParser = require('body-parser');
-const cors = require('cors');
 var app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 module.exports = app;
-
-const getData = (req, res) => {
-    db.query('SELECT bbname, barcode from counts', (error, results) => {
-        if (error){
-            throw error
-        }
-        res.status(200).json(results.view)
-    })
-}
-
-app
-    .route('/getData')
-    .get(getData)
 
 var query = 'select * from "refresh"';
 db.any(query)
