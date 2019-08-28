@@ -1,6 +1,7 @@
 var express = require('express');
 var db = require('../database');
 var app = express();
+require('newrelic');
 module.exports = app;
 
 var query = 'select * from "refresh"';

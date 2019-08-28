@@ -11,7 +11,7 @@ var cookieParser = require("cookie-parser");
 var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-
+require('newrelic');
 
 module.exports = app;
 app.use(cookieParser('counts'));

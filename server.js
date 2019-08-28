@@ -9,6 +9,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 const cors = require('cors');
 app.use(bodyParser.json());
 app.use(cors());
+require('newrelic');
 var multer = require('multer');
 var multerupload = multer({dest: 'files/'})
 var methodOverride = require('method-override');
