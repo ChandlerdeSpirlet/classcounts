@@ -205,7 +205,7 @@ app.post('/data', function(req, res){
     res.json({
         message: 'Data received'
     });
-    console.log('done');
+    console.log('done - ' + req.body.name + " " + req.body.barCodeId);
     var options = {
         timeZone: "America/Denver",
         year: 'numeric', month: 'long', day: 'numeric'
