@@ -209,6 +209,9 @@ app.post('/data', function(req, res){
     var combined = localTime + " at " + time;
     var query = 'update "refresh" set refreshed = $1';
     db.none(query, [combined]);
+    //NEW LOG DB
+    var updatelog = 'insert into log (barcode, firstname, lastname, classname, classdate) values (req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp)';
+    db.none(updatelog);
 });
 app.get('/home', function(request, response) {
     getVersion();
