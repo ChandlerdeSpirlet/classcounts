@@ -1,4 +1,4 @@
-require('newrelic');
+//require('newrelic');
 var express = require('express');
 const db = require('./database');
 var app = express();
