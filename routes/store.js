@@ -606,6 +606,10 @@ function readData(area){
 function refresh(){
     var deleteQuery = 'update counts set regular = 0, sparring = 0, swats = 0 where barcode > 0';
     db.none(deleteQuery)
+    var historyQuery = 'delete from history where barcode > 0';
+    var logQuery = 'delete from log where barcode > 0';
+    db.none(historyQuery);
+    db.none(logQuery);
 };
 
 app.route('/file').post(function(req, res, next) {
@@ -1715,7 +1719,7 @@ function sendEmail(name){
         service: 'gmail',
         auth: {
             user: 'classcountsema@gmail.com',
-            pass: 'novnap-hizcaf-rimGi7'
+            pass: 'bEhqyw-fifbe0-bukwun'
         }
     });
     var mailOptions = {
@@ -1737,7 +1741,7 @@ function sendCopy(name, days){
         service: 'gmail',
         auth: {
             user: 'classcountsema@gmail.com',
-            pass: 'novnap-hizcaf-rimGi7'
+            pass: 'bEhqyw-fifbe0-bukwun'
         }
     });
     var mailOptions = {
@@ -1766,7 +1770,7 @@ app.post('/email', function (request, response) {
             service: 'gmail',
             auth: {
                 user: 'classcountsema@gmail.com',
-                pass: 'novnap-hizcaf-rimGi7'
+                pass: 'bEhqyw-fifbe0-bukwun'
             }
         });
         var item = {
@@ -1849,7 +1853,7 @@ app.post('/email2', function (request, response) {
             service: 'gmail',
             auth: {
                 user: 'classcountsema@gmail.com',
-                pass: 'novnap-hizcaf-rimGi7'
+                pass: 'bEhqyw-fifbe0-bukwun'
             }
         });
         var item = {
