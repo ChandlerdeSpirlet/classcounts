@@ -14,11 +14,6 @@ db.any(query)
 
 
 app.get('/', function (request, response) {
-    var http = require("http");
-    setInterval(function() {
-        http.get("http://classcounts.herokuapp.com");
-    }, 300000); // every 5 minutes (300000)
-    
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     var query = 'SELECT * FROM counts order by bbname';

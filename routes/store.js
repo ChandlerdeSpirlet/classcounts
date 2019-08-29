@@ -32,18 +32,6 @@ app.use(
 app.use(bodyParser.json())
 app.use(cors())
 
-const getData = (req, res) => {
-    db.query('SELECT barcode, bbname from counts', (err, results) => {
-        if (err){
-            throw err
-        }
-        res.status(200).json(results.rows)
-    })
-}
-app
-    .route('/data')
-    .get(getData)
-
 function getDate() {
     var query = 'select * from "refresh"';
     db.any(query)
