@@ -208,10 +208,10 @@ app.post('/data', function(req, res){
     var time = form.format(new Date());
     var combined = localTime + " at " + time;
     var query = 'update "refresh" set refreshed = $1';
-    var updatelog = 'insert into log (barcode, firstname, lastname, classname, classdate) values ($1, $2, $3, $4, $5)';
+    var updatelog = 'insert into log (barcode, firstname, lastname, classname, classdate, classtime) values ($1, $2, $3, $4, $5, $6)';
     db.any(query, [combined])
         .then(function (){
-            db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp])
+            db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp, req.body.beginDate])
                 .then(function(){
                     console.log("Added to log and updated refreshed");
                 })
