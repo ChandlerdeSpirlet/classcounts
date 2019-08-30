@@ -222,7 +222,6 @@ app.post('/data', function(req, res){
         .catch(function(error){
             console.log("Not updated log or refreshed with - " + error);
         })
-    //NEW LOG DB
 });
 app.get('/home', function(request, response) {
     getVersion();
