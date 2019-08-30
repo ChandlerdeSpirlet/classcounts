@@ -208,10 +208,21 @@ app.post('/data', function(req, res){
     var time = form.format(new Date());
     var combined = localTime + " at " + time;
     var query = 'update "refresh" set refreshed = $1';
-    db.none(query, [combined]);
+    var updatelog = 'insert into log (barcode, firstname, lastname, classname, classdate) values ($1, $2, $3, $4, $5)';
+    db.any(query, [combined])
+        .then(function (){
+            db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp])
+                .then(function(){
+                    console.log("Added to log and updated refreshed");
+                })
+                .catch(function(err){
+                    console.log("Not added to log with - " + err);
+                })
+        })
+        .catch(function(error){
+            console.log("Not updated log or refreshed with - " + error);
+        })
     //NEW LOG DB
-    var updatelog = 'insert into log (barcode, firstname, lastname, classname, classdate) values (req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp)';
-    db.none(updatelog);
 });
 app.get('/home', function(request, response) {
     getVersion();
