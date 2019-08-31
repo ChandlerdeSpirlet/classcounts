@@ -211,20 +211,37 @@ app.post('/data', function(req, res){
     var time = form.format(new Date());
     var combined = localTime + " at " + time;
     var query = 'update "refresh" set refreshed = $1';
-    var updatelog = 'insert into log (barcode, firstname, lastname, classname, classdate, classtime) values ($1, $2, $3, $4, $5, $6)';
-    db.any(query, [combined])
-        .then(function (){
-            db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp, req.body.beginDate])
-                .then(function(){
-                    console.log("Added to log and updated refreshed");
-                })
-                .catch(function(err){
-                    console.log("Not added to log with - " + err);
-                })
+    var updatelog = 'insert into log (barcode, firstname, lastname, classname, classdate, classtime, attendance_id) values ($1, $2, $3, $4, $5, $6, $7)';
+    var attenQuery = 'select attendance_id from log where barcode = $1'
+    db.any(attenQuery, [req.body.barCodeId])
+        .then(function(rows) {
+            var alreadyCounted = false;
+            var attenArray = rows.attendance_id;
+            attenArray.forEach(function(element){
+                if (req.body.attendanceID == element){
+                    alreadyCounted = true;
+                }
+                else {
+                    console.log("That class has already been accounted for");
+                }
+            })
+            if (alreadyCounted == false){
+                db.any(query, [combined])
+                    .then(function (){
+                        db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp, req.body.beginDate, req.body.attendanceID])
+                            .then(function(){
+                                console.log("Added to log and updated refreshed");
+                            })
+                            .catch(function(err){
+                                console.log("Not added to log with - " + err);
+                            })
+                    })
+                    .catch(function(error){
+                        console.log("Not updated log or refreshed with - " + error);
+                    })
+            }
         })
-        .catch(function(error){
-            console.log("Not updated log or refreshed with - " + error);
-        })
+        
 });
 app.get('/home', function(request, response) {
     getVersion();
