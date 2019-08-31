@@ -229,7 +229,7 @@ app.post('/data', function(req, res){
             if (alreadyCounted == false){
                 db.any(query, [combined])
                     .then(function (){
-                        db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp, req.body.beginDate, req.body.attendanceID])
+                        db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp, req.body.beginDate, req.body.attendanceId])
                             .then(function(){
                                 console.log("Added to log and updated refreshed");
                             })
