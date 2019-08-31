@@ -241,7 +241,9 @@ app.post('/data', function(req, res){
                     })
             }
         })
-        
+        .catch(function(errors){
+            console.log("Unable to fetch attendance_id " + errors);
+        })
 });
 app.get('/home', function(request, response) {
     getVersion();
