@@ -192,7 +192,7 @@ app.post('/data', function(req, res){
     console.log(req.body);
     console.log("---------------------------");
     console.log('date is', setDate(req.body.timestamp));
-    addClass(req.body.barCodeId, req.body.name, setDate(req.body.timestamp), req.body.beginDate);
+    addClass(req.body.barCodeId, req.body.name, setDate(req.body.timestamp));
     res.json({
         message: 'Data received'
     });
@@ -215,7 +215,7 @@ app.post('/data', function(req, res){
     var attenQuery = 'select attendance_id from log where barcode = $1'
     db.any(attenQuery, [req.body.barCodeId])
         .then(function(rows) {
-            console.log("rows = " + rows);
+            console.log("rows = " + rows.attendance_id);
             var alreadyCounted = false;
             var attenArray = rows.attendance_id;
             attenArray.forEach(function(element){
