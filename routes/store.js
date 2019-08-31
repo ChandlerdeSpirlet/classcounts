@@ -188,6 +188,9 @@ function setDate(date){
     return (strMonth + " " + day + ", " + year);
 };
 app.post('/data', function(req, res){
+    console.log("--------------------------");
+    console.log(req.body);
+    console.log("---------------------------");
     console.log('date is', setDate(req.body.timestamp));
     addClass(req.body.barCodeId, req.body.name, setDate(req.body.timestamp));
     res.json({
