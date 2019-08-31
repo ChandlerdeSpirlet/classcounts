@@ -215,7 +215,7 @@ app.post('/data', function(req, res){
     var attenQuery = 'select attendance_id from log where barcode = $1'
     db.any(attenQuery, [req.body.barCodeId])
         .then(function(rows) {
-            console.log("rows = " + rows.attendance_id);
+            console.log("rows = " + rows);
             var alreadyCounted = false;
             var attenArray = rows.attendance_id;
             attenArray.forEach(function(element){
