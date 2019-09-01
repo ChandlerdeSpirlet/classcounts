@@ -77,7 +77,7 @@ app.get('/', function (request, response) {
     
 });
 
-function addType(code, name, type, time){
+function addType(code, name, type, time, id){
     db.none('insert into history (barcode, classname, classdate, classtype, attendance_id) values ($1, $2, $3, $4, $5)', [code, name, time, type, id]);
 };
 function addClass(code, name, time, id){
