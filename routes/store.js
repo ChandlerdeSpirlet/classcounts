@@ -78,68 +78,68 @@ app.get('/', function (request, response) {
 });
 
 function addType(code, name, type, time){
-    db.none('insert into history (barcode, classname, classdate, classtype) values ($1, $2, $3, $4)', [code, name, time, type]);
+    db.none('insert into history (barcode, classname, classdate, classtype, attendance_id) values ($1, $2, $3, $4, $5)', [code, name, time, type, id]);
 };
-function addClass(code, name, time){
+function addClass(code, name, time, id){
     if (name == 'SWAT'){
         db.none('update counts set swats = (swats + 1) where barcode = ' + code);
-        addType(code, name, 'SWAT', time);
+        addType(code, name, 'SWAT', time, id);
     }
     if (name == 'Black Belt'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
-        addType(code, name, 'Regular', time);
+        addType(code, name, 'Regular', time, id);
     }
     if (name == 'Basic'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
-        addType(code, name, 'Regular', time);
+        addType(code, name, 'Regular', time, id);
     }
     if (name == 'Level 1'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
-        addType(code, name, 'Regular', time);
+        addType(code, name, 'Regular', time, id);
     }
     if (name == 'Level 1/2'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
-        addType(code, name, 'Regular', time);
+        addType(code, name, 'Regular', time, id);
     }
     if (name == 'Level 2'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
-        addType(code, name, 'Regular', time);
+        addType(code, name, 'Regular', time, id);
     }
     if (name == 'Level 3'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
-        addType(code, name, 'Regular', time);
+        addType(code, name, 'Regular', time, id);
     }
     if (name == 'Lvl 3/Prep/Cond'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
-        addType(code, name, 'Regular', time);
+        addType(code, name, 'Regular', time, id);
     }
     if (name == 'Prep/Cond'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
-        addType(code, name, 'Regular', time);
+        addType(code, name, 'Regular', time, id);
     }
     if (name == 'Spar-3/Prep/Cond/Black'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
-        addType(code, name, 'Sparring', time);
+        addType(code, name, 'Sparring', time, id);
     }
     if (name == 'Spar-Cond/Black'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
-        addType(code, name, 'Sparring', time);
+        addType(code, name, 'Sparring', time, id);
     }
     if (name == 'Spar-Level 3'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
-        addType(code, name, 'Sparring', time);
+        addType(code, name, 'Sparring', time, id);
     }
     if (name == 'Spar - Level 2'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
-        addType(code, name, 'Sparring', time);
+        addType(code, name, 'Sparring', time, id);
     }
     if (name == 'Women\'s Sparring'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
-        addType(code, name, 'Sparring', time);
+        addType(code, name, 'Sparring', time, id);
     }
     if (name == 'Spar-Black Belt'){
         db.none('update counts set sparring = (sparring + 1) where barcode = ' + code);
-        addType(code, name, 'Sparring', time);
+        addType(code, name, 'Sparring', time, id);
     }
 }
 function getMonth(month){
@@ -192,7 +192,6 @@ app.post('/data', function(req, res){
     console.log(req.body);
     console.log("---------------------------");
     console.log('date is', setDate(req.body.timestamp));
-    addClass(req.body.barCodeId, req.body.name, setDate(req.body.timestamp));
     res.json({
         message: 'Data received'
     });
@@ -212,38 +211,19 @@ app.post('/data', function(req, res){
     var combined = localTime + " at " + time;
     var query = 'update "refresh" set refreshed = $1';
     var updatelog = 'insert into log (barcode, firstname, lastname, classname, classdate, classtime, attendance_id) values ($1, $2, $3, $4, $5, $6, $7)';
-    var attenQuery = 'select attendance_id from log where barcode = $1'
-    db.any(attenQuery, [req.body.barCodeId])
-        .then(function(rows) {
-            console.log("rows = " + rows);
-            var alreadyCounted = false;
-            var attenArray = rows.attendance_id;
-            attenArray.forEach(function(element){
-                if (req.body.attendanceID == element){
-                    alreadyCounted = true;
-                }
-                else {
-                    console.log("That class has already been accounted for");
-                }
-            })
-            if (alreadyCounted == false){
-                db.any(query, [combined])
-                    .then(function (){
-                        db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp, req.body.beginDate, req.body.attendanceId])
-                            .then(function(){
-                                console.log("Added to log and updated refreshed");
-                            })
-                            .catch(function(err){
-                                console.log("Not added to log with - " + err);
-                            })
-                    })
-                    .catch(function(error){
-                        console.log("Not updated log or refreshed with - " + error);
-                    })
-            }
+    db.any(query, [combined])
+        .then(function (){
+            db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp, req.body.beginDate, req.body.attendanceId])
+                .then(function(){
+                    addClass(req.body.barCodeId, req.body.name, setDate(req.body.timestamp), req.body.attendanceId);
+                    console.log("Added to log and updated refreshed");
+                })
+                .catch(function(err){
+                    console.log("Class already accounted for in log and in history. ERROR: " + err);
+                })
         })
-        .catch(function(errors){
-            console.log("Unable to fetch attendance_id " + errors);
+        .catch(function(error){
+            console.log("Not updated log or refreshed with - " + error);
         })
 });
 app.get('/home', function(request, response) {
