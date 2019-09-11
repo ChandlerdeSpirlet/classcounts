@@ -21,6 +21,19 @@ app.use(methodOverride(function (req, res) {
         return method
     }
 }));
+const accountSid = 'ACb1c03f08d23ecbf461fa0a181bb02bfd';
+const authToken = '37a9dba405c734c85e66c2b4370041a5';
+const client = require('twilio')(accountSid, authToken);
+
+function sendMessage(text){
+    client.messages
+        .create({
+            body: text,
+            from: '+19705172654',
+            to: '+19703634895'
+        })
+        .then(message => console.log(message.sid));
+}
 
 cron.schedule("0 0 6 * * 6", function(){
     console.log("-----------------------------------");
@@ -32,9 +45,11 @@ cron.schedule("0 0 6 * * 6", function(){
             console.log("--------------------");
             console.log("Log has been cleared");
             console.log("--------------------");
+            sendMessage("Log has been successfully cleared.");
         })
         .catch(function(err){
             console.log("ERROR in log clear: " + err);
+            sendMessage("Log has not been successfully cleared.");
         })
 });
 

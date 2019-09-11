@@ -105,6 +105,12 @@
     .white input:invalid+span:after {
         color: black;
     }
+    .dark h4{
+        color: white;
+    }
+    .white h4{
+        color: black;
+    }
     .dark td {
         color: white;
     }
@@ -168,6 +174,7 @@
 </style>
 <!--Create a form to take input from user-->
 <html>
+    <h4>A response will be sent in the form of a text message."</h4>
     <body>
 <div id="data">
 <form action="/store/email" method="post" name="form1">
@@ -178,8 +185,8 @@
                 <span class="validity"></span></td>
         </tr>
         <tr>
-            <td>Email</td>
-            <td><input type="email" name="email" id="email" pattern="\b[A-z0-9._%+-]+@[A-z0-9.-]+\.[A-z]{2,}\b" min=" @ . " minlength="5" value="<%= email %>"/>
+            <td>Phone Number</td>
+            <td><input type="tel" name="tel" id="tel" pattern="[0-9]{10}" minlength="10" value="<%= number %>"/>
                 <span class="validity"></span></td>
         </tr>
         <tr>

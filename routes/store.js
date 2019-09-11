@@ -13,6 +13,20 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+const accountSid = 'ACb1c03f08d23ecbf461fa0a181bb02bfd';
+const authToken = '37a9dba405c734c85e66c2b4370041a5';
+const client = require('twilio')(accountSid, authToken);
+
+function sendMessage(text){
+    client.messages
+        .create({
+            body: text,
+            from: '+19705172654',
+            to: '+19703634895'
+        })
+        .then(message => console.log(message.sid));
+}
+
 module.exports = app;
 app.use(cookieParser('counts'));
 app.use(session({
@@ -1720,7 +1734,7 @@ app.get('/email', function (request, response) {
     response.render('store/email', {
         title: 'Contact Us',
         name: '',
-        email: '',
+        number: '',
         text: ''
     })
 });
@@ -1771,42 +1785,19 @@ function sendCopy(name, days){
 app.post('/email', function (request, response) {
     // Validate user input - ensure non emptiness
     request.assert('name', 'Name is required').notEmpty();
-    request.assert('email', 'Email is required').notEmpty();
+    request.assert('number', 'Phone Number is required').notEmpty();
     request.assert('text', 'Response is required.').notEmpty();
 
     var errors = request.validationErrors();
     if (!errors){
-        var transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: 'classcountsema@gmail.com',
-                pass: 'bEhqyw-fifbe0-bukwun'
-            }
-        });
         var item = {
             name: request.sanitize('name').escape().trim(),
-            email: request.sanitize('email').escape().trim(),
+            number: request.sanitize('number').escape().trim(),
             text: request.sanitize('text').escape().trim()
         };
         version = getVersion();
-        var opening = 'Version: ' + global.versionGlobal  + '\n' + 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
-        var mailOptions = {
-            from: 'classcountsema@gmail.com',
-            to: 'chandler.despirlet@icloud.com',
-            subject: 'Class Counts form submission',
-            text: opening
-        };
-        transporter.sendMail(mailOptions, function(error, info){
-            if (error){
-                console.log(error);
-                request.flash('error', 'Your response has not been sent!');
-                response.redirect('email');
-            } else {
-                console.log('Email sent: ' + info.response);
-                request.flash('success', 'Your response has been sent!');
-                response.redirect('email');
-            }
-        });
+        var opening = 'Version: ' + global.versionGlobal  + '\n' + 'Name: ' + item.name + '\n' + 'number: ' + item.number + '\n' + 'Problem: ' + item.text;
+        sendMessage(opening);
     } else {
         var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
         request.flash('error', error_msg);
