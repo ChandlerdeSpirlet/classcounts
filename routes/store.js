@@ -1804,7 +1804,7 @@ app.post('/email', function (request, response) {
         response.render('store/email', {
             title: 'Contact Us',
             name: request.body.barcode,
-            email: request.body.reg,
+            number: request.body.reg,
             text: request.body.spar
         })
     }
