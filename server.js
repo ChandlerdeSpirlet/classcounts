@@ -13,6 +13,7 @@ app.use(cors());
 var multer = require('multer');
 var multerupload = multer({dest: 'files/'})
 var methodOverride = require('method-override');
+const cron = require('node-cron');
 app.use(methodOverride(function (req, res) {
     if (req.body && typeof req.body === 'object' && '_method' in req.body) {
         var method = req.body._method;
@@ -20,6 +21,22 @@ app.use(methodOverride(function (req, res) {
         return method
     }
 }));
+
+cron.schedule("0 0 6 * * 6", function(){
+    console.log("-----------------------------------");
+    console.log("Clearing the log of non black belts");
+    console.log("-----------------------------------");
+    var query = "delete from log where barcode not in (select barcode from counts)";
+    db.any(query)
+        .then(function(){
+            console.log("--------------------");
+            console.log("Log has been cleared");
+            console.log("--------------------");
+        })
+        .catch(function(err){
+            console.log("ERROR in log clear: " + err);
+        })
+});
 
 const getData = (req, res) => {
     query = 'SELECT barcode, bbname, regular, sparring, swats FROM counts order by bbname';
