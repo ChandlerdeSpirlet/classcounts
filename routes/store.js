@@ -14,7 +14,7 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const accountSid = 'ACb1c03f08d23ecbf461fa0a181bb02bfd';
-const authToken = '37a9dba405c734c85e66c2b4370041a5';
+const authToken = '512226080551998d03d7fc429ad091d6';
 const client = require('twilio')(accountSid, authToken);
 
 function sendMessage(text){
@@ -1798,6 +1798,8 @@ app.post('/email', function (request, response) {
         version = getVersion();
         var opening = 'Version: ' + global.versionGlobal  + '\n' + 'Name: ' + item.name + '\n' + 'number: ' + item.number + '\n' + 'Problem: ' + item.text;
         sendMessage(opening);
+        request.flash('success', "Message sent successfully.");
+        response.redirect('home');
     } else {
         var error_msg = errors.reduce((accumulator, current_error) => accumulator + '<br />' + current_error.msg, '');
         request.flash('error', error_msg);
