@@ -241,12 +241,12 @@ tr:hover {
                         <tr>
                             <td><%= item.bbname %></td>
                             <td><%= item.barcode %></td>
-			    <% if(item.regular < 8) { %>
+			    <% if(item.regular < 11) { %>
                             <td style="color:red;"><%= item.regular %></td>
 			    <% } else { %>
 			    <td style="color:green;"><%= item.regular %></td>
 			    <% } %>
-			    <% if(item.sparring < 8) { %>
+			    <% if(item.sparring < 11) { %>
                             <td style="color:red;"><%= item.sparring %></td>
 			    <% } else { %>
 			    <td style="color:green;"><%= item.sparring %></td>
