@@ -230,7 +230,7 @@ tr:hover {
     <div>
         <ul>
             <li><a href="/store/list3">Home</a></li>
-            <li><a href="/store/adminView">SWAT Signups</a></li>
+            <li><a href="/store/adminView">Logs</a></li>
             <li class="dropdown">
             <a href="javascript:void(0)" class="dropbtn">Edit</a>
             <div class="dropdown-content">
@@ -276,12 +276,11 @@ tr:hover {
             <table>
             <!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
                 <tr>
-                    <th>Name</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Class Name</th>
+                    <th>Scanned Time</th>
+                    <th>Class Time</th>
                 </tr>
             </table>
         </div>
@@ -293,12 +292,11 @@ tr:hover {
                 The 'data' variable is passed from the store.js during the response.render function call -->
                     <% data.forEach(function(item){ %>
                         <tr>
-                            <td><%= item.bbname %></td>
-                            <td><%= item.mon %></td>
-                            <td><%= item.tues %></td>
-                            <td><%= item.wed %></td>
-                            <td><%= item.thurs %></td>
-                            <td><%= item.fri %></td>
+                            <td><%= item.firstname %></td>
+                            <td><%= item.lastname %></td>
+                            <td><%= item.classname %></td>
+                            <td><%= item.classdate %></td>
+                            <td><%= item.classtime %></td>
                         </tr>
                     <% }) %>
                 <% } %>

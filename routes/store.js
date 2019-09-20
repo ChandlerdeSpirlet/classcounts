@@ -1441,11 +1441,11 @@ app.get('/adminView', function(req, res){
             })
         })
     } else {
-        var query = 'select * from signup';
+        var query = 'SELECT barcode, firstname, lastname, classname, classdate, classtime FROM log where barcode in (select barcode from counts) order by classtime';
         db.any(query)
             .then(function(rows){
                 res.render('store/adminView', {
-                    title: 'Spring Break',
+                    title: 'Class Logs',
                     data: rows
                 })
             })
