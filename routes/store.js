@@ -1441,7 +1441,7 @@ app.get('/adminView', function(req, res){
             })
         })
     } else {
-        var query = 'SELECT barcode, firstname, lastname, classname, classdate, classtime FROM log where barcode in (select barcode from counts) order by classtime';
+        var query = 'SELECT barcode, firstname, lastname, classname, classdate, classtime FROM log where barcode in (select barcode from counts) order by classtime desc';
         db.any(query)
             .then(function(rows){
                 res.render('store/adminView', {
@@ -1999,5 +1999,18 @@ app.post('/delete', function(req, res){
         .catch(function(err){
             req.flash('error', 'Unable to refresh history');
             res.redirect('list3');
+        })
+});
+
+app.post('/updateLog', function(req, res){
+    var query = 'delete from log where barcode not in (select barcode from counts)';
+    db.none(query)
+        .then(function(){
+            req.flash('success', 'Removed unnecessary logs');
+            res.redirect('adminView');
+        })
+        .catch(function(err){
+            req.flash('error', "ERROR: " + err);
+            res.redirect('adminView');
         })
 });

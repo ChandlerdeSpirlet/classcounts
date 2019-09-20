@@ -268,7 +268,10 @@ tr:hover {
         </ul>
     </div>
     <h1>SWAT Signups</h1>
-    <h2><%= title %></h2><!--Using if-check to see if an error occurred and displaying appropriate message-->
+    <h2><%= title %></h2>
+    <form action="/store/updateLog" method="post">
+        <input type="submit" name="update" value="Update Logs">
+    </form><!--Using if-check to see if an error occurred and displaying appropriate message-->
     </div>
 	<div>
         <div class="header" id="myHeader">
