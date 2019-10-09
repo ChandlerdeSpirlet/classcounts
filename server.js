@@ -22,7 +22,7 @@ app.use(methodOverride(function (req, res) {
     }
 }));
 
-function getSid(){
+function getSid(callback){
     var acctSid = '';
     query = "select pass_key from secure_data where data_name = 'accountSid'";
     db.any(query)
@@ -32,39 +32,42 @@ function getSid(){
             console.log("data[0] = " + '\n' + data);
             console.log("sid in getSid function in server = " + sid );
             acctSid = sid;
+            callback(acctSid);
         })
         .catch (function(err){
             console.log("getSid ERROR: " + err);
         })
-    return acctSid;
 }
-function getToken(){
+function getToken(callback){
     var authToken = '';
     query = "select pass_key from secure_data where data_name = 'authToken'";
     db.any(query, ['authToken'])
         .then (function(data){
             var token = data[0];
             authToken = token;
+            callback(authToken);
         })
         .catch (function(err){
             console.log("getToken ERROR: " + err);
         })
     return authToken;
 }
-var acctSid = getSid();
-console.log("acctSid in server = " + acctSid);
-var authToken = getToken();
-console.log("authToken in server = " + authToken);
-const client = require('twilio')(acctSid, authToken);
 
 function sendMessage(text){
-    client.messages
-        .create({
-            body: text,
-            from: '+19705172654',
-            to: '+19703634895'
-        })
-        .then(message => console.log(message.sid));
+    getToken(function(result1){
+        var authToken = result1;
+        getSid(function(result2){
+            var acctSid = result2;
+            client = require('twilio')(acctSid, authToken);
+            client.messages
+            .create({
+                body: text,
+                from: '+19705172654',
+                to: '+19703634895'
+            })
+            .then(message => console.log(message.sid));
+        });
+    });
 }
 
 cron.schedule("0 0 6 * * 6", function(){
