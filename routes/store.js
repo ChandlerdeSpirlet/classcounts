@@ -13,9 +13,35 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const accountSid = 'ACb1c03f08d23ecbf461fa0a181bb02bfd';
-const authToken = '512226080551998d03d7fc429ad091d6';
-const client = require('twilio')(accountSid, authToken);
+function getSid(){
+    var acctSid = '';
+    query = 'select pass_key from secure_data where data_name = $1';
+    db.one(query, ['accountSid'])
+        .then (function(data){
+            var sid = data[0];
+            acctSid = sid;
+        })
+        .catch (function(err){
+            console.log("getSid ERROR: " + err);
+        })
+    return acctSid;
+}
+function getToken(){
+    var authToken = '';
+    query = 'select pass_key from secure_data where data_name = $1';
+    db.one(query, ['authToken'])
+        .then (function(data){
+            var token = data[0];
+            authToken = token;
+        })
+        .catch (function(err){
+            console.log("getToken ERROR: " + err);
+        })
+    return authToken;
+}
+var acctSid = getSid();
+var authToken = getToken();
+const client = require('twilio')(acctSid, authToken);
 
 function sendMessage(text){
     client.messages

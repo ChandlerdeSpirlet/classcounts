@@ -21,9 +21,35 @@ app.use(methodOverride(function (req, res) {
         return method
     }
 }));
-const accountSid = 'ACb1c03f08d23ecbf461fa0a181bb02bfd';
-const authToken = '37a9dba405c734c85e66c2b4370041a5';
-const client = require('twilio')(accountSid, authToken);
+function getSid(){
+    var acctSid = '';
+    query = 'select pass_key from secure_data where data_name = $1';
+    db.one(query, ['accountSid'])
+        .then (function(data){
+            var sid = data[0];
+            acctSid = sid;
+        })
+        .catch (function(err){
+            console.log("getSid ERROR: " + err);
+        })
+    return acctSid;
+}
+function getToken(){
+    var authToken = '';
+    query = 'select pass_key from secure_data where data_name = $1';
+    db.one(query, ['authToken'])
+        .then (function(data){
+            var token = data[0];
+            authToken = token;
+        })
+        .catch (function(err){
+            console.log("getToken ERROR: " + err);
+        })
+    return authToken;
+}
+var acctSid = getSid();
+var authToken = getToken();
+const client = require('twilio')(acctSid, authToken);
 
 function sendMessage(text){
     client.messages
