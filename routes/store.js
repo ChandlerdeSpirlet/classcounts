@@ -31,9 +31,8 @@ function getSid(callback){
 function getToken(callback){
     var authToken = '';
     query = "select pass_key from secure_data where data_name = 'authToken'";
-    db.any(query, ['authToken'])
-        .then (function(data){
-            var token = data[0];
+    db.any(query, (err, res) => {
+            var token = res.rows[0];
             authToken = token;
             callback(authToken);
         })

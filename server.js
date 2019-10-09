@@ -25,11 +25,10 @@ app.use(methodOverride(function (req, res) {
 function getSid(callback){
     var acctSid = '';
     query = "select pass_key from secure_data where data_name = 'accountSid'";
-    db.any(query)
-        .then (function(data){
-            var sid = data[0];
+    db.any(query, (err, res) => {
+            var sid = res.rows[0];
             console.log("query is = " + query);
-            console.log("data[0] = " + '\n' + data);
+            console.log("data = " + '\n' + res);
             console.log("sid in getSid function in server = " + sid );
             acctSid = sid;
             callback(acctSid);
@@ -41,9 +40,8 @@ function getSid(callback){
 function getToken(callback){
     var authToken = '';
     query = "select pass_key from secure_data where data_name = 'authToken'";
-    db.any(query, ['authToken'])
-        .then (function(data){
-            var token = data[0];
+    db.any(query, (err, res) => {
+            var token = res.rows[0];
             authToken = token;
             callback(authToken);
         })
