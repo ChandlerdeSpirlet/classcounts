@@ -102,8 +102,12 @@ input[type=text] {
         background-color: blue;
         color: white;
     }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 </style>
 </head>
+<body>
 <form action="/store/adjust/<%= barcode %>" method="post" name="form1">
     <table width="30%" border="0">
         <tr>
@@ -144,5 +148,6 @@ input[type=text] {
         </tr>
     </table>
 </form>
+</body>
 </html>
 <%- include ../layouts/footer.ejs %>
