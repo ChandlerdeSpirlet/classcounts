@@ -16,11 +16,10 @@ const cors = require('cors');
 function getSid(callback){
     var acctSid = '';
     query = "select pass_key from secure_data where data_name = 'accountSid'";
-    db.any(query)
-        .then (function(data){
-            var sid = data[0];
+    db.any(query, (err, res) => {
+            var sid = res.rows[0];
             console.log("query is = " + query);
-            console.log("data[0] = " + '\n' + data);
+            console.log("data = " + '\n' + res);
             console.log("sid in getSid function in store = " + sid );
             acctSid = sid;
             callback(acctSid);
