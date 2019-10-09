@@ -24,9 +24,11 @@ app.use(methodOverride(function (req, res) {
 function getSid(){
     var acctSid = '';
     query = 'select pass_key from secure_data where data_name = $1';
-    db.one(query, ['accountSid'])
+    db.any(query, ['accountSid'])
         .then (function(data){
             var sid = data[0];
+            console.log("data[0] = " + '\n' + data);
+            console.log("sid in getSid function = " + sid );
             acctSid = sid;
         })
         .catch (function(err){
@@ -37,7 +39,7 @@ function getSid(){
 function getToken(){
     var authToken = '';
     query = 'select pass_key from secure_data where data_name = $1';
-    db.one(query, ['authToken'])
+    db.any(query, ['authToken'])
         .then (function(data){
             var token = data[0];
             authToken = token;
@@ -48,7 +50,9 @@ function getToken(){
     return authToken;
 }
 var acctSid = getSid();
+console.log("acctSid = " + acctSid);
 var authToken = getToken();
+console.log("authToken = " + authToken);
 const client = require('twilio')(acctSid, authToken);
 
 function sendMessage(text){
