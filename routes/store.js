@@ -13,15 +13,19 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
+global.authToken = '';
+global.acctSid = '';
+console.log('authToken at decleration = ' + authToken);
+console.log('acctSid at decleration = ' + acctSid);
+
 function getSid(callback){
-    //var acctSid = '';
     var query = "select pass_key from secure_data where data_name = 'accountSid'";
     db.query(query, (err, res) => {
         if (err){
             console.log("ERROR in getSid call in store.js: " + err);
-            var acctSid = 'NULL ERROR';
+            acctSid = 'NULL ERROR';
         } else {
-            var acctSid = res.rows[0];
+            acctSid = res.rows[0];
             console.log("query is = " + query);
             console.log("data = " + '\n' + res);
             console.log("sid in getSid function in store = " + acctSid);
@@ -29,17 +33,16 @@ function getSid(callback){
     })
     return callback(acctSid);
 }
-
+console.log('acctSid after getSid call = ' + acctSid);
 function getToken(callback){
-    //var authToken = '';
     var query = "select pass_key from secure_data where data_name = 'authToken'";
     db.query(query, (err, res) => {
         console.log('res is = ' + res);
         if (err){
             console.log("ERROR in getToken call in store.js: " + err);
-            var authToken = 'NULL ERROR';
+            authToken = 'NULL ERROR';
         } else {
-            var authToken = res.rows[0];
+            authToken = res.rows[0];
             console.log("query is = " + query);
             console.log("data in token = " + '\n' + res);
             console.log("token in getToken function in store = " + authToken);
@@ -48,13 +51,13 @@ function getToken(callback){
     console.log('authToken in getToken = ' + authToken);
     return callback(authToken);
 }
-
+console.log('authToken after getToken call = ' + authToken);
 function sendMessage(text){
     getToken(function(result1){
-        var authToken = result1;
+        var authToken1 = result1;
         console.log('authToken in sendMessage = ' + authToken);
         getSid(function(result2){
-            var acctSid = result2;
+            var acctSid1 = result2;
             console.log('acctSid in sendMessage = ' + acctSid);
             client = require('twilio')(acctSid, authToken);
             client.messages
