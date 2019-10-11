@@ -14,14 +14,14 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 function getSid(callback){
-    var acctSid = '';
+    //var acctSid = '';
     var query = "select pass_key from secure_data where data_name = 'accountSid'";
     db.query(query, (err, res) => {
         if (err){
             console.log("ERROR in getSid call in store.js: " + err);
-            acctSid = 'NULL ERROR';
+            var acctSid = 'NULL ERROR';
         } else {
-            acctSid = res.rows[0];
+            var acctSid = res.rows[0];
             console.log("query is = " + query);
             console.log("data = " + '\n' + res);
             console.log("sid in getSid function in store = " + acctSid);
@@ -31,14 +31,15 @@ function getSid(callback){
 }
 
 function getToken(callback){
-    var authToken = '';
+    //var authToken = '';
     var query = "select pass_key from secure_data where data_name = 'authToken'";
     db.query(query, (err, res) => {
+        console.log('res is = ' = res);
         if (err){
             console.log("ERROR in getToken call in store.js: " + err);
-            authToken = 'NULL ERROR';
+            var authToken = 'NULL ERROR';
         } else {
-            authToken = res.rows[0];
+            var authToken = res.rows[0];
             console.log("query is = " + query);
             console.log("data in token = " + '\n' + res);
             console.log("token in getToken function in store = " + authToken);
