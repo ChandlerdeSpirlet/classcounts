@@ -34,7 +34,7 @@ function getToken(callback){
     //var authToken = '';
     var query = "select pass_key from secure_data where data_name = 'authToken'";
     db.query(query, (err, res) => {
-        console.log('res is = ' = res);
+        console.log('res is = ' + res);
         if (err){
             console.log("ERROR in getToken call in store.js: " + err);
             var authToken = 'NULL ERROR';
