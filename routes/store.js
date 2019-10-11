@@ -18,36 +18,24 @@ global.acctSid = '';
 console.log('authToken at decleration = ' + authToken);
 console.log('acctSid at decleration = ' + acctSid);
 
+client
+  .query('SELECT NOW() as now')
+  .then(res => console.log(res.rows[0]))
+  .catch(e => console.error(e.stack))
+
 function getSid(callback){
     var query = "select pass_key from secure_data where data_name = 'accountSid'";
-    db.query(query, (err, res) => {
-        if (err){
-            console.log("ERROR in getSid call in store.js: " + err);
-            acctSid = 'NULL ERROR';
-        } else {
-            acctSid = res;
-            console.log("query is = " + query);
-            console.log("data = " + '\n' + res);
-            console.log("sid in getSid function in store = " + acctSid);
-        }
-    })
+    db.query(query)
+    .then(res => acctSid = res)
+    .catch(err => console.log('ERROR in getSid call in store.js: ' + err))
     return callback(acctSid);
 }
 console.log('acctSid after getSid call = ' + acctSid);
 function getToken(callback){
     var query = "select pass_key from secure_data where data_name = 'authToken'";
-    db.query(query, (err, res) => {
-        console.log('res is = ' + res);
-        if (err){
-            console.log("ERROR in getToken call in store.js: " + err);
-            authToken = 'NULL ERROR';
-        } else {
-            authToken = res;
-            console.log("query is = " + query);
-            console.log("data in token = " + '\n' + res);
-            console.log("token in getToken function in store = " + authToken);
-        }
-    })
+    db.query(query)
+    .then(res => authToken = res)
+    .catch(err => console.log('ERROR in getToken call in store.js: ' + err))
     console.log('authToken in getToken = ' + authToken);
     return callback(authToken);
 }
