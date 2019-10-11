@@ -14,227 +14,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <style>
-@media (prefers-color-scheme: dark) {
-    body {
-        background-color: black;
-        color: white;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        margin: 0px;
-    }
-    header {
-        background-color: black;
-        color: white;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    input {
-    border: 1px solid transparent;
+body {
     background-color: black;
-    padding: 10px;
-    font-size: 16px;
-    }
-    input[type=text] {
-        background-color: black;
-        color: white;
-        border: 4px white;
-        width: 100%;
-    }
-    input[type=submit] {
-        background-color: blue;
-        color: black;
-    }
-    .autocomplete-items {
-        position: absolute;
-        border: 1px solid black;
-        border-bottom: none;
-        border-top: none;
-        z-index: 99;
-        /*position the autocomplete items to be the same width as the container:*/
-        top: 100%;
-        left: 0;
-        right: 0;
-    }
-    .autocomplete-items div {
-        padding: 10px;
-        cursor: pointer;
-        background-color: black; 
-        border-bottom: 1px solid #d4d4d4; 
-    }
-    .autocomplete-items div:hover {
-        /*when hovering an item:*/
-        background-color: black; 
-    }
-    .autocomplete-active {
-        /*when navigating through the items using the arrow keys:*/
-        background-color: blue !important; 
-        color: black; 
-    }
-    .camp {
-        background-color: blue;
-        border: solid black 1px;
-    }
-    .camp a:hover {
-        background-color: blue;
-    }
-    .student-card {
-        position: relative;
-        display: block;
-        text-align: -webkit-center;
-        margin-bottom: 1.5rem;
-        padding: 1rem;
-        background-color: rgba(255,255,255, .15);
-        box-shadow: 0px 4px 1rem rgba( 255,255,255, 0.9);
-        /* border-radius: 4px; */
-        color: white;
-        font-size: x-large;
-    }
-}
-@media (prefers-color-scheme: light) {
-    body {
-        background-color: white;
-        color: black;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        margin: 0px;
-    }
-    header {
-        background-color: white;
-        color: black;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    input {
-        border: 1px solid transparent;
-        background-color: #d4d4d4;
-        padding: 10px;
-        font-size: 16px;
-    }
-    input[type=text] {
-        background-color: #d4d4d4;
-        width: 100%;
-        border: 1px black;
-        color: black;
-    }
-    input[type=submit]{
-        background-color: blue;
-        color: white;
-    }
-    .autocomplete-items {
-        position: absolute;
-        border: 1px solid #d4d4d4;
-        border-bottom: none;
-        border-top: none;
-        z-index: 99;
-        /*position the autocomplete items to be the same width as the container:*/
-        top: 100%;
-        left: 0;
-        right: 0;
-    }
-    .autocomplete-items div {
-        padding: 10px;
-        cursor: pointer;
-        background-color: white; 
-        border-bottom: 1px solid #d4d4d4; 
-    }
-    .autocomplete-items div:hover {
-        /*when hovering an item:*/
-        background-color: white; 
-    }
-    .autocomplete-active {
-        /*when navigating through the items using the arrow keys:*/
-        background-color: blue !important; 
-        color: white; 
-    }
-    .camp {
-        background-color: blue;
-        border: solid black 1px;
-    }
-    .camp a:hover {
-        background-color: blue;
-    }
-    .student-card {
-        position: relative;
-        display: block;
-        text-align: -webkit-center;
-        margin-bottom: 1.5rem;
-        padding: 1rem;
-        background-color: rgba(255,255,255, .15);
-        box-shadow: 0px 4px 1rem rgba( 255,255,255, 0.9);
-        /* border-radius: 4px; */
-        color: white;
-        font-size: x-large;
-    }
-}
-@media (prefers-color-scheme: no-preference) {
-    body {
-        background-color: black;
-        color: white;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        margin: 0px;
-    }
-    header {
-        background-color: black;
-        color: white;
-        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-    }
-    input {
-        border: 1px solid transparent;
-        background-color: black;
-        padding: 10px;
-        font-size: 16px;
-    }
-    input[type=text] {
-        background-color: black;
-        color: white;
-        border: 1px white;
-        width: 100%;
-    }
-    input[type=submit] {
-        background-color: blue;
-        color: black;
-    }
-    .autocomplete-items {
-        position: absolute;
-        border: 1px solid black;
-        border-bottom: none;
-        border-top: none;
-        z-index: 99;
-        /*position the autocomplete items to be the same width as the container:*/
-        top: 100%;
-        left: 0;
-        right: 0;
-    }
-    .autocomplete-items div {
-        padding: 10px;
-        cursor: pointer;
-        background-color: black; 
-        border-bottom: 1px solid #d4d4d4; 
-    }
-    .autocomplete-items div:hover {
-        /*when hovering an item:*/
-        background-color: black; 
-    }
-    .autocomplete-active {
-        /*when navigating through the items using the arrow keys:*/
-        background-color: blue !important; 
-        color: black; 
-    }
-    .camp {
-        background-color: blue;
-        border: solid black 1px;
-    }
-    .camp a:hover {
-        background-color: blue;
-    }
-    .student-card {
-        position: relative;
-        display: block;
-        text-align: -webkit-center;
-        margin-bottom: 1.5rem;
-        padding: 1rem;
-        background-color: rgba(255,255,255, .15);
-        box-shadow: 0px 4px 1rem rgba( 255,255,255, 0.9);
-        /* border-radius: 4px; */
-        color: white;
-        font-size: x-large;
-    }
+    color: white;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0px;
 }
 header {
     text-align: center;
@@ -279,6 +63,18 @@ li a:hover, .dropdown:hover  .dropbtn {
     display: block;
     text-align: left;
     padding: 12px 16px;
+}
+.student-card {
+    position: relative;
+    display: block;
+    text-align: -webkit-center;
+    margin-bottom: 1.5rem;
+    padding: 1rem;
+    background-color: rgba(255,255,255, .15);
+    box-shadow: 0px 4px 1rem rgba( 255,255,255, 0.9);
+    /* border-radius: 4px; */
+    color: white;
+    font-size: x-large;
 }
 .student-content {
     display: none;
@@ -350,6 +146,13 @@ div.student-card:hover a {
     border-radius: 4px;
 }
 
+.camp {
+    background-color: blue;
+    border: solid black 1px;
+}
+.camp a:hover {
+    background-color: blue;
+}
 .sparring {
     float: left;
     width: 50%;
@@ -385,17 +188,99 @@ div.student-card:hover a {
     background-color: white;
     color: black;
 }
-
+.day .student-card {
+    background-color: #333;
+    box-shadow: 0px 4px 1rem rgba( 0,0,0, 0.9);
+}
 * { box-sizing: border-box; }
 body {
-    font: 16px;
+  font: 16px Arial; 
 }
 .autocomplete {
-    /*the container must be positioned relative:*/
-    position: relative;
-    display: inline-block;
+  /*the container must be positioned relative:*/
+  position: relative;
+  display: inline-block;
 }
-
+.day input {
+  border: 1px solid transparent;
+  background-color: #d4d4d4;
+  padding: 10px;
+  font-size: 16px;
+}
+input {
+    border: 1px solid transparent;
+    background-color: black;
+    padding: 10px;
+    font-size: 16px;
+}
+input[type=text] {
+  background-color: black;
+  width: 100%;
+}
+.day input[type=text] {
+    background-color: #d4d4d4;
+    width: 100%
+}
+input[type=submit] {
+  background-color: blue;
+  color: black;
+}
+.day input[type=submit]{
+    background-color: blue;
+    color: white;
+}
+.autocomplete-items {
+  position: absolute;
+  border: 1px solid black;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.day .autocomplete-items {
+  position: absolute;
+  border: 1px solid #d4d4d4;
+  border-bottom: none;
+  border-top: none;
+  z-index: 99;
+  /*position the autocomplete items to be the same width as the container:*/
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+.autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: black; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.day .autocomplete-items div {
+  padding: 10px;
+  cursor: pointer;
+  background-color: white; 
+  border-bottom: 1px solid #d4d4d4; 
+}
+.autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: black; 
+}
+.day .autocomplete-items div:hover {
+  /*when hovering an item:*/
+  background-color: white; 
+}
+.autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: blue !important; 
+  color: black; 
+}
+.day .autocomplete-active {
+  /*when navigating through the items using the arrow keys:*/
+  background-color: blue !important; 
+  color: white; 
+}
 .barcode::before, .sparring::before, .regular::before, .swats::before {
     width: 85px;
 }
@@ -435,7 +320,7 @@ body {
     </div>
     <input type="submit" value="Search" name="Submit"/>
 </form>
-<body>
+<body id="body-content">
         <% if (data) { %>
             <% data.forEach(function(item){ %>
         <div class="student-card">
@@ -450,6 +335,26 @@ body {
         </div>
                 <% }) %>
             <% } %>
+        <script>
+            var x = "True";
+            var y = "False";
+            var localTime = new Date();
+            // var localTime = new Date(2018, 11, 24, 10, 33);
+            var hours   = localTime.getHours();
+            console.log(hours, ' -hours');
+            var timeString = "" + hours;
+            
+            console.log('localTime is ', localTime);
+            console.log(timeString);
+    
+            if (hours >= 7 && hours <= 19) {
+                console.log(x);
+                document.getElementById("body-content").classList.add('day');
+            } else {
+                console.log(y);
+                // document.getElementById("body-content").classList.add('dark');
+            }
+        </script> 
         <script>
             var names = ["Aaron Pidek", "Andre de Spirlet", "Benjamin Mansanares", "Beth Flythe", "Bobert Hoffman", "Caden Stutz", "Cedric McPhee", "Daniel Lynch", "Dave Hoffmann", "Domenic Colaizzi", "Eli Pinsky", "Emma Pratt", "Evan Jantz", "Garrett Manuello", "Hayley Pidek", "Heather Steyn", "Jake Augut", "Jennifer Panning", "Jessica Mestas", "Justice Ortega", "Kaylee Flythe", "Kaylee Young", "Kimberly Rosene", "Kurt Nagel", "Kyle Pinkerton", "Lauren Hawley", "Lucas Cooper", "Madison Bowman", "Mackenzie Silverthorn", "Makiah Anderson", "Max Anderson", "Nick Mansanares", "Olivia Wachter", "Patrick Aasheim", "Riane Dobnak", "Rob Rosene", "Seanna Pidek", "Seth Rosene", "Tanner Schmitz", "Tanner Teff", "Tiana Skanderbeg", "William Parker", "Will Masche"];
             function autocomplete(inp, arr) {
