@@ -394,26 +394,6 @@ body {
                 <% }) %>
             <% } %>
         <script>
-            var x = "True";
-            var y = "False";
-            var localTime = new Date();
-            // var localTime = new Date(2018, 11, 24, 10, 33);
-            var hours   = localTime.getHours();
-            console.log(hours, ' -hours');
-            var timeString = "" + hours;
-            
-            console.log('localTime is ', localTime);
-            console.log(timeString);
-    
-            if (hours >= 7 && hours <= 19) {
-                console.log(x);
-                document.getElementById("body-content").classList.add('day');
-            } else {
-                console.log(y);
-                // document.getElementById("body-content").classList.add('dark');
-            }
-        </script> 
-        <script>
             var names = ["Aaron Pidek", "Andre de Spirlet", "Benjamin Mansanares", "Beth Flythe", "Bobert Hoffman", "Caden Stutz", "Cedric McPhee", "Daniel Lynch", "Dave Hoffmann", "Domenic Colaizzi", "Eli Pinsky", "Emma Pratt", "Evan Jantz", "Garrett Manuello", "Hayley Pidek", "Heather Steyn", "Jake Augut", "Jennifer Panning", "Jessica Mestas", "Justice Ortega", "Kaylee Flythe", "Kaylee Young", "Kimberly Rosene", "Kurt Nagel", "Kyle Pinkerton", "Lauren Hawley", "Lucas Cooper", "Madison Bowman", "Mackenzie Silverthorn", "Makiah Anderson", "Max Anderson", "Nick Mansanares", "Olivia Wachter", "Patrick Aasheim", "Riane Dobnak", "Rob Rosene", "Seanna Pidek", "Seth Rosene", "Tanner Schmitz", "Tanner Teff", "Tiana Skanderbeg", "William Parker", "Will Masche"];
             function autocomplete(inp, arr) {
         /*the autocomplete function takes two arguments,
