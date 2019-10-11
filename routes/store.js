@@ -25,7 +25,7 @@ function getSid(callback){
             console.log("ERROR in getSid call in store.js: " + err);
             acctSid = 'NULL ERROR';
         } else {
-            acctSid = res.rows[0];
+            acctSid = res;
             console.log("query is = " + query);
             console.log("data = " + '\n' + res);
             console.log("sid in getSid function in store = " + acctSid);
@@ -42,7 +42,7 @@ function getToken(callback){
             console.log("ERROR in getToken call in store.js: " + err);
             authToken = 'NULL ERROR';
         } else {
-            authToken = res.rows[0];
+            authToken = res;
             console.log("query is = " + query);
             console.log("data in token = " + '\n' + res);
             console.log("token in getToken function in store = " + authToken);
