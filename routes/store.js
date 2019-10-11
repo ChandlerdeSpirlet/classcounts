@@ -50,8 +50,10 @@ function getToken(callback){
 function sendMessage(text){
     getToken(function(result1){
         var authToken = result1;
+        console.log('authToken = ' + authToken);
         getSid(function(result2){
             var acctSid = result2;
+            console.log('acctSid = ' + acctSid);
             client = require('twilio')(acctSid, authToken);
             client.messages
             .create({
