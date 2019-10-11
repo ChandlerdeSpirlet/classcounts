@@ -14,26 +14,6 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 
 function getSid(callback){
-    var query = "select pass_key from secure_data where data_name = 'accountSid'";
-    db.query(query, (err, res) => {
-        if (err){
-            console.log("ERROR in getSid store.js = " + err);
-        } else {
-            console.log("RESULTS in getSid store.js = " + res);
-            callback(res);
-        }
-    })
-}
-getSid(function(err, data){
-    if (err){
-        console.log('error in getSid call stand alone: ' + err);
-    } else {
-        console.log('data is: ' + data);
-        console.log('data.toString() is: ' + data.toString());
-    }
-});
-
-function getSid(callback){
     var acctSid = '';
     var query = "select pass_key from secure_data where data_name = 'accountSid'";
     db.query(query, (err, res) => {
