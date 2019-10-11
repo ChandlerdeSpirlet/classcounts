@@ -44,16 +44,17 @@ function getToken(callback){
             console.log("token in getToken function in store = " + authToken);
         }
     })
+    console.log('authToken in getToken = ' + authToken);
     return callback(authToken);
 }
 
 function sendMessage(text){
     getToken(function(result1){
         var authToken = result1;
-        console.log('authToken = ' + authToken);
+        console.log('authToken in sendMessage = ' + authToken);
         getSid(function(result2){
             var acctSid = result2;
-            console.log('acctSid = ' + acctSid);
+            console.log('acctSid in sendMessage = ' + acctSid);
             client = require('twilio')(acctSid, authToken);
             client.messages
             .create({
