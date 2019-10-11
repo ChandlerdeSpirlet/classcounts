@@ -18,11 +18,6 @@ global.acctSid = '';
 console.log('authToken at decleration = ' + authToken);
 console.log('acctSid at decleration = ' + acctSid);
 
-client
-  .query('SELECT NOW() as now')
-  .then(res => console.log(res.rows[0]))
-  .catch(e => console.error(e.stack))
-
 function getSid(callback){
     var query = "select pass_key from secure_data where data_name = 'accountSid'";
     db.query(query)
