@@ -120,6 +120,9 @@ app.get('/', function (request, response) {
 
 function addType(code, name, type, time, id){
     db.none('insert into history (barcode, classname, classdate, classtype, attendance_id) values ($1, $2, $3, $4, $5)', [code, name, time, type, id]);
+    //TO BE ADDED WHEN CLASSES RESET!!!
+    //CHANGE DATATYPE OF CLASSTIME COLUMN TO DATE
+    //db.none("insert into history (barcode, classname, classdate, classtype, attendance_id) values ($1, $2, to_date($3, 'Month DD, YYYY'), $4, $5)");
 };
 function addClass(code, name, time, id){
     if (name == 'SWAT'){
