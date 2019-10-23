@@ -20,6 +20,9 @@ function sendMessage(text){
         .then(data => {
             var temp = data[0];
             var accountSid = temp.get_accountSid;
+            console.log('data_acctSid is: ' + data);
+            console.log('temp(data[0]) is: ' + temp);
+            console.log('accountSid is: ' + accountSid);
             db.func('get_authToken')
                 .then(data2 => {
                     var temp2 = data2[0];
