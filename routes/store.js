@@ -13,45 +13,33 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-global.authToken = '';
-global.acctSid = '';
-console.log('authToken at decleration = ' + authToken);
-console.log('acctSid at decleration = ' + acctSid);
 
-function getSid(callback){
-    var query = "select pass_key from secure_data where data_name = 'accountSid'";
-    db.query(query)
-    .then(res => acctSid = res)
-    .catch(err => console.log('ERROR in getSid call in store.js: ' + err))
-    return callback(acctSid);
-}
-console.log('acctSid after getSid call = ' + acctSid);
-function getToken(callback){
-    var query = "select pass_key from secure_data where data_name = 'authToken'";
-    db.query(query)
-    .then(res => authToken = res)
-    .catch(err => console.log('ERROR in getToken call in store.js: ' + err))
-    console.log('authToken in getToken = ' + authToken);
-    return callback(authToken);
-}
-console.log('authToken after getToken call = ' + authToken);
+
 function sendMessage(text){
-    getToken(function(result1){
-        var authToken1 = result1;
-        console.log('authToken in sendMessage = ' + authToken);
-        getSid(function(result2){
-            var acctSid1 = result2;
-            console.log('acctSid in sendMessage = ' + acctSid);
-            client = require('twilio')(acctSid, authToken);
-            client.messages
-            .create({
-                body: text,
-                from: '+19705172654',
-                to: '+19703634895'
-            })
-            .then(message => console.log(message.sid));
-        });
-    });
+    db.func('get_accountSid')
+        .then(data => {
+            var temp = data[0];
+            var accountSid = temp.get_accountSid;
+            db.func('get_authToken')
+                .then(data2 => {
+                    var temp2 = data2[0];
+                    var authToken = temp2.get_authToken;
+                    client = require('twilio')(accountSid, authToken);
+                    client.messages
+                    .create({
+                        body: text,
+                        from: '+19705172654',
+                        to: '+19703634895'
+                    })
+                    .then(message => console.log(message.sid));
+                })
+                .catch(err => {
+                    console.log('Error in sendMessage authToken: ' + err);
+                })
+        })
+        .catch(err => {
+            console.log('Error in sendMessage accountSid: ' + err);
+        })
 }
 
 module.exports = app;
