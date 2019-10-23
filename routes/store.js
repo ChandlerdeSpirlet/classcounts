@@ -16,17 +16,17 @@ const cors = require('cors');
 
 
 function sendMessage(text){
-    db.func('get_accountSid')
+    db.func('get_accountsid')
         .then(data => {
             var temp = data[0];
-            var accountSid = temp.get_accountSid;
+            var accountSid = temp.get_accountsid;
             console.log('data_acctSid is: ' + data);
             console.log('temp(data[0]) is: ' + temp);
             console.log('accountSid is: ' + accountSid);
-            db.func('get_authToken')
+            db.func('get_authtoken')
                 .then(data2 => {
                     var temp2 = data2[0];
-                    var authToken = temp2.get_authToken;
+                    var authToken = temp2.get_authtoken;
                     client = require('twilio')(accountSid, authToken);
                     client.messages
                     .create({
