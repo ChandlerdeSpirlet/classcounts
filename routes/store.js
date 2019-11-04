@@ -216,10 +216,12 @@ function getMonth(month){
     }
 };
 function setDate(date){
+    //2019-11-02T10:45
     var year = date.substring(0, 4);
     var month = date.substring(5, 7);
     var day = date.substring(8, 10);
     var strMonth = getMonth(month);
+    console.log("in setDate function. Date is: " + strMonth + " " + day + ", " + year)
     return (strMonth + " " + day + ", " + year);
 };
 app.post('/data', function(req, res){
@@ -248,7 +250,7 @@ app.post('/data', function(req, res){
         .then(function (){
             db.any(updatelog, [req.body.barCodeId, req.body.firstName, req.body.lastName, req.body.name, req.body.timestamp, req.body.beginDate, req.body.attendanceId])
                 .then(function(){
-                    addClass(req.body.barCodeId, req.body.name, setDate(req.body.timestamp), req.body.attendanceId);
+                    addClass(req.body.barCodeId, req.body.name, setDate(req.body.beginDate), req.body.attendanceId);
                     console.log("Added to log and updated refreshed");
                 })
                 .catch(function(err){
