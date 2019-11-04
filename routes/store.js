@@ -223,6 +223,7 @@ function setDate(date){
     return (strMonth + " " + day + ", " + year);
 };
 app.post('/data', function(req, res){
+    console.log("DATA IS: " + '\n' + req.body);
     console.log('date is', setDate(req.body.timestamp));
     res.json({
         message: 'Data received'
