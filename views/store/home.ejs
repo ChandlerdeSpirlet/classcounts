@@ -309,17 +309,11 @@ input[type=submit] {
     </ul>
     <h1>Black Belt Class Counts</h1><br>
     <h2><%= title %></h2>
-    <h4>Class Requirements</h4>
+    <h3>Class Requirements</h3>
     <h5>Classes: 11</h5>
     <h5>Sparring: 11</h5>
     <h5>Swats: 16</h5>
 </header>
-<form autocomplete="off" action="/store/search" method="post" name="form1">
-    <div class="autocomplete" style="width:70%;">
-        <input id="result" name="result" type="text" placeholder="Black Belt First Name" value="<%= result %>"/>
-    </div>
-    <input type="submit" value="Search" name="Submit"/>
-</form>
 <body id="body-content">
         <% if (data) { %>
             <% data.forEach(function(item){ %>
