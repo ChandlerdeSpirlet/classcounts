@@ -127,8 +127,8 @@ input[type=text] {
             <td><input type="number" pattern="[0-9]*" name="swat" min="0" max="99999" value="<%= swat %>" novalidate/></td>
         </tr>
         <tr>
-            <td>Date String</td>
-            <td><input type="text" name="datestring" value="<%= datestring %>"/></td>
+            <td>Date String (enter as Month dd, yyyy)</td>
+            <td><input type="date" name="text" value="<%= datestring %>"/></td>
         </tr>
         <tr>
             <select name="type" value="<%= type %>">
