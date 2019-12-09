@@ -226,7 +226,7 @@ function setDate(date){
 };
 app.post('/data', function(req, res){
     console.log("DATA IS: " + '\n' + req.body.beginDate);
-    console.log('date is', setDate(req.body.timestamp));
+    console.log('date is', setDate(req.body.beginDate));
     res.json({
         message: 'Data received'
     });
