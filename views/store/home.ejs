@@ -327,17 +327,7 @@ input[type=submit] {
             <button class="nameField"><%= item.bbname %></button>
             <div class="student-content">
                 <div class="barcode"><%= item.barcode %></div>
-
-                <% if(item.regular >= 5){ %>
-                    <div class="regular"><%= item.regular %></div><div class="check">✔</div>
-                <% } else { %>
-                    <div class="regular"><%= item.regular %></div>
-                <% } %>
-                <!-- <div class="regular"><%= item.regular %></div> -->
-
-
-
-
+                <div class="regular"><%= item.regular %></div>
                 <div class="sparring"><%= item.sparring %></div>
                 <div class="swats"><%= item.swats %></div>
                 <div class="camp"><a sty href='/store/history/<%= item.barcode %>'>Class History</a></div>
