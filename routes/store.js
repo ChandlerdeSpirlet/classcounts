@@ -72,17 +72,8 @@ function getDate() {
             global.globalDate = temp.refreshed;
         })
 }
-function getVersion() {
-    var query = 'select * from changelog order by ver desc';
-    db.any(query)
-        .then(function(data){
-            var version = data[0];
-            global.versionGlobal = version.ver;
-            console.log('in function - global.versionGlobal -', global.versionGlobal);
-        })
-}
+
 app.get('/', function (request, response) {
-    getVersion();
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     var query = 'SELECT * FROM counts order by bbname';
@@ -262,7 +253,6 @@ app.post('/data', function(req, res){
         })
 });
 app.get('/home', function(request, response) {
-    getVersion();
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     var query = 'SELECT * FROM counts order by bbname';
@@ -420,7 +410,6 @@ app.get('/6GoalSetting', function(req, res){
     res.send(data);
 });
 app.get('/test', function(request, response){
-    getVersion();
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     var query = 'SELECT * FROM counts order by bbname';
@@ -1718,7 +1707,6 @@ app.post('/email', function (request, response) {
             number: request.sanitize('number').escape().trim(),
             text: request.sanitize('text').escape().trim()
         };
-        version = getVersion();
         var opening = 'Version: ' + global.versionGlobal  + '\n' + 'Name: ' + item.name + '\n' + 'number: ' + item.number + '\n' + 'Problem: ' + item.text;
         sendMessage(opening);
         request.flash('success', "Message sent successfully.");
@@ -1786,8 +1774,6 @@ app.post('/email2', function (request, response) {
             name: request.sanitize('name').escape().trim(),
             email: request.sanitize('email').escape().trim(),
             text: request.sanitize('text').escape().trim()
-        };
-        version = getVersion();
         var opening = 'Version: ' + global.versionGlobal + '\n' + 'Name: ' + item.name + '\n' + 'email: ' + item.email + '\n' + 'Problem: ' + item.text;
         var mailOptions = {
             from: 'classcountsema@gmail.com',
