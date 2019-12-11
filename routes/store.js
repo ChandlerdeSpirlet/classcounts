@@ -311,7 +311,7 @@ app.get('/search', function(req, res){
 });
 app.get('/history/(:barcode)', function(req, res){
     var code = req.params.barcode;
-    var query = 'select classname, classtype, classdate from history where barcode = $1 order by classdate desc';
+    var query = "select classname, classtype, TO_CHAR(classdate, 'Mon dd, yyyy') from history where barcode = $1 order by classdate desc";
     db.any(query, code)
         .then(function(rows){
             res.render('store/history', {
