@@ -1353,7 +1353,7 @@ app.get('/adminView', function(req, res){
             })
         })
     } else {
-        var query = "SELECT barcode, firstname, lastname, classname, TO_CHAR(classdate, 'Mon dd, yyyy') as classdate, TO_CHAR(classtime, 'Mon dd, yyyy') as classtime FROM log where barcode in (select barcode from counts) order by classtime desc";
+        var query = "SELECT barcode, firstname, lastname, classname, TO_CHAR(classdate, 'Mon dd, yyyy') as classdate, classtime FROM log where barcode in (select barcode from counts) order by classtime desc";
         db.any(query)
             .then(function(rows){
                 res.render('store/adminView', {
