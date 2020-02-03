@@ -310,14 +310,14 @@ app.get('/search', function(req, res){
     })
 });
 app.get('/test_checkin', function(req, res){
-    var query = "select bbname from counts"
+    var query = "select * from get_names()";
     db.any(query)
-        .then(function(rows){
+        .then(dataNames => {
             console.log("rows from get checkin = " + rows);
             res.render('store/test_checkin', {
                 title: 'Testing Check-In',
                 bbrank: '',
-                data: rows
+                data: dataNames
             })
         })
         .catch(function(err){
