@@ -136,7 +136,7 @@
             <td><select name="bbname" required="true">
                 <% if (data) { %>
                     <% data.forEach(function(item){ %>
-                        <option value="<% item.bbname %>"><% item.bbname %></option>
+                        <option value=<% item.bbname %>><% item.bbname %></option>
                         <% }) %>
                 <% } %>
             </td></select>
