@@ -309,6 +309,46 @@ app.get('/search', function(req, res){
         data: ''
     })
 });
+app.get('/test_checkin', function(req, res){
+    var query = "select bbname from counts"
+    db.any(query)
+        .then(function(rows){
+            res.render('store/test_checkin.ejs', {
+                title: 'Testing Check-In',
+                data: rows
+            })
+        })
+        .catch(function(err){
+            req.flash('error', 'Unable to generate file');
+            res.redirect('home');
+        })
+});
+app.post('/test_checkin', function(req, res){
+    var item = {
+        bbname: req.sanitize('bbname').trim(),
+        bbrank: req.sanitize('bbrank').trim()
+    }
+    console.log("The test checkin name is: " + item.bbname);
+    query = 'select * from translate_barcode($1)';
+    db.query(query, item.bbname)
+        .then(data => {
+            var temp = data[0];
+            var barcode = temp.translate_barcode;
+            query2 = 'insert into test_candidates values ($1, $2, $3, $4)';
+            db.query(query2, [barcode, item.bbname, item.bbrank])
+                .then(function(){
+                    req.flash('success', "Successfully Registered for Testing");
+                    res.redirect('home');
+                })
+                .catch(function(err){
+                    req.flash('error', "Unable to register for test");
+                    res.redirect('home');
+                })
+        .catch(function(err){
+            req.flash('error', "Unable to find blackbelt with that name");
+            res.redirect('home');
+        })
+});
 app.get('/history/(:barcode)', function(req, res){
     var code = req.params.barcode;
     var query = "select classname, classtype, TO_CHAR(classdate, 'Mon dd, yyyy') as classdate from history where barcode = $1 order by classdate desc";
@@ -324,6 +364,7 @@ app.get('/history/(:barcode)', function(req, res){
             res.redirect('home');
         })
 });
+
 app.get('/schedule', function (req, res){
     var data =fs.readFileSync(__dirname + '/storedFiles/sched.pdf');
     res.contentType("application/pdf");
