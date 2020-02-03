@@ -315,6 +315,7 @@ app.get('/test_checkin', function(req, res){
         .then(function(rows){
             res.render('store/test_checkin.ejs', {
                 title: 'Testing Check-In',
+                bbrank: '',
                 data: rows
             })
         })
