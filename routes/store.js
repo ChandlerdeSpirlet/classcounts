@@ -327,7 +327,7 @@ app.post('/test_checkin', function(req, res){
     var item = {
         bbname: req.sanitize('bbname').trim(),
         bbrank: req.sanitize('bbrank').trim()
-    }
+    };
     console.log("The test checkin name is: " + item.bbname);
     query = 'select * from translate_barcode($1)';
     db.query(query, item.bbname)
@@ -344,6 +344,7 @@ app.post('/test_checkin', function(req, res){
                     req.flash('error', "Unable to register for test");
                     res.redirect('home');
                 })
+            })
         .catch(function(err){
             req.flash('error', "Unable to find blackbelt with that name");
             res.redirect('home');
