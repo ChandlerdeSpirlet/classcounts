@@ -128,13 +128,13 @@
     <table width="25%" border="0">
         <tr>
             <td>Name</td>
-            <% if (data) { %>
-                <% data.forEach(function(item){ %>
             <td><select name="bbname" required="true">
-                <option value="<% item.bbname %>"><% item.bbname %></option>
+                <% if (data) { %>
+                    <% data.forEach(function(item){ %>
+                        <option value="<% item.bbname %>"><% item.bbname %></option>
+                        <% }) %>
+                <% } %>
             </td></select>
-                <% }) %>
-            <% } %>
         </tr>
         <tr>
             <td>Testing Rank</td>
