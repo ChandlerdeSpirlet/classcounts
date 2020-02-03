@@ -314,7 +314,7 @@ app.get('/test_checkin', function(req, res){
     db.any(query)
         .then(function(rows){
             console.log("rows from get checkin = " + rows);
-            res.render('store/test_checkin.ejs', {
+            res.render('store/test_checkin', {
                 title: 'Testing Check-In',
                 bbrank: '',
                 data: rows
