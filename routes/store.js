@@ -311,7 +311,7 @@ app.get('/search', function(req, res){
 });
 app.get('/test_checkin', function(req, res){
     var query = "select * from get_names()";
-    db.any(query)
+    db.query(query)
         .then(dataNames => {
             console.log("rows from get checkin = " + rows);
             res.render('store/test_checkin', {
