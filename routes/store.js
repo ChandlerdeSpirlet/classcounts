@@ -313,6 +313,7 @@ app.get('/test_checkin', function(req, res){
     var query = "select bbname from counts"
     db.any(query)
         .then(function(rows){
+            console.log("rows from get checkin = " + rows);
             res.render('store/test_checkin.ejs', {
                 title: 'Testing Check-In',
                 bbrank: '',
