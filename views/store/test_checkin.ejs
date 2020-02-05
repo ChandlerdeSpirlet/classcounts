@@ -22,6 +22,12 @@
         margin-right: 8px;
         margin-bottom: 8px;
     }
+    .dark h3{
+        color: white;
+    }
+    .white h3{
+        color: black;
+    }
     body {
         font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
@@ -40,23 +46,6 @@
     }
     
     input[type=text]:focus {
-        width: 100%;
-    }
-    input[type=password] {
-        width: 130px;
-        box-sizing: border-box;
-        border: 2px solid #ccc;
-        border-radius: 4px;
-        font-size: 16px;
-        background-color: white;
-        background-position: 10px 10px; 
-        background-repeat: no-repeat;
-        padding: 12px 20px 12px 40px;
-        -webkit-transition: width 0.4s ease-in-out;
-        transition: width 0.4s ease-in-out;
-    }
-    
-    input[type=password]:focus {
         width: 100%;
     }
     [type=submit] {
@@ -118,17 +107,7 @@
         color: white;
         border: 2px solid white;
     }
-    .dark input[type=password]{
-        background-color: #333;
-        color: white;
-        border: 2px solid white;
-    }
     .white input[type=text] {
-        background-color: white;
-        color: black;
-        border: 2px solid black;
-    }
-    .white input[type=password]{
         background-color: white;
         color: black;
         border: 2px solid black;
@@ -154,6 +133,7 @@
         <tr>
             <td>Testing Rank</td>
             <td><input type="text" required="true" name="bbrank" id="bbrank" value="<%= bbrank %>"/></td>
+            <td>Note: For <b>Testing Rank</b>, enter the rank you are testing for, not your current rank.</td>
         </tr>
         <tr>
             <td></td>

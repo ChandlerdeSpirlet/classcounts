@@ -13,7 +13,7 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-
+let testDateGlobal = 'Feb 28 2020';
 
 function sendMessage(text){
     db.query('select * from get_accountsid()')
@@ -337,19 +337,65 @@ app.post('/test_checkin', function(req, res){
         .then(data => {
             var temp = data[0];
             var barcode = temp.translate_barcode;
-            query2 = 'insert into test_candidates values ($1, $2, $3)';
-            db.query(query2, [barcode, item.bbname, item.bbrank])
+            console.log("The barcode is " + barcode);
+            testerID = testDateGlobal.replace(/\s/g, "") + barcode.toString();
+            query2 = 'insert into test_candidates values ($1, $2, $3, $4, $5, $6)';
+            db.query(query2, [barcode, item.bbname, item.bbrank, NULL, testerID, testDateGlobal])
                 .then(function(){
                     req.flash('success', "Successfully Registered for Testing");
                     res.redirect('home');
                 })
                 .catch(function(err){
-                    req.flash('error', "Unable to register for test");
+                    req.flash('error', "Unable to register for test. Use the contact tab at the top of the page to fix this issue.");
                     res.redirect('home');
                 })
             })
         .catch(function(err){
             req.flash('error', "Unable to find blackbelt with that name");
+            res.redirect('home');
+        })
+});
+app.get('/test_candidates', function(req, res){
+    var query = 'select * from test_candidate';
+    db.any(query)
+        .then(function (rows) {
+        // render views/store/list.ejs template file
+        res.render('store/test_candidates', {
+            title: 'Testing Candidates',
+            testDate: testDateGlobal,
+            data: rows
+        })
+    })
+    .catch(function (err) {
+        // display error message in case an error
+        request.flash('error', err);
+        response.redirect('home');
+        })
+});
+app.get('/pass/(:barcode)', function(req, res){
+    var code = req.params.barcode;
+    var query = 'update test_candidates set pass_status = true where barcode = $1'
+    db.none(query, code)
+        .then(function(rows){
+            res.render('store/history', {
+                title: 'Class History',
+                data: rows
+            })
+        })
+        .catch(function(err){
+            req.flash('error', 'That black belt is not registered with this website. Contact a system admin using the Contact Us page with your name.');
+            res.redirect('home');
+        })
+});
+app.get('/fail/(:barcode)', function(req, res){
+    var code = req.params.barcode;
+    var query = 'update test_candidates set pass_status = false where barcode = $1'
+    db.none(query, code)
+        .then({
+            
+        })
+        .catch(function(err){
+            req.flash('error', 'That black belt is not registered with this website. Contact a system admin using the Contact Us page with your name.');
             res.redirect('home');
         })
 });
