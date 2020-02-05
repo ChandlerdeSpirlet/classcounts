@@ -333,13 +333,14 @@ app.post('/test_checkin', function(req, res){
         bbrank: req.sanitize('bbrank').trim()
     };
     query = 'select * from translate_barcode($1)';
+    console.log("bbname is " + item.bbname);
     db.query(query, item.bbname)
         .then(data => {
             var temp = data[0];
             var barcode = temp.translate_barcode;
             console.log("The barcode is " + barcode);
             testerID = testDateGlobal.replace(/\s/g, "") + barcode.toString();
-            query2 = 'insert into test_candidates values ($1, $2, $3, $4, $5, $6)';
+            query2 = 'insert into test_candidates(barcode, bbname, bbrink, pass_status, test_id, test_date) values ($1, $2, $3, $4, $5, $6)';
             db.query(query2, [barcode, item.bbname, item.bbrank, NULL, testerID, testDateGlobal])
                 .then(function(){
                     req.flash('success', "Successfully Registered for Testing");
