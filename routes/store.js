@@ -341,14 +341,14 @@ app.post('/test_checkin', function(req, res){
             console.log("The barcode is " + barcode);
             testerID = testDateGlobal.replace(/\s/g, "") + barcode.toString();
             console.log("The testerid is " + testerID);
-            query2 = 'insert into test_candidates(barcode, bbname, bbrink, pass_status, test_id, test_date) values ($1, $2, $3, $4, $5, $6)';
-            db.query(query2, [barcode, item.bbname, item.bbrank, 'NULL', testerID, testDateGlobal])
+            query2 = 'insert into test_candidates(barcode, bbname, bbrink, test_id, test_date) values ($1, $2, $3, $4, $5)';
+            db.query(query2, [barcode, item.bbname, item.bbrank, testerID, testDateGlobal])
                 .then(function(){
                     req.flash('success', "Successfully Registered for Testing");
                     res.redirect('home');
                 })
                 .catch(function(err){
-                    req.flash('error', "Unable to register for test. Use the contact tab at the top of the page to fix this issue.");
+                    req.flash('error', "Unable to register for test. Use the contact tab at the top of the page to fix this issue. " + err);
                     res.redirect('home');
                 })
         })
