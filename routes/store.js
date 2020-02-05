@@ -368,8 +368,8 @@ app.get('/test_candidates', function(req, res){
     })
     .catch(function (err) {
         // display error message in case an error
-        request.flash('error', err);
-        response.redirect('home');
+        req.flash('error', err);
+        res.redirect('home');
         })
 });
 app.get('/pass/(:barcode)', function(req, res){
