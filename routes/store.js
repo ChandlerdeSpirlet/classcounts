@@ -356,7 +356,7 @@ app.post('/test_checkin', function(req, res){
         })
 });
 app.get('/test_candidates', function(req, res){
-    var query = 'select * from test_candidate';
+    var query = 'select * from test_candidates';
     db.any(query)
         .then(function (rows) {
         // render views/store/list.ejs template file
