@@ -310,10 +310,11 @@ app.get('/search', function(req, res){
     })
 });
 app.get('/test_checkin', function(req, res){
-    var query = 'select * from get_names()'
-    db.query(query)
+    var query = 'select * from get_names()';
+    var nameArray = []
+    db.any(query)
         .then(function(rows) {
-            console.log("rows from get checkin = " + rows);
+            let nameString = JSON.stringify(rows);
             res.render('store/test_checkin', {
                 title: 'Testing Check-In',
                 data: rows,
@@ -330,13 +331,12 @@ app.post('/test_checkin', function(req, res){
         bbname: req.sanitize('bbname').trim(),
         bbrank: req.sanitize('bbrank').trim()
     };
-    console.log("The test checkin name is: " + item.bbname);
     query = 'select * from translate_barcode($1)';
     db.query(query, item.bbname)
         .then(data => {
             var temp = data[0];
             var barcode = temp.translate_barcode;
-            query2 = 'insert into test_candidates values ($1, $2, $3, $4)';
+            query2 = 'insert into test_candidates values ($1, $2, $3)';
             db.query(query2, [barcode, item.bbname, item.bbrank])
                 .then(function(){
                     req.flash('success', "Successfully Registered for Testing");
