@@ -335,7 +335,7 @@ app.post('/test_checkin', function(req, res){
     query = 'select * from translate_barcode($1)';
     console.log("bbname is " + item.bbname);
     db.query(query, item.bbname)
-        .then(data => {
+        .then(function(data) {
             var temp = data[0];
             var barcode = temp.translate_barcode;
             console.log("The barcode is " + barcode);
@@ -351,9 +351,9 @@ app.post('/test_checkin', function(req, res){
                     req.flash('error', "Unable to register for test. Use the contact tab at the top of the page to fix this issue.");
                     res.redirect('home');
                 })
-            })
+        })
         .catch(function(err){
-            req.flash('error', "Unable to find blackbelt with that name");
+            req.flash('error', "Unable to find blackbelt with that name" + err);
             res.redirect('home');
         })
 });
