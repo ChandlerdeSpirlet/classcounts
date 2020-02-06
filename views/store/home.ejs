@@ -264,6 +264,7 @@ input[type=submit] {
         <li><a href="#">Home</a></li>
         <li><a href="/store/login">Login</a></li>
         <li><a href="/store/email">Contact</a></li>
+        <li><a href="/store/test_checkin">Testing Check-In</a></li>
     </ul>
     <h1>Black Belt Class Counts</h1><br>
     <h2><%= title %></h2>
@@ -281,7 +282,8 @@ input[type=submit] {
                 <div class="regular"><%= item.regular %></div>
                 <div class="sparring"><%= item.sparring %></div>
                 <div class="swats"><%= item.swats %></div>
-                <div class="camp"><a sty href='/store/history/<%= item.barcode %>'>Class History</a></div>
+                <div class="camp"><a sty href='/store/history/<%= item.barcode %>'>Class History</a></div><br>
+                <div class="camp"><a sty href='/store/test_history/<%= item.barcode %>'>Test History</a></div>
             </div>
         </div>
                 <% }) %>

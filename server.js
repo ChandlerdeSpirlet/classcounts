@@ -114,8 +114,8 @@ var index = require('./routes/index');
 var store = require('./routes/store');
 app.use('/', index);
 app.use('/store', store);
-//var port = 5000;
-var port = process.env.PORT;
+var port = 5000;
+//var port = process.env.PORT;
 
 
 app.listen(port, function() {

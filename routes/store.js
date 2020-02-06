@@ -356,72 +356,84 @@ app.post('/test_checkin', function(req, res){
         })
 });
 app.get('/test_candidates', function(req, res){
-    var query = 'select * from test_candidates where pass_status is NULL';
-    db.any(query)
-        .then(function (rows) {
-        res.render('store/test_candidates', {
-            title: 'Testing Candidates',
-            testDate: testDateGlobal,
-            data: rows
+    console.log("user is " + req.session.user);
+    if (!req.session.user == 'Instructor'){
+        request.flash('error', 'Login credentials required');
+        getDate();
+        // TODO: Initialize the query variable with a SQL query
+        // that returns all the rows and columns in the 'store' table
+        
+        var query = 'SELECT * FROM counts order by bbname';
+
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/home', {
+                title: 'Class Counts - Updated ' + globalDate,
+                result: '',
+                data: rows
+            })
         })
-    })
-    .catch(function (err) {
-        // display error message in case an error
-        req.flash('error', err);
-        res.redirect('home');
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/home', {
+                title: 'Class Counts - Updated ' + globalDate,
+                result: '',
+                data: ''
+            })
         })
-});
-function processTest(barcode, test_id, req, res){
-    var query = 'update test_candidates set pass_status = true where barcode = $1 and testid = $2';
-    db.none(query, [barcode, test_id])
-        .then(function(){
-            var query2 = 'insert into test_history(barcode, bbrank, test_date, barcode_date) select (barcode, bbrank, test_date, test_id FROM test_candidates where barcode = $1 and test_id = $2';
-            db.none(query2, [barcode, test_id])
-                .then(function(){
-                    res.redirect('test_candidates');
-                })
-                .catch(function(err){
-                    req.flash('error', err);
-                    res.redirect('home');
-                })
+    } else {
+        var query = 'select * from test_candidates where pass_status is NULL';
+        db.any(query)
+            .then(function (rows) {
+            res.render('store/test_candidates', {
+                title: 'Testing Candidates',
+                testDate: testDateGlobal,
+                data: rows
+            })
         })
-        .catch(function(err){
+        .catch(function (err) {
+            // display error message in case an error
             req.flash('error', err);
             res.redirect('home');
-        })
+            })
+    }
+});
+function processTest(code, id, passed){
+    if (passed){
+        var query = 'select * from alter_test($1, $2)';
+        db.none(query, [code, id])
+            .then(function(data){
+                console.log("Sucess");
+            })
+            .catch(function(err){
+                console.log("ERROR in pass");
+            })
+    } else {
+        var query = 'select * from alter_test_fail($1, $2)';
+        db.none(query, [code, id])
+            .then(function(data){
+                console.log("Sucess");
+            })
+            .catch(function(err){
+                console.log("ERROR in fail");
+            })
+    }
 }
 app.get('/pass/(:barcode)', function(req, res){
     var code = req.params.barcode;
     console.log("barcode in pass is " + code);
     var test_id = testDateGlobal.replace(/\s/g, "") + code.toString();
-    processTest(code, test_id, req, res);
+    processTest(code, test_id, true);
+    res.redirect('/store/test_candidates');
 });
 app.get('/fail/(:barcode)', function(req, res){
     var code = req.params.barcode;
+    console.log("barcode in pass is " + code);
     var test_id = testDateGlobal.replace(/\s/g, "") + code.toString();
-    var query = 'update test_candidates set pass_status = false where barcode = $1 and test_id = $2';
-    db.none(query, [code, test_id])
-        .then(function(){
-            var query2 = 'select * from test_candidates where pass_status != true';
-                db.any(query2)
-                    .then(function (rows) {
-                    // render views/store/list.ejs template file
-                    res.render('store/test_candidates', {
-                        title: 'Testing Candidates',
-                        testDate: testDateGlobal,
-                        data: rows
-                    })
-                })
-                .catch(function (err) {
-                    // display error message in case an error
-                    req.flash('error', err);
-                    res.redirect('home');
-                })
-            })
-        .catch(function(err){
-            req.flash('error', 'That black belt is not registered with this website. Contact a system admin using the Contact Us page with your name.');
-            res.redirect('home');
-        })
+    processTest(code, test_id, false);
+    res.redirect('/store/test_candidates');
 });
 app.get('/test_history/(:barcode)', function(req, res){
     var code = req.params.barcode;

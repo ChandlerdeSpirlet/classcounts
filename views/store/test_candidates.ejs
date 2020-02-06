@@ -238,8 +238,8 @@ tr:hover {
                         <tr>
                             <td><%= item.bbname %></td>
                             <td><%= item.bbrank %></td>
-                            <td><a  sty href='/store/pass/<%= item.barcode %>'>Pass</a></td>
-                            <td><a  sty href='/store/fail/<%= item.barcode %>'>Fail</a> &nbsp;</td>
+                            <td><a  sty style="color: green;"href='/store/pass/<%= item.barcode %>'>Pass</a></td>
+                            <td><a  sty style="color: red;"href='/store/fail/<%= item.barcode %>'>Fail</a> &nbsp;</td>
                         </tr>
                     <% }) %>
                 <% } %>
