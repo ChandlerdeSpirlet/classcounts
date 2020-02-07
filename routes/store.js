@@ -357,7 +357,7 @@ app.post('/test_checkin', function(req, res){
 });
 app.get('/test_candidates', function(req, res){
     console.log("user is " + req.session.user);
-    if (!req.session.user == 'Instructor'){
+    if (req.session.user == 'Instructor'){
         request.flash('error', 'Login credentials required');
         getDate();
         // TODO: Initialize the query variable with a SQL query
