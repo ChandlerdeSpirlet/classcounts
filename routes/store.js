@@ -358,7 +358,7 @@ app.post('/test_checkin', function(req, res){
 app.get('/test_candidates', function(req, res){
     console.log("user is " + req.session.user);
     if (!req.session.user){
-        request.flash('error', 'Login credentials required');
+        req.flash('error', 'Login credentials required');
         getDate();
         // TODO: Initialize the query variable with a SQL query
         // that returns all the rows and columns in the 'store' table
