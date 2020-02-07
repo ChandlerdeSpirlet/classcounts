@@ -357,7 +357,22 @@ app.post('/test_checkin', function(req, res){
 });
 app.get('/test_candidates', function(req, res){
     console.log("user is " + req.session.user);
-    if (!req.session.user){
+    if (req.session.user == 'Instructor'){
+        var query = 'select * from test_candidates where pass_status is NULL';
+        db.any(query)
+            .then(function (rows) {
+            res.render('store/test_candidates', {
+                title: 'Testing Candidates',
+                testDate: testDateGlobal,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.redirect('home');
+            })
+    } else {
         req.flash('error', 'Login credentials required');
         getDate();
         // TODO: Initialize the query variable with a SQL query
@@ -383,21 +398,6 @@ app.get('/test_candidates', function(req, res){
                 data: ''
             })
         })
-    } else {
-        var query = 'select * from test_candidates where pass_status is NULL';
-        db.any(query)
-            .then(function (rows) {
-            res.render('store/test_candidates', {
-                title: 'Testing Candidates',
-                testDate: testDateGlobal,
-                data: rows
-            })
-        })
-        .catch(function (err) {
-            // display error message in case an error
-            req.flash('error', err);
-            res.redirect('home');
-            })
     }
 });
 function processTest(code, id, passed){
