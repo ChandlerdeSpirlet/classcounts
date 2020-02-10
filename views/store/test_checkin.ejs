@@ -122,7 +122,7 @@
 <form action="/store/test_checkin" method="post" method="post" name="form1">
     <table width="25%" border="0">
         <tr>
-            <td>Name</td>
+            <td>Your Name</td><br>
             <td><select name="bbname" required="true">
                 <option value="">Select Your Name from the List</option>
                     <% for (var i = 0; i < data.length; i++) { %>
@@ -131,10 +131,24 @@
             </select></td>
         </tr>
         <tr>
-            <td>Testing Rank</td>
-            <td><input type="text" required="true" name="bbrank" id="bbrank" value="<%= bbrank %>"/></td>
-            <td>Note: For <b>Testing Rank</b>, enter the rank you are testing for, not your current rank.</td>
+            <td>The Rank You Are Testing For</td><br>
+            <td><select type="text" required="true" name="bbrank" id="bbrank">
+                <option value="First Degree">First Degree</option>
+                <option value="First Degree - White Bar">First Degree - White Bar</option>
+                <option value="First Degree - Gold Bar">First Degree - Gold Bar</option>
+                <option value="First Degree - Orange Bar">First Degree - Orange Bar</option>
+                <option value="First Degree - Green Bar">First Degree - Green Bar</option>
+                <option value="First Degree - Purple Bar">First Degree - Purple Bar</option>
+                <option value="First Degree - Blue Bar">First Degree - Blue Bar</option>
+                <option value="First Degree - Brown Bar">First Degree - Brown Bar</option>
+                <option value="Second Degree">Second Degree</option>
+                <option value="Second Degree - Progress Check">Second Degree - Progress Check</option>
+                <option value="Third Degree">Third Degree</option>
+                <option value="Third Degree - Progress Check">Third Degree - Progress Check</option>
+                <option value="Fourth Degree">Fourth Degree</option>
+            </select></td>
         </tr>
+        <tr>Note: For <b>Testing Rank</b>, enter the rank you are testing for, not your current rank.</tr>
         <tr>
             <td></td>
             <td><input type="submit" name="Submit" value="Submit"/></td>
