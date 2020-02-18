@@ -622,7 +622,7 @@ app.get('/list_Instructor', function(request, response){
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/list2', {
+            response.render('store/list_Instructor', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: rows
             })
@@ -630,7 +630,7 @@ app.get('/list_Instructor', function(request, response){
         .catch(function (err) {
             // display error message in case an error
             request.flash('error', err);
-            response.render('store/list2', {
+            response.render('store/list_Instructor', {
                 title: 'Class Counts - Updated ' + global.globalDate,
                 data: ''
             })
