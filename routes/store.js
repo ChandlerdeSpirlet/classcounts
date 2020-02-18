@@ -403,7 +403,7 @@ app.get('/test_candidates', function(req, res){
 function processTest(code, id, passed){
     if (passed){
         var query = 'select * from alter_test($1, $2)';
-        db.none(query, [code, id])
+        db.one(query, [code, id])
             .then(function(data){
                 console.log("Sucess " + data);
             })
@@ -412,7 +412,7 @@ function processTest(code, id, passed){
             })
     } else {
         var query = 'select * from alter_test_fail($1, $2)';
-        db.none(query, [code, id])
+        db.one(query, [code, id])
             .then(function(data){
                 console.log("Sucess");
             })
