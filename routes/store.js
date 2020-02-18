@@ -437,8 +437,8 @@ app.get('/fail/(:barcode)', function(req, res){
 });
 app.get('/test_history/(:barcode)', function(req, res){
     var code = req.params.barcode;
-    var query = "select test_date, bbrank from test_history where barcode = $1";
-    db.any(query, code)
+    var query = "select test_date, bbrank from test_history where barcode = $1 and test_status = $2";
+    db.any(query, [code, 'FAIL'])
         .then(function(rows){
             res.render('store/test_history', {
                 title: 'Test History',
@@ -467,7 +467,7 @@ app.get('/history/(:barcode)', function(req, res){
 });
 app.get('/test_history_admin/(:barcode)', function(req, res){
     var code = req.params.barcode;
-    var query = "select bbrank, pass_status, test_date from test_candidates where barcode = $1";
+    var query = "select bbrank, pass_status, test_date from test_history where barcode = $1";
     db.any(query, code)
         .then(function(rows){
             res.render('store/test_history_admin.ejs',{
