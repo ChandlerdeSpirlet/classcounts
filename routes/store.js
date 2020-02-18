@@ -405,10 +405,10 @@ function processTest(code, id, passed){
         var query = 'select * from alter_test($1, $2)';
         db.none(query, [code, id])
             .then(function(data){
-                console.log("Sucess");
+                console.log("Sucess " + data);
             })
             .catch(function(err){
-                console.log("ERROR in pass");
+                console.log("ERROR in pass " + err);
             })
     } else {
         var query = 'select * from alter_test_fail($1, $2)';
