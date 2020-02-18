@@ -465,6 +465,21 @@ app.get('/history/(:barcode)', function(req, res){
             res.redirect('home');
         })
 });
+app.get('/test_history_admin/(:barcode)', function(req, res){
+    var code = req.params.barcode;
+    var query = "select bbrank, pass_status, test_date from test_candidates where barcode = $1";
+    db.any(query, code)
+        .then(function(rows){
+            res.render('store/test_history_admin.ejs',{
+                title: 'Testing History',
+                data: rows
+            })
+        })
+        .catch(function(err){
+            req.flash('error', "That black belt is not registered with this website.");
+            res.redirect('list_Instructor');
+        })
+})
 
 app.get('/schedule', function (req, res){
     var data =fs.readFileSync(__dirname + '/storedFiles/sched.pdf');
@@ -573,6 +588,55 @@ app.get('/test', function(request, response){
         })
     })
 });
+app.get('/list_Instructor', function(request, response){
+
+    // TODO: Initialize the query variable with a SQL query
+    // that returns all the rows and columns in the 'store' table
+    if(request.session.user != 'Instructor'){
+        request.flash('error', 'Instructor credentials required');
+        getDate();
+        var query = 'SELECT * FROM counts order by bbname';
+
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: ''
+            })
+        })
+    } else {
+        getDate();
+        var query = 'SELECT * FROM counts order by bbname';
+
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            response.render('store/list2', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            request.flash('error', err);
+            response.render('store/list2', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                data: ''
+            })
+        })
+    }
+})
 app.get('/list2', function (request, response) {
     
     // TODO: Initialize the query variable with a SQL query
@@ -1455,6 +1519,11 @@ app.post('/login', function(request, response){
                     request.session.user = item.bbuser;
                     request.flash('success', 'Admin credentials accepted!');
                     response.redirect('list3');
+                }
+                if (final == true && item.bbuser == "Instructor"){
+                    request.session.user = item.bbuser;
+                    request.flash('success', 'Instructor credentials accepted!');
+                    response.redirect('list_Instructor');
                 }
                 if (final == true){
                     request.session.user = item.bbuser;
