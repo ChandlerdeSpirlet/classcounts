@@ -339,7 +339,7 @@ app.post('/test_checkin', function(req, res){
             var temp = data[0];
             var barcode = temp.translate_barcode;
             testerID = testDateGlobal.replace(/\s/g, "") + barcode.toString();
-            query2 = "insert into test_candidates(barcode, bbname, bbrank, test_id, to_date(test_date, 'Mon/DD/YYYY')) values ($1, $2, $3, $4, $5)";
+            query2 = "insert into test_candidates(barcode, bbname, bbrank, test_id, test_date) values ($1, $2, $3, $4, to_date($5, 'Mon/DD/YYYY'))";
             db.query(query2, [barcode, item.bbname, item.bbrank, testerID, testDateGlobal])
                 .then(function(){
                     req.flash('success', "Successfully Registered for Testing");
