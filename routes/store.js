@@ -405,7 +405,7 @@ function processTest(code, id, passed){
         var query = 'select * from alter_test($1, $2)';
         db.one(query, [code, id])
             .then(function(data){
-                console.log("Sucess " + data);
+                console.log("Sucess");
             })
             .catch(function(err){
                 console.log("ERROR in pass " + err);
@@ -437,8 +437,8 @@ app.get('/fail/(:barcode)', function(req, res){
 });
 app.get('/test_history/(:barcode)', function(req, res){
     var code = req.params.barcode;
-    var query = "select test_date, bbrank from test_history where barcode = $1 and test_status = $2";
-    db.any(query, [code, 'FAIL'])
+    var query = "select cast(to_char(test_date, 'Mon DD, YYYY') as varchar) as test_date, bbrank from test_history where barcode = $1 and pass_status = $2 order by test_date desc";
+    db.any(query, [code, 'PASS'])
         .then(function(rows){
             res.render('store/test_history', {
                 title: 'Test History',
@@ -452,7 +452,7 @@ app.get('/test_history/(:barcode)', function(req, res){
 });
 app.get('/history/(:barcode)', function(req, res){
     var code = req.params.barcode;
-    var query = "select classname, classtype, TO_CHAR(classdate, 'Mon dd, yyyy') as classdate from history where barcode = $1 order by classdate desc";
+    var query = "select classname, classtype, TO_CHAR(classdate, 'Mon DD, YYYY') as classdate from history where barcode = $1 order by classdate desc";
     db.any(query, code)
         .then(function(rows){
             res.render('store/history', {
@@ -467,7 +467,7 @@ app.get('/history/(:barcode)', function(req, res){
 });
 app.get('/test_history_admin/(:barcode)', function(req, res){
     var code = req.params.barcode;
-    var query = "select bbrank, pass_status, test_date from test_history where barcode = $1";
+    var query = "select bbrank, pass_status, cast(to_char(test_date, 'Mon DD, YYYY') as varchar) as test_date from test_history where barcode = $1 order by test_date desc";
     db.any(query, code)
         .then(function(rows){
             res.render('store/test_history_admin.ejs',{
