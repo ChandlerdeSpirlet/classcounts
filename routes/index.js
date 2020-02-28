@@ -12,9 +12,16 @@ db.any(query)
 });
 
 
+function getDate() {
+    var query = 'select * from "refresh"';
+    db.any(query)
+        .then(function(data){
+            var temp = data[0];
+            global.globalDate = temp.refreshed;
+        })
+}
 
 app.get('/', function (request, response) {
-    console.log("req.headers[x-forwarded-proto = " + request.headers['x-forwarded-proto']);
     if(request.headers['x-forwarded-proto']!='https'){
         response.redirect('https://classcounts.herokuapp.com')
     } else {
