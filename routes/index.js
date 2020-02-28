@@ -11,7 +11,7 @@ db.any(query)
         global.globalDate = temp.refreshed;
 });
 
-app.use(requireHTTPS);
+
 
 app.get('/', function (request, response) {
     // TODO: Initialize the query variable with a SQL query
