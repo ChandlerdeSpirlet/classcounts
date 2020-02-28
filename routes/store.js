@@ -76,7 +76,7 @@ function getDate() {
 app.get('/', function (request, response) {
     console.log("req.headers[x-forwarded-proto = " + request.headers['x-forwarded-proto']);
     if(request.headers['x-forwarded-proto']!='https'){
-        res.redirect('https://classcounts.herokuapp.com')
+        response.redirect('https://classcounts.herokuapp.com')
     } else {
         var query = 'SELECT * FROM counts order by bbname';
     //var query = 'select Z.*, S.mon, S.tues, S.wed, S.thurs, S.fri from counts Z, signup S where Z.bbname like S.bbname';
