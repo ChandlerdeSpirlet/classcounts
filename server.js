@@ -21,6 +21,7 @@ app.use(methodOverride(function (req, res) {
         return method
     }
 }));
+app.use(requireHTTPS);
 
 function getSid(callback){
     var acctSid = '';

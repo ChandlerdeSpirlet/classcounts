@@ -63,6 +63,7 @@ app.use(
 )
 app.use(bodyParser.json())
 app.use(cors())
+app.use(requireHTTPS);
 
 function getDate() {
     var query = 'select * from "refresh"';
