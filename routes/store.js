@@ -74,6 +74,7 @@ function getDate() {
 }
 
 app.get('/', function (request, response) {
+    console.log("req.headers[x-forwarded-proto = " + request.headers['x-forwarded-proto']);
     if(request.headers['x-forwarded-proto']!='https'){
         res.redirect('https://classcounts.herokuapp.com')
     } else {
