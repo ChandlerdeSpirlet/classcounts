@@ -74,10 +74,10 @@ function getDate() {
 }
 
 app.get('/', function (request, response) {
-    if(request.headers['x-forwarded-proto']!='https'){
-        response.redirect('https://classcounts.herokuapp.com')
-    } else {
-        var query = 'SELECT * FROM counts order by bbname';
+    //if(request.headers['x-forwarded-proto']!='https'){
+    //    response.redirect('https://classcounts.herokuapp.com')
+    //} else {
+        var query = 'SELECT * FROM counts order by bbname_last';
     //var query = 'select Z.*, S.mon, S.tues, S.wed, S.thurs, S.fri from counts Z, signup S where Z.bbname like S.bbname';
         getDate();
         db.any(query)
@@ -98,7 +98,7 @@ app.get('/', function (request, response) {
                 data: ''
             })
         })
-    }
+    //}
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     
@@ -260,7 +260,7 @@ app.post('/data', function(req, res){
 app.get('/home', function(request, response) {
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
-    var query = 'SELECT * FROM counts order by bbname';
+    var query = 'SELECT * FROM counts order by bbname_last';
     //var query = 'select Z.*, S.mon, S.tues, S.wed, S.thurs, S.fri from counts Z, signup S where Z.bbname like S.bbname';
     getDate();
     db.any(query)
@@ -347,8 +347,16 @@ app.post('/test_checkin', function(req, res){
             query2 = "insert into test_candidates(barcode, bbname, bbrank, test_id, test_date) values ($1, $2, $3, $4, to_date($5, 'Mon/DD/YYYY'))";
             db.query(query2, [barcode, item.bbname, item.bbrank, testerID, testDateGlobal])
                 .then(function(){
-                    req.flash('success', "Successfully Registered for Testing");
-                    res.redirect('home');
+                    var query_last = 'update test_candidates set bbname_last = (select bbname_last from counts where barcode = $1) where barcode = $2';
+                    db.query(query_last, [barcode, barcode])
+                        .then(function(){
+                            req.flash('success', "Successfully Registered for Testing");
+                            res.redirect('home');
+                        })
+                        .catch(function(){
+                            req.flash('error', "Not registered for test. Last name issue. CONTACT system admin.");
+                            res.redirect('home');
+                        })
                 })
                 .catch(function(err){
                     req.flash('error', "Unable to register for test. Use the contact tab at the top of the page to fix this issue. This error might occur if you have already registered for this test.");
@@ -363,7 +371,7 @@ app.post('/test_checkin', function(req, res){
 app.get('/test_candidates', function(req, res){
     console.log("user is " + req.session.user);
     if (req.session.user == 'Instructor'){
-        var query = 'select * from test_candidates where pass_status is NULL';
+        var query = 'select * from test_candidates where pass_status is NULL order by bbname_last';
         db.any(query)
             .then(function (rows) {
             res.render('store/test_candidates', {
@@ -383,7 +391,7 @@ app.get('/test_candidates', function(req, res){
         // TODO: Initialize the query variable with a SQL query
         // that returns all the rows and columns in the 'store' table
         
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
 
         db.any(query)
             .then(function (rows) {
@@ -574,7 +582,7 @@ app.get('/6GoalSetting', function(req, res){
 app.get('/test', function(request, response){
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
-    var query = 'SELECT * FROM counts order by bbname';
+    var query = 'SELECT * FROM counts order by bbname_last';
     getDate();
     db.any(query)
         .then(function (rows) {
@@ -600,7 +608,7 @@ app.get('/list_Instructor', function(request, response){
     if(request.session.user != 'Instructor'){
         request.flash('error', 'Instructor credentials required');
         getDate();
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
 
         db.any(query)
             .then(function (rows) {
@@ -622,7 +630,7 @@ app.get('/list_Instructor', function(request, response){
         })
     } else {
         getDate();
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
 
         db.any(query)
             .then(function (rows) {
@@ -649,7 +657,7 @@ app.get('/list2', function (request, response) {
     if(!request.session.user){
         request.flash('error', 'Login credentials required');
         getDate();
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
 
         db.any(query)
             .then(function (rows) {
@@ -671,7 +679,7 @@ app.get('/list2', function (request, response) {
         })
     } else {
         getDate();
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
 
         db.any(query)
             .then(function (rows) {
@@ -698,7 +706,7 @@ app.get('/list3', function (request, response) {
         // TODO: Initialize the query variable with a SQL query
         // that returns all the rows and columns in the 'store' table
         
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
 
         db.any(query)
             .then(function (rows) {
@@ -723,7 +731,7 @@ app.get('/list3', function (request, response) {
         // TODO: Initialize the query variable with a SQL query
         // that returns all the rows and columns in the 'store' table
         
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
 
         db.any(query)
             .then(function (rows) {
@@ -748,7 +756,7 @@ app.get('/file', function (request, response) {
     // render the views/index.ejs template file
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
         getDate();
         db.any(query)
             .then(function (rows) {
@@ -894,7 +902,7 @@ function clearBool(){
 app.get('/additional', function(req, res){
     if (!req.session.user || req.session.user != 'admin'){
         req.flash('error', 'Admin credentials required');
-        var query = 'SELECT * FROM inc order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
         getDate();
         db.any(query)
             .then(function (rows) {
@@ -944,7 +952,7 @@ app.get('/additional', function(req, res){
         })
     } else {
         req.flash('error', 'Admin credentials required');
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
         getDate();
         db.any(query)
             .then(function (rows) {
@@ -1040,7 +1048,7 @@ app.get('/adjust/(:barcode)', function(req, res){
         })
     } else {
         req.flash('error', 'Admin credentials required');
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
         getDate();
         db.any(query)
             .then(function (rows) {
@@ -1301,7 +1309,7 @@ app.put('/alter/(:barcode)', function (req, res) {
 app.get('/barcode/(:bbname)', function(req, res) {
     if (!req.session.user){
         req.flash('error', 'Login credentials required');
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
         getDate();
         db.any(query)
             .then(function (rows) {
@@ -1325,7 +1333,7 @@ app.get('/barcode/(:bbname)', function(req, res) {
     else {
         var code = req.params.bbname;
         console.log('name is ', req.params.bbname);
-        var query = 'select * from counts where bbname = $1';
+        var query = "select * from counts where bbname_first || ' ' || bbname_last = $1";
         db.one(query, code)
             .then(function (row) {
                 if (row.length === 0){
@@ -1335,7 +1343,7 @@ app.get('/barcode/(:bbname)', function(req, res) {
                     console.log('In the else for .get barcode');
                     res.render('store/barcode', {
                         title: 'Change Barcode',
-                        bbname: row.bbname,
+                        bbname: row.bbname_first + ' ' + row.bbname_last,
                         barcode: row.barcode                    
                     })
                     
@@ -1361,10 +1369,10 @@ app.put('/barcode/(:bbname)', function (req, res) {
             bbname: req.sanitize('bbname').escape().trim(),
             barcode: req.sanitize('barcode').escape().trim(),
         };
-        db.one('select * from counts where bbname = $1', [item.bbname])
+        db.one("select * from counts where bbname_first || ' ' || bbname_last = $1", [item.bbname])
             .then(function(result){
                 console.log(item.bbname, item.barcode, result.barcode, 'name, submitted, from db');
-                        db.one('select * from inc where bbname = $1', [item.bbname])
+                        db.one("select * from inc where bbname_first || ' ' || bbname_last = $1", [item.bbname])
                             .then(function(row){
                                 console.log(item.bbname, item.barcode, result.barcode, 'name, submitted, from db');
                                 if (row.length === 1){
@@ -1375,7 +1383,7 @@ app.put('/barcode/(:bbname)', function (req, res) {
                                         .catch(function() {
                                             console.log('didnt work');
                                         })
-                                    db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
+                                    db.none('update counts set barcode = $1 where barcode = $2', [item.barcode, result.barcode])
                                         .then(function() {
                                             req.flash('success', 'Black belt classes updated.');
                                             console.log('In the .then for updateQuery');
@@ -1384,7 +1392,7 @@ app.put('/barcode/(:bbname)', function (req, res) {
                                             // TODO: Initialize the query variable with a SQL query
                                             // that returns all the rows and columns in the 'store' table
                                             
-                                            var query = 'SELECT * FROM counts order by bbname';
+                                            var query = 'SELECT * FROM counts order by bbname_last';
 
                                             db.any(query)
                                                 .then(function (rows) {
@@ -1403,7 +1411,7 @@ app.put('/barcode/(:bbname)', function (req, res) {
                                         })
                                         })
                                 } else {
-                                    db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
+                                    db.none('update counts set barcode = $1 where barcode = $1', [item.barcode, result.barcode])
                                         .then(function() {
                                             req.flash('success', 'Black belt classes updated.');
                                             console.log('In the .then for updateQuery');
@@ -1412,7 +1420,7 @@ app.put('/barcode/(:bbname)', function (req, res) {
                                             // TODO: Initialize the query variable with a SQL query
                                             // that returns all the rows and columns in the 'store' table
                                             
-                                            var query = 'SELECT * FROM counts order by bbname';
+                                            var query = 'SELECT * FROM counts order by bbname_last';
 
                                             db.any(query)
                                                 .then(function (rows) {
@@ -1433,7 +1441,7 @@ app.put('/barcode/(:bbname)', function (req, res) {
                                 }
                             })
                             .catch(function(err){
-                                db.none('update counts set bbname = $1, barcode = $2 where barcode = $3', [item.bbname, item.barcode, result.barcode])
+                                db.none('update counts set barcode = $1 where barcode = $2', [item.barcode, result.barcode])
                                         .then(function() {
                                             req.flash('success', 'Black belt classes updated.');
                                             console.log('In the .then for updateQuery');
@@ -1442,7 +1450,7 @@ app.put('/barcode/(:bbname)', function (req, res) {
                                             // TODO: Initialize the query variable with a SQL query
                                             // that returns all the rows and columns in the 'store' table
                                             
-                                            var query = 'SELECT * FROM counts order by bbname';
+                                            var query = 'SELECT * FROM counts order by bbname_last';
 
                                             db.any(query)
                                                 .then(function (rows) {
@@ -1548,7 +1556,7 @@ app.get('/adminView', function(req, res){
         // TODO: Initialize the query variable with a SQL query
         // that returns all the rows and columns in the 'store' table
         
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
 
         db.any(query)
             .then(function (rows) {
@@ -1697,7 +1705,7 @@ app.get('/edit', function (request, response) {
     // render views/store/add.ejs
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
         getDate();
         db.any(query)
             .then(function (rows) {
@@ -1785,7 +1793,7 @@ app.get('/add', function (request, response) {
     // render views/store/add.ejs
     if (!request.session.user){
         request.flash('error', 'Login credentials required');
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
         getDate();
         db.any(query)
             .then(function (rows) {
@@ -1816,7 +1824,8 @@ app.get('/add', function (request, response) {
 app.post('/add', function (request, response) {
     // Validate user input - ensure non emptiness
     request.assert('barcode', 'Barcode is required').notEmpty();
-    request.assert('bbname', 'Name is required').notEmpty();
+    request.assert('bbname_first', 'First name is required').notEmpty();
+    request.assert('bbname_last', 'Last name is required').notEmpty();
 
     var errors = request.validationErrors();
     if (!errors) { // No validation errors
@@ -1825,10 +1834,11 @@ app.post('/add', function (request, response) {
             // malicious code(as data) into our database. There by preventing
             // SQL-injection attacks.
             barcode: request.sanitize('barcode').escape().trim(),
-            bbname: request.sanitize('bbname').escape().trim()
+            bbname_first: request.sanitize('bbname_first').escape().trim(),
+            bbname_last: request.sanitize('bbname_last').escape().trim()
         };
         // Running SQL query to insert data into the store table
-        db.none('INSERT INTO counts(barcode, bbname, regular, sparring, swats) VALUES($1, $2, $3, $4, $5)', [item.barcode, item.bbname, 0, 0, 0])
+        db.none('INSERT INTO counts(barcode, bbname_first, bbname_last, regular, sparring, swats) VALUES($1, $2, $3, $4, $5, $6)', [item.barcode, item.bbname_first, item.bbname_last, 0, 0, 0])
             .then(function (result) {
                 request.flash('success', 'Blackbelt added successfully!');
                 // render views/store/add.ejs
@@ -1843,7 +1853,8 @@ app.post('/add', function (request, response) {
             response.render('store/add', {
                 title: 'Add New Blackbelt',
                 barcode: item.barcode,
-                bbname: item.bbname
+                bbname_first: item.bbname_first,
+                bbname_last: item.bbname_last
             })
         })
     } else {
@@ -1852,7 +1863,8 @@ app.post('/add', function (request, response) {
         response.render('store/add', {
             title: 'Add New Blackbelt',
             barcode: request.body.barcode,
-            bbname: request.body.bbname
+            bbname_first: request.body.bbname_first,
+            bbname_last: item.bbname_last
         })
     }
 });
@@ -1942,7 +1954,7 @@ app.post('/email', function (request, response) {
 app.get('/del', function(req, res){
     if (!req.session.user){
         req.flash('error', 'Login credentials required');
-        var query = 'SELECT * FROM counts order by bbname';
+        var query = 'SELECT * FROM counts order by bbname_last';
         getDate();
         db.any(query)
             .then(function (rows) {
@@ -1973,21 +1985,14 @@ app.get('/del', function(req, res){
 app.post('/del', function(req, res){
     req.assert('barcode', 'Barcode is required to prevent mistakes.').notEmpty();
     var item = {
-        barcode: req.sanitize('barcode').escape(),
-        bbname: req.sanitize('bbname').escape()
+        barcode: req.sanitize('barcode').escape()
     };
     var errors = req.validationErrors();
     if (!errors){
-        db.none('delete from counts where (barcode = $1) or (bbname = $2)', [item.barcode, item.bbname])
+        db.none('delete from counts where (barcode = $1)', [item.barcode])
         .then(function(result){
-            if (item.bbname != ""){
-                req.flash('success', item.bbname, ' (' + item.barcode + ') ', 'has been removed.');
-                res.redirect('list2');
-            } else {
-                req.flash('success', item.barcode, item.bbname, ' has been removed.');
-                res.redirect('list2');
-            }
-            
+            req.flash('success', item.barcode, item.bbname, ' has been removed.');
+            res.redirect('list2');
         }).catch(function(err){
             req.flash('error', err, ' blackbelt could not be removed');
             res.redirect('list2');
@@ -1997,8 +2002,7 @@ app.post('/del', function(req, res){
         req.flash('error', error_msg);
         res.render('store/del', {
             title: 'Remove Blackbelt',
-            barcode: req.body.barcode,
-            bbname: req.body.bbname
+            barcode: req.body.barcode
         })
     }
 });

@@ -294,7 +294,7 @@ tr:hover {
                 The 'data' variable is passed from the store.js during the response.render function call -->
                     <% data.forEach(function(item){ %>
                         <tr>
-                            <td><%= item.bbname %></td>
+                            <td><%= item.bbname_first %> <%= item.bbname_last %></td>
                             <td><%= item.barcode %></td>
                             <td><%= item.regular %></td>
                             <td><%= item.sparring %></td>

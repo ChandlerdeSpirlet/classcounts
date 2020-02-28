@@ -276,7 +276,7 @@ input[type=submit] {
         <% if (data) { %>
             <% data.forEach(function(item){ %>
         <div class="student-card">
-            <button class="nameField"><%= item.bbname %></button>
+            <button class="nameField"><%= item.bbname_first %> <%= item.bbname_last %></button>
             <div class="student-content">
                 <div class="barcode"><%= item.barcode %></div>
                 <div class="regular"><%= item.regular %></div>
