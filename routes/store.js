@@ -1817,7 +1817,8 @@ app.get('/add', function (request, response) {
         response.render('store/add', {
             title: 'Add New Blackbelt',
             barcode: '',
-            bbname: ''
+            bbname_first:'',
+            bbbame_last: ''
         })
     }
 });
