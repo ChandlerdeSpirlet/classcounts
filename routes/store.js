@@ -1907,7 +1907,8 @@ app.post('/add', function (request, response) {
                 response.render('store/add', {
                     title: 'Add New Blackbelt',
                     barcode: '',
-                    bbname: ''
+                    bbname_first: '',
+                    bbname_last: ''
                 })
             }).catch(function (err) {
             request.flash('error', err);
