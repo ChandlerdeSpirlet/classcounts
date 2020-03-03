@@ -344,8 +344,69 @@ app.post('/test_checkin', function(req, res){
             var temp = data[0];
             var barcode = temp.translate_barcode;
             testerID = testDateGlobal.replace(/\s/g, "") + barcode.toString();
-            query2 = "insert into test_candidates(barcode, bbname, bbrank, test_id, test_date) values ($1, $2, $3, $4, to_date($5, 'Mon/DD/YYYY'))";
-            db.query(query2, [barcode, item.bbname, item.bbrank, testerID, testDateGlobal])
+            var rank_order;
+            var rank_to_process = item.bbrank;
+            switch(rank_to_process){
+                case "Prep Belt":
+                    rank_order = 0.1;
+                    break;
+                case "Prep Belt - Progress Check":
+                    rank_order = 0.2;
+                    break;
+                case "Conditional":
+                    rank_order = 0.3;
+                    break;
+                case "Conditional - Progress Check":
+                    rank_order = 0.4;
+                    break;
+                case "First Degree":
+                    rank_order = 1.0;
+                    break;
+                case "First Degree - White Bar":
+                    rank_order = 1.1;
+                    break;
+                case "First Degree - Gold Bar":
+                    rank_order = 1.2;
+                    break;
+                case "First Degree - Orange Bar":
+                    rank_order = 1.3;
+                    break;
+                case "First Degree - Green Bar":
+                    rank_order = 1.4;
+                    break;
+                case "First Degree - Purple Bar":
+                    rank_order = 1.5;
+                    break;
+                case "First Degree - Blue Bar":
+                    rank_order = 1.6;
+                    break;
+                case "First Degree - Brown Bar":
+                    rank_order = 1.7;
+                    break;
+                case "Second Degree":
+                    rank_order = 2.0;
+                    break;
+                case "Second Degree - Progress Check":
+                    rank_order = 2.1;
+                    break;
+                case "Third Degree":
+                    rank_order = 3.0;
+                    break;
+                case "Third Degree - Progress Check":
+                    rank_order = 3.1;
+                    break;
+                case "Fourth Degree":
+                    rank_order = 4.0;
+                    break;
+                case "Fourth Degree - Progress Check":
+                    rank_order = 4.1;
+                    break;
+                default:
+                    rank_order = 999;
+                    break;
+            }
+            query2 = "insert into test_candidates(barcode, bbname, bbrank, test_id, test_date, rank_sort) values ($1, $2, $3, $4, to_date($5, 'Mon/DD/YYYY'), $6)";
+            db.query(query2, [barcode, item.bbname, item.bbrank, testerID, testDateGlobal, rank_order])
                 .then(function(){
                     var query_last = 'update test_candidates set bbname_last = (select bbname_last from counts where barcode = $1) where barcode = $2';
                     db.query(query_last, [barcode, barcode])
@@ -371,7 +432,7 @@ app.post('/test_checkin', function(req, res){
 app.get('/test_candidates', function(req, res){
     console.log("user is " + req.session.user);
     if (req.session.user == 'Instructor'){
-        var query = 'select * from test_candidates where pass_status is NULL order by bbname_last';
+        var query = 'select * from test_candidates where pass_status is NULL order by rank_sort';
         db.any(query)
             .then(function (rows) {
             res.render('store/test_candidates', {
@@ -1817,7 +1878,7 @@ app.get('/add', function (request, response) {
         response.render('store/add', {
             title: 'Add New Blackbelt',
             barcode: '',
-            bbname_first:'',
+            bbname_first: '',
             bbbame_last: ''
         })
     }
