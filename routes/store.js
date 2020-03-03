@@ -1879,7 +1879,7 @@ app.get('/add', function (request, response) {
             title: 'Add New Blackbelt',
             barcode: '',
             bbname_first: '',
-            bbbame_last: ''
+            bbname_last: ''
         })
     }
 });
