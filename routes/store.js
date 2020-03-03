@@ -51,7 +51,7 @@ app.use(session({
     secret: 'counts',
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 8 * 60 * 1000} //8 minute cookie
+    cookie: {maxAge: 60 * 60 * 1000} //8 minute cookie
 }));
 app.use(exp_val());
 app.use(busboy());

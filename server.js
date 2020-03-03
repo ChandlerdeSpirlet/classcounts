@@ -108,7 +108,7 @@ app.use(session({
     secret: 'count',
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge: 8 * 60 * 1000}
+    cookie: {maxAge: 60 * 60 * 1000}
 }));
 app.use(flash());
 var index = require('./routes/index');
