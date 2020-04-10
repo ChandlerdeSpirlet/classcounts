@@ -112,6 +112,30 @@ function addType(code, name, type, time, id){
     db.none("insert into history (barcode, classname, classdate, classtype, attendance_id) values ($1, $2, to_date($3, 'Month DD, YYYY'), $4, $5)", [code, name, time, type, id]);
 };
 function addClass(code, name, time, id){
+    if (name == 'Basic VK'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 1 VK'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 2 VK'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 3 VK'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Black Belt VK'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Prep & Conditional VK'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
     if (name == 'SWAT'){
         db.none('update counts set swats = (swats + 1) where barcode = ' + code);
         addType(code, name, 'SWAT', time, id);
