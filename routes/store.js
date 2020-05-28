@@ -132,6 +132,10 @@ function addClass(code, name, time, id){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
         addType(code, name, 'Regular', time, id);
     }
+    if (name == '2nd Degree BB VK'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
     if (name == 'Prep & Conditional VK'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
         addType(code, name, 'Regular', time, id);
