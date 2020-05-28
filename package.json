@@ -23,7 +23,7 @@
     "connect-busboy": "0.0.2",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
-    "csv-parse": "^4.9.0",
+    "csv-parse": "^4.10.1",
     "dotenv": "^8.2.0",
     "ejs": "^2.7.4",
     "express": "^4.17.1",
@@ -50,6 +50,6 @@
     "sun-time": "^1.0.2",
     "suncalc2": "^1.8.1",
     "sundown": "^2.0.0",
-    "twilio": "^3.43.0"
+    "twilio": "^3.44.0"
   }
 }
