@@ -944,6 +944,12 @@ function readData(area){
                 if (csvData[x][2] == 'Spar-Black Belt'){
                     addClass(csvData[x][1], csvData[x][2], localTime);
                 }
+                if (csvData[x][2] == 'Black Belt VK'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == '2nd Degree BB VK'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
             }
         })
 };
