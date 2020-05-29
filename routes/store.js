@@ -13,7 +13,7 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-let testDateGlobal = 'Jun 05 2020';
+let testDateGlobal = 'Jun 06 2020';
 
 function sendMessage(text){
     db.query('select * from get_accountsid()')
@@ -350,7 +350,7 @@ app.get('/test_checkin', function(req, res){
             let nameString = JSON.stringify(rows);
             res.render('store/test_checkin', {
                 title: 'Testing Check-In',
-                date: 'June 5 - 6',
+                date: 'June 6 - 13',
                 data: rows,
                 bbrank: ''
             })
