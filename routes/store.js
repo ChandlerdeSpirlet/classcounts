@@ -2218,9 +2218,9 @@ app.post('/1degree_signup', function(req, res){
     var dates_array = [];
     temp_dates.forEach(function(value){
         getDate = parseDateInfo(value);
-        month_input = getInfo[0];
-        day_num = getInfo[1];
-        time_num = getInfo[2];
+        month_input = getDate[0];
+        day_num = getDate[1];
+        time_num = getDate[2];
         var readable_date = month_input + ' ' + day_num + ' at ' + time_num;
         dates_array.push(readable_date);
         var query = 'update black_belt_class set count = count + 1 where month_name = $1 and day_num = $2 and time_num = $3 and level = $4';
