@@ -2213,6 +2213,6 @@ app.post('/1degree_signup', function(req, res){
         email: req.sanitize('email'),
         day_time: req.sanitize('day_time')
     }
-    console.log(day_time);
+    console.log(item.day_time);
     res.redirect('home');
 });
