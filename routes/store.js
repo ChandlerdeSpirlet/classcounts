@@ -2214,9 +2214,42 @@ app.post('/1degree_signup', function(req, res){
         day_time: req.sanitize('day_time')
     }
     var belt_group = 1;
-    console.log('item.day_time = ' + item.day_time);
-    console.log('item.day_time[0] = ' + item.day_time[0]);
-    res.redirect('home');
+    temp_dates = parseDates(item.day_time);
+    var readable_date = [];
+    temp_dates.forEach(function(value){
+        getDate = parseDateInfo(value);
+        month_input = getInfo[0];
+        day_num = getInfo[1];
+        time_num = getInfo[2];
+        var readable_date = month_input + ' ' + day_num + ' at ' + time_num;
+        dates_array.push(readable_date);
+        var query = 'update black_belt_class set count = count + 1 where month_name = $1 and day_num = $2 and time_num = $3 and level = $4';
+        db.none(query, [month_input, day_num, time_num, belt_group])
+            .then(function(rows){
+            })
+            .catch(function(err){
+                req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: count_update.');
+                res.redirect('home');
+            })
+        var dateConversion = month_input + ' ' + str(day_num) + ' at ' + time_num;
+        var query_sched = "insert into people_classes (first_name, last_name, email, belt, test_day, time_num) values ($1, $2, $3, $4, to_date($5, 'Month DD YYYY'), $6);"
+        if (req.params.belt_group == 1){
+            db.none(query_sched, [item.fname, item.lname, item.email, 'Black Belt', dateConversion, time_num])
+                .then(function(rows){
+                })
+                .catch(function(err){
+                    req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: sched_update.');
+                    res.redirect('home');
+                })
+        }
+    })
+    temp_name = item.fname + ' ' + item.lname;
+    sendEmail(temp_name, item.email, prettyPrint(dates_array));
+    res.render('store/class_register', {
+        stud_name: temp_name,
+        times: prettyPrint(dates_array),
+        email: item.email
+    })
 });
 
 function parseDates(date){
@@ -2233,53 +2266,6 @@ function parseDates(date){
     }
     return dates;
 }
-
-app.get('/class_register/(:fname)/(:lname)/(:email)/(:day_time)/(:belt_group)', function(req, res){
-    dates_array = [];
-    console.log(req.params.day_time);
-    temp = parseDates(req.params.day_time);
-    temp.forEach(function(value){
-        getDate = parseDateInfo(value);
-        month_input = getInfo[0];
-        day_num = getInfo[1];
-        time_num = getInfo[2];
-        var readable_date = month_input + ' ' + day_num + ' at ' + time_num;
-        dates_array.push(readable_date);
-        var item = {
-            fname: req.params.fname,
-            lname: req.params.lname,
-            email: req.params.email
-        }
-        var query = 'update black_belt_class set count = count + 1 where month_name = $1 and day_num = $2 and time_num = $3 and level = $4';
-        db.none(query, [month_input, day_num, time_num, req.params.belt_group])
-            .then(function(rows){
-
-            })
-            .catch(function(err){
-                req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: count_update.');
-                res.redirect('home');
-            })
-        var dateConversion = month_input + ' ' + str(day_num) + ' at ' + time_num;
-        var query_sched = "insert into people_classes (first_name, last_name, email, belt, test_day, time_num) values ($1, $2, $3, $4, to_date($5, 'Month DD YYYY'), $6);"
-        if (req.params.belt_group == 1){
-            db.none(query_sched, [item.fname, item.lname, item.email, 'Black Belt', dateConversion, time_num])
-                .then(function(rows){
-
-                })
-                .catch(function(err){
-                    req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: sched_update.');
-                    res.redirect('home');
-                })
-        }
-    });
-    temp_name = item.fname + ' ' + item.lname;
-    sendEmail(temp_name, item.email, prettyPrint(dates_array));
-    res.render('store/class_register', {
-        stud_name: temp_name,
-        times: prettyPrint(dates_array),
-        email: item.email
-    })
-});
 
 app.get('/class_register', function(req, res){
     res.render('/store/class_register', {
