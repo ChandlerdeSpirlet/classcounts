@@ -2164,7 +2164,7 @@ app.get('/1degree_signup', function(req, res){
     if (req.headers['x-forwarded-proto'] != 'https'){
         res.redirect('https://emafiles.herokuapp.com/store/1degree_signup');
     } else {
-        var query = 'select * from black_belt_class where count < 10 and level = 1 order by id';
+        var query = 'select * from black_belt_class where count < 10 and level = 1 order by id limit 4';
         db.any(query)
             .then(function(rows){
                 res.render('store/1degree_signup', {
@@ -2260,7 +2260,7 @@ function parseDates(date){
         dates.push(temp);
         day_time_str = day_time_str.substring(day_time_str.indexOf(',' + 1, day_time_str.length));
         if ((day_time_str.indexOf(',') == -1) && day_time_str.length > 0){
-            words.push(hi.substring(0, hi.length));
+            dates.push(hi.substring(0, hi.length));
             break;
         }
     }
