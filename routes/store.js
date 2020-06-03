@@ -2206,7 +2206,7 @@ app.post('/1degree_signup', function(req, res){
     req.assert('fname', 'First Name is Required').notEmpty();
     req.assert('lname', 'Last Name is Required').notEmpty();
     req.assert('email', 'Email is Required').notEmpty();
-    req.assert('day_time', 'A Class Time is Required').notEmpty();
+    req.assert('day_time', 'A Testing Time is Required').notEmpty();
     var item = {
         fname: req.sanitize('fname'),
         lname: req.sanitize('lname'),
@@ -2235,9 +2235,13 @@ function parseDates(date){
 
 app.get('/class_register/(:fname)/(:lname)/(:email)/(:day_time)/(:belt_group)', function(req, res){
     dates_array = [];
+<<<<<<< HEAD
     console.log(req.params.day_time);
     temp = parseDates(req.params.day_time);
     temp.forEach(function(value){
+=======
+    req.params.day_time.forEach(function(value){
+>>>>>>> parent of 27354d3... Working on bug
         getDate = parseDateInfo(value);
         month_input = getInfo[0];
         day_num = getInfo[1];
@@ -2318,15 +2322,3 @@ function sendEmail(name, email_user, dates){
         }
     });
 }
-
-app.get('/adjust_classes', function(req, res){
-    res.render('/store/adjust_classes', {
-        email: ''
-    })
-});
-
-app.post('/adjust_classes', function(req, res){
-    //run query to select classes.
-    //delete classes if button is clicked.
-    //return to /adjust_classes
-});
