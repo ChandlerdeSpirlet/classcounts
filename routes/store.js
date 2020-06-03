@@ -2159,3 +2159,60 @@ app.post('/updateLog', function(req, res){
             res.redirect('adminView');
         })
 });
+
+app.get('/1degree_signup', function(req, res){
+    if (req.headers['x-forwarded-proto'] != 'https'){
+        res.redirect('https://emafiles.herokuapp.com/store/1degree_signup');
+    } else {
+        var query = 'select * from black_belt_class where count < 10 and level = 1 order by id';
+        db.any(query)
+            .then(function(rows){
+                res.render('store/1degree_signup', {
+                    fname: '',
+                    lname: '',
+                    email: '',
+                    data: rows
+                })
+            })
+            .catch(function(err){
+                req.flash('error', 'Please screenshot and send to EMA_Testing@outlook.com. Unable to render class signup (ERROR: ' + err + ')');
+                res.render('store/1degree_signup', {
+                    fname: '',
+                    lname: '',
+                    email: '',
+                    data: ''
+                })
+            })
+    }
+});
+
+function parseDateInfo(day_time){
+    day_time_str = String(day_time)
+    var n = day_time_str.indexOf(" ");
+    var month = day_time_str.substring(0,n);
+    var newStr = day_time_str.substring(n + 1, day_time.length);
+    var temp = newStr.indexOf(" ");
+    var day = newStr.substring(0,temp);
+    var finalStr = newStr.substring(temp + 4, newStr.length);
+    var time = finalStr;
+    var x = [];
+    x.push(month);
+    x.push(day);
+    x.push(time);
+    return x;
+}
+
+app.post('/1degree_signup', function(req, res){
+    req.assert('fname', 'First Name is Required').notEmpty();
+    req.assert('lname', 'Last Name is Required').notEmpty();
+    req.assert('email', 'Email is Required').notEmpty();
+    req.assert('day_time', 'A Testing Time is Required').notEmpty();
+    var item = {
+        fname: req.sanitize('fname'),
+        lname: req.sanitize('lname'),
+        email: req.sanitize('email'),
+        day_time: req.sanitize('day_time')
+    }
+    console.log(day_time);
+    res.redirect('home');
+});

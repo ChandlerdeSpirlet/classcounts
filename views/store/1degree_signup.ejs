@@ -1,0 +1,395 @@
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:green"><%- messages.success %></p>
+<% } %>
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        @media (prefers-color-scheme: dark) {
+            input[type='first name'] {
+                width: 150px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                border-color: blue;
+                font-size: 16px;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            input[type='last name'] {
+                width: 150px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                font-size: 16px;
+                border-color: blue;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            input[type='email'] {
+                width: 220px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                font-size: 16px;
+                border-color: blue;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            [type=submit] {
+                background-color: blue; /* Green */
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                -webkit-transition-duration: 0.4s; /* Safari */
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            label {
+                color: white;
+                font-size: 20px;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            h1 {
+                text-align: center;
+                color: blue;
+                background-color: black;
+            }
+            head {
+                background-color: black;
+            }
+            body {
+                background-color: black;
+                font-size: 16px;
+                color: white;
+            }
+            #footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2.5rem;            /* Footer height */
+                color: white;
+                background-color: black;
+            }
+            #Instructor_Login {
+                background-color: blue; /* Green */
+                border: none;
+                color: white;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                -webkit-transition-duration: 0.4s; /* Safari */
+                transition-duration: 0.4s;
+                cursor: pointer;
+                position: right;
+            }
+            p {
+                color: white;
+                font-size: 14px;
+            }
+            li {
+                color: white;
+                font-size: 14px;
+            }
+        }
+        @media (prefers-color-scheme: light) {
+            input[type='first name'] {
+                width: 150px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                border-color: blue;
+                font-size: 16px;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            input[type='last name'] {
+                width: 150px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                font-size: 16px;
+                border-color: blue;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            input[type='email'] {
+                width: 220px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                font-size: 16px;
+                border-color: blue;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            [type=submit] {
+                background-color: blue; /* Green */
+                border: none;
+                color: black;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                -webkit-transition-duration: 0.4s; /* Safari */
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            label {
+                color: balck;
+                font-size: 20px;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            h1 {
+                text-align: center;
+                color: blue;
+                background-color: white;
+            }
+            head {
+                background-color: white;
+            }
+            body {
+                background-color: white;
+                font-size: 16px;
+                color: black;
+            }
+            #footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2.5rem;            /* Footer height */
+                color: black;
+                background-color: white;
+            }
+            #Instructor_Login {
+                background-color: blue; /* Green */
+                border: none;
+                color: black;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                -webkit-transition-duration: 0.4s; /* Safari */
+                transition-duration: 0.4s;
+                cursor: pointer;
+                position: right;
+            }
+            p {
+                color: black;
+                font-size: 14px;
+            }
+            li {
+                color: black;
+                font-size: 14px;
+            }
+        }
+        @media (prefers-color-scheme: no-preference) {
+            input[type='first name'] {
+                width: 150px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                border-color: blue;
+                font-size: 16px;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            input[type='last name'] {
+                width: 150px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                font-size: 16px;
+                border-color: blue;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            input[type='email'] {
+                width: 220px;
+                box-sizing: border-box;
+                border-radius: 4px;
+                font-size: 16px;
+                border-color: blue;
+                background-color: white;
+                background-position: 10px 10px; 
+                background-repeat: no-repeat;
+                padding: 12px 20px 12px 40px;
+                -webkit-transition: width 0.4s ease-in-out;
+                transition: width 0.4s ease-in-out;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            [type=submit] {
+                background-color: blue; /* Green */
+                border: none;
+                color: black;
+                padding: 16px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                -webkit-transition-duration: 0.4s; /* Safari */
+                transition-duration: 0.4s;
+                cursor: pointer;
+            }
+            label {
+                color: black;
+                font-size: 20px;
+                padding-left: 10px;
+                padding-bottom: 10px;
+            }
+            h1 {
+                text-align: center;
+                color: blue;
+                background-color: white;
+            }
+            head {
+                background-color: white;
+            }
+            body {
+                background-color: white;
+                font-size: 16px;
+                color: black;
+            }
+            p {
+                color: black;
+                font-size: 14px;
+            }
+            li {
+                color: black;
+                font-size: 14px;
+            }
+        }
+    </style>
+    <head>
+        <h1>Black Belt Class Signup</h1>
+        <p>Black Belt class times are available at the school at the below times. There are only 10 spots available for each class slot, so only class times with available slots are shown.</p>
+        <p>*If you are not comfortable with attending class at the school, Virtual Karate will be held from during the same times via Zoom.</p>
+        <p>*Please be aware of the following rules for in-person class:</p>
+        <ul>
+            <li>You must already be in your uniform when you arrive at the school.</li>
+            <li>Use of the restrooms is currently prohibited.</li>
+            <li>Shoes must be taken off and placed on the shoe rack by the door.</li>
+            <li>Hand sanitizer must be used before and after class.</li>
+            <li>Parents must remain outside the class and can watch the class from Zoom.</li>
+            <li>Mingling will not be allowed after class.</li>
+        </ul>
+        <p><strong>BLACK BELT CLASS TIMES</strong></p>
+        <ul>
+            <li>Tuesdays
+            <ul>
+            <li>6:00 PM - 6:30 PM</li>
+            </ul>
+            </li>
+            <li>Thursdays
+            <ul>
+            <li>6:00 PM - 6:30 PM</li>
+            </ul>
+            </li>
+        </ul>
+    </head>
+    <body>
+        <form onsubmit="return ValidateForm()" name="Form" action="/store/1degree_signup" method="POST">
+            <label>First Name: </label><input type="first name" name="fname" id="fname" pattern="[A-z]{1}[A-z ]+" value="<%= fname %>"><br>
+            <label>Last Name: </label><input type="last name" name="lname" id="lname" pattern="[A-z]{1}[A-z ]+" value="<%= lname %>"><br>
+            <label>Email: </label><input type="email" name="email" id="email" pattern="[A-z0-9.]+[@][A-z0-9]{1,}[.]+[A-z]{2,}" value="<%= email %>"><br>
+            <label>Testing Days and Times:</label><br>
+            <% if (data) {%>
+                <% data.forEach(function(item){ %>
+                    <pre>   <input type="checkbox" id="day_time" name="day_time" value="<%= item.month_name %> <%= item.day_number %> at <%= item.time_num %>"> <%= item.month_name %> <%= item.day_number %> at <%= item.time_num %> (<%= 10 - item.count %> spot(s) remaining).</pre>
+                <% }) %>
+            <% } %>
+            <input type="submit" name="Preview" value="Preview"/>
+        </form>
+    </body>
+</html>
+<script>
+    function ValidateForm(){
+        var fname = document.getElementById('fname');
+        var lname = document.getElementById('lname');
+        var email = document.getElementById('email');
+        var day = document.getElementById('day_time');
+        if (fname == null || fname == ""){
+            alert("First name is required and must contain at least two letters.");
+            return false;
+        }
+        if (lname == null || lname == ""){
+            alert("Last name is required and must contain at least two letters.");
+            return false;
+        }
+        if (email == null || email == ""){
+            alert("An email is required. We use this in case we need to contact you.");
+            return false;
+        }
+        if (rank == ""){
+            alert("Please select a belt color.");
+            return false;
+        }
+        if (day == null || day == ""){
+            alert("Please select a day and time.");
+            return false;
+        }
+        return true;
+    }
+</script>
