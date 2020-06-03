@@ -2214,7 +2214,8 @@ app.post('/1degree_signup', function(req, res){
         day_time: req.sanitize('day_time')
     }
     var belt_group = 1;
-    console.log(item.day_time);
+    console.log('item.day_time = ' + item.day_time);
+    console.log('item.day_time[0] = ' + item.day_time[0]);
     res.redirect('home');
 });
 
