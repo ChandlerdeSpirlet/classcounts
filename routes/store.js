@@ -2215,7 +2215,7 @@ app.post('/1degree_signup', function(req, res){
     }
     var belt_group = 1;
     temp_dates = parseDates(item.day_time);
-    var readable_date = [];
+    var dates_array = [];
     temp_dates.forEach(function(value){
         getDate = parseDateInfo(value);
         month_input = getInfo[0];
