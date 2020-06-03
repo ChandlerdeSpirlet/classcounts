@@ -2214,8 +2214,8 @@ app.post('/1degree_signup', function(req, res){
         day_time: req.sanitize('day_time')
     }
     var belt_group = 1;
-    var redir_link = '/store/class_register/' + item.fname + '/' + item.lname + '/' + item.email + '/' + item.day_time + '/' + belt_group;
-    res.redirect(redir_link);
+    console.log(item.day_time);
+    res.redirect('home');
 });
 
 function parseDates(date){
