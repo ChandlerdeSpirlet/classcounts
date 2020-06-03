@@ -2231,7 +2231,7 @@ app.post('/1degree_signup', function(req, res){
                 req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: count_update.');
                 res.redirect('home');
             })
-        var dateConversion = month_input + ' ' + str(day_num) + ' at ' + time_num;
+        var dateConversion = month_input + ' ' + String(day_num) + ' at ' + time_num;
         var query_sched = "insert into people_classes (first_name, last_name, email, belt, test_day, time_num) values ($1, $2, $3, $4, to_date($5, 'Month DD YYYY'), $6);"
         if (req.params.belt_group == 1){
             db.none(query_sched, [item.fname, item.lname, item.email, 'Black Belt', dateConversion, time_num])
