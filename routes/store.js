@@ -2218,10 +2218,26 @@ app.post('/1degree_signup', function(req, res){
     res.redirect(redir_link);
 });
 
+function parseDates(date){
+    var dates = []
+    var day_time_str = String(date);
+    while (day_time_str.length > 0){
+        var temp = day_time_str.substring(0, day_time_str.indexOf(','));
+        dates.push(temp);
+        day_time_str = day_time_str.substring(day_time_str.indexOf(',' + 1, day_time_str.length));
+        if ((day_time_str.indexOf(',') == -1) && day_time_str.length > 0){
+            words.push(hi.substring(0, hi.length));
+            break;
+        }
+    }
+    return dates;
+}
+
 app.get('/class_register/(:fname)/(:lname)/(:email)/(:day_time)/(:belt_group)', function(req, res){
     dates_array = [];
     console.log(req.params.day_time);
-    req.params.day_time.forEach(function(value){
+    temp = parseDates(req.params.day_time);
+    temp.forEach(function(value){
         getDate = parseDateInfo(value);
         month_input = getInfo[0];
         day_num = getInfo[1];
