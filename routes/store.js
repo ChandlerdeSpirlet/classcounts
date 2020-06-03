@@ -2253,14 +2253,15 @@ app.post('/1degree_signup', function(req, res){
 });
 
 function parseDates(date){
-    var dates = []
+    var dates = [];
     var day_time_str = String(date);
     while (day_time_str.length > 0){
         var temp = day_time_str.substring(0, day_time_str.indexOf(','));
         dates.push(temp);
+        temp_arr = [];
         day_time_str = day_time_str.substring(day_time_str.indexOf(',' + 1, day_time_str.length));
         if ((day_time_str.indexOf(',') == -1) && day_time_str.length > 0){
-            dates.push(hi.substring(0, hi.length));
+            dates.push(day_time_str.substring(0, day_time_str.length));
             break;
         }
     }
