@@ -354,6 +354,7 @@
             <label>First Name: </label><input type="first name" name="fname" id="fname" pattern="[A-z]{1}[A-z ]+" value="<%= fname %>"><br>
             <label>Last Name: </label><input type="last name" name="lname" id="lname" pattern="[A-z]{1}[A-z ]+" value="<%= lname %>"><br>
             <label>Email: </label><input type="email" name="email" id="email" pattern="[A-z0-9.]+[@][A-z0-9]{1,}[.]+[A-z]{2,}" value="<%= email %>"><br>
+            <input type="hidden" name="id" id="id" value="<%= id %>"><br>
             <label>Testing Days and Times:</label><br>
             <% if (data) {%>
                 <% data.forEach(function(item){ %>

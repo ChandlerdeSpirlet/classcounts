@@ -8,6 +8,7 @@ var fs = require('fs');
 let fastcsv = require('fast-csv');
 var nodemailer = require('nodemailer');
 var session = require("express-session");
+var format = require('pg-format');
 var cookieParser = require("cookie-parser");
 var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
@@ -2171,6 +2172,7 @@ app.get('/1degree_signup', function(req, res){
                     fname: '',
                     lname: '',
                     email: '',
+                    id: '',
                     data: rows
                 })
             })
@@ -2180,6 +2182,7 @@ app.get('/1degree_signup', function(req, res){
                     fname: '',
                     lname: '',
                     email: '',
+                    id: '',
                     data: ''
                 })
             })
@@ -2202,6 +2205,78 @@ function parseDateInfo(day_time){
     return x;
 }
 
+function adaptQuery(fname, lname, email, belt, arr){
+    var final = [];
+    arr.forEach(function(item){
+        var temp = [];
+        temp.push(fname);
+        temp.push(lname);
+        temp.push(email);
+        temp.push(belt);
+        temp.push(item);
+        final.push(temp);
+    });
+    return final;
+}
+
+app.post('/1degree_signup', function(req, res){
+    req.assert('fname', 'First Name is Required').notEmpty();
+    req.assert('lname', 'Last Name is Required').notEmpty();
+    req.assert('email', 'Email is Required').notEmpty();
+    req.assert('day_time', 'A Testing Time is Required').notEmpty();
+    var item = {
+        fname: req.sanitize('fname'),
+        lname: req.sanitize('lname'),
+        email: req.sanitize('email'),
+        day_time: req.sanitize('day_time'),
+        id: req.sanitize('id')
+    }
+    var belt_group = 1;
+    temp_dates = parseDates(item.day_time);
+    var dates_array = [];
+    insert_arr = [];
+    temp_dates.forEach(function(value){
+        var getDate = parseDateInfo(value);
+        month_input = getDate[0];
+        day_num = getDate[1];
+        time_num = getDate[2];
+        var readable_date = month_input + ' ' + day_num + ' at ' + time_num;
+        dates_array.push(readable_date);
+        var count_query = 'update black_belt_class set count = count + 1 where id = $1';
+        db.none(count_query, [item.id])
+            .then(function(row){
+            })
+            .catch(function(err){
+                req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: count_update.');
+                res.redirect('home');
+            })
+        var temp_arr = [];
+        temp_arr.push(item.fname);
+        temp_arr.push(item.lname);
+        temp_arr.push(item.email);
+        temp_arr.push('Black Belt');
+        var temp_date = 'to_date(' + month_input + ' ' + String(day_num) + ' 2020' + ", 'Month DD YYYY')";
+        temp_arr.push(temp_date);
+        temp_arr.push(time_num);
+        insert_arr.push(temp_arr);
+    })
+    let query1 = format('insert into people_classes (first_name, last_name, email, belt, test_day, time_num) values %L', insert_arr);
+    db.none(query1)
+        .then(function(row){
+            temp_name = item.fname + ' ' + item.lname;
+            sendEmail(temp_name, item.email, prettyPrint(dates_array));
+            res.render('store/class_register', {
+                stud_name: temp_name,
+                times: prettyPrint(dates_array),
+                email: item.email
+            })
+        })
+        .catch(function(err){
+            req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: sched_update.');
+            res.redirect('home');
+        })
+});
+/*
 app.post('/1degree_signup', function(req, res){
     req.assert('fname', 'First Name is Required').notEmpty();
     req.assert('lname', 'Last Name is Required').notEmpty();
@@ -2251,6 +2326,9 @@ app.post('/1degree_signup', function(req, res){
         email: item.email
     })
 });
+*/
+
+
 
 function parseDates(date){
     var dates = [];
