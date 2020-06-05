@@ -2212,7 +2212,7 @@ app.post('/1degree_signup', function(req, res){
         fname: req.sanitize('fname'),
         lname: req.sanitize('lname'),
         email: req.sanitize('email'),
-        class_id: req.sanitize('id')
+        class_id: req.sanitize('class_id')
     }
     const count_cs = new pgp.helpers.ColumnSet(['count', 'id'], {table: 'black_belt_class'});
     const times_cs = new pgp.helpers.ColumnSet(['first_last_name', 'id_from_other', 'email'], {table: 'people_classes'});
