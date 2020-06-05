@@ -357,9 +357,7 @@
             <label>Testing Days and Times:</label><br>
             <% if (data) {%>
                 <% data.forEach(function(item){ %>
-                    <pre>   <input type="checkbox" id="day_time" name="day_time" value="<%= item.month_name %> <%= item.day_num %> at <%= item.time_name %>"> <%= item.month_name %> <%= item.day_num %> at <%= item.time_name %> (<%= 10 - item.count %> spot(s) remaining).</pre>
-                    <input type="hidden" name="id" id="id" value="<%= item.id %>">
-                    <input type="hidden" name="count" id="count" value="<%= item.count %>">
+                    <pre>   <input type="checkbox" id="class_id" name="class_id" value="<%= item.id %>"> <%= item.month_name %> <%= item.day_num %> at <%= item.time_name %> (<%= 10 - item.count %> spot(s) remaining).</pre>
                 <% }) %>
             <% } %>
             <input type="submit" name="Preview" value="Preview"/>

@@ -2206,29 +2206,20 @@ function parseDateInfo(day_time){
     x.push(time);
     return x;
 }
-
+//Do only one signup at a time and mimic testing sign up
 app.post('/1degree_signup', function(req, res){
     var item = {
         fname: req.sanitize('fname'),
         lname: req.sanitize('lname'),
         email: req.sanitize('email'),
-        id: req.sanitize('id'),
-        count: req.sanitize('count'),
-        day_time: req.sanitize('day_time')
+        class_id: req.sanitize('id')
     }
-    console.log('id is ' + item.id);
-    console.log('count is ' + item.count);
-    temp_dates = parseDates(item.day_time);
-    var dates_array = [];
-    const count_cs = new pgp.helpers.ColumnSet(['count', 'id', 'month_name', 'day_num', 'time_name'], {table: 'black_belt_class'});
-    const times_cs = new pgp.helpers.ColumnSet(['first_last_name', 'belt', 'test_day', 'time_num'], {table: 'people_classes'});
+    const count_cs = new pgp.helpers.ColumnSet(['count', 'id'], {table: 'black_belt_class'});
+    const times_cs = new pgp.helpers.ColumnSet(['first_last_name', 'id_from_other', 'email'], {table: 'people_classes'});
     var count_values = [];
     var times_values = [];
+    console.log('class_id is ' + item.class_id);
     temp_dates.forEach(function(value){
-        dates_array.push(temp_date);
-        var getDate = parseDateInfo(value);
-        var temp_date = getDate[0] + ' ' + getDate[1] + ' at ' + getDate[2];
-        console.log('func: id is ' + item.id);
         count_values.push({count: item.count + 1, id: item.id});
         times_values.push({first_last_name: item.fname + ' ' + item.lname, belt: 'Black Belt', test_day: 'to_date(' + getDate[0] + ' ' + getDate[1] + ' 2020, ' + "'Month DD YYYY')", time_num: getDate[2]});
     });
