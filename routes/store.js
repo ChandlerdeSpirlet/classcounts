@@ -2225,9 +2225,9 @@ app.post('/1degree_signup', function(req, res){
         times_values.push({first_last_name: item.fname + ' ' + item.lname, belt: 'Black Belt', test_day: 'to_date(' + getDate[0] + ' ' + getDate[1] + ' 2020, ' + "'Month DD YYYY')", time_num: getDate[2]});
     });
     const count_query = pgp.helpers.update(count_values, count_cs);
-    await db.none(count_query);
+    db.none(count_query);
     const times_query = pgp.helpers.insert(times_values, times_cs);
-    await db.none(times_query);
+    db.none(times_query);
     temp_name = item.fname + ' ' + item.lname;
     sendEmail(temp_name, item.email, prettyPrint(dates_array));
     res.render('store/class_register', {
