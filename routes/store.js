@@ -2216,6 +2216,7 @@ app.post('/1degree_signup', function(req, res){
         count: req.sanitize('count'),
         day_time: req.sanitize('day_time')
     }
+    console.log('item is ' + item);
     console.log('id is ' + item.id);
     console.log('count is ' + item.count);
     temp_dates = parseDates(item.day_time);
@@ -2228,7 +2229,7 @@ app.post('/1degree_signup', function(req, res){
         dates_array.push(temp_date);
         var getDate = parseDateInfo(value);
         var temp_date = getDate[0] + ' ' + getDate[1] + ' at ' + getDate[2];
-        console.log('id is ' + id);
+        console.log('func: id is ' + id);
         count_values.push({count: item.count + 1, id: 'item.id'});
         times_values.push({first_last_name: item.fname + ' ' + item.lname, belt: 'Black Belt', test_day: 'to_date(' + getDate[0] + ' ' + getDate[1] + ' 2020, ' + "'Month DD YYYY')", time_num: getDate[2]});
     });
