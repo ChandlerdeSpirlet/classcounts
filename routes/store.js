@@ -2216,7 +2216,6 @@ app.post('/1degree_signup', function(req, res){
         count: req.sanitize('count'),
         day_time: req.sanitize('day_time')
     }
-    console.log('item is ' + item);
     console.log('id is ' + item.id);
     console.log('count is ' + item.count);
     temp_dates = parseDates(item.day_time);
