@@ -2173,6 +2173,7 @@ app.get('/1degree_signup', function(req, res){
                     lname: '',
                     email: '',
                     id: '',
+                    count: '',
                     data: rows
                 })
             })
@@ -2183,6 +2184,7 @@ app.get('/1degree_signup', function(req, res){
                     lname: '',
                     email: '',
                     id: '',
+                    count: '',
                     data: ''
                 })
             })
@@ -2211,8 +2213,11 @@ app.post('/1degree_signup', function(req, res){
         lname: req.sanitize('lname'),
         email: req.sanitize('email'),
         id: req.sanitize('id'),
+        count: req.sanitize('count'),
         day_time: req.sanitize('day_time')
     }
+    console.log('id is ' + item.id);
+    console.log('count is ' + item.count);
     temp_dates = parseDates(item.day_time);
     var dates_array = [];
     const count_cs = new pgp.helpers.ColumnSet(['count', 'id'], {table: 'black_belt_class'});
@@ -2220,12 +2225,19 @@ app.post('/1degree_signup', function(req, res){
     var count_values = [];
     var times_values = [];
     temp_dates.forEach(function(value){
+        dates_array.push(temp_date);
         var getDate = parseDateInfo(value);
-        count_values.push({count: 'count = count + 1', id: 'item.id'});
+        var temp_date = getDate[0] + ' ' + getDate[1] + ' at ' + getDate[2];
+        console.log('id is ' + id);
+        count_values.push({count: item.count + 1, id: 'item.id'});
         times_values.push({first_last_name: item.fname + ' ' + item.lname, belt: 'Black Belt', test_day: 'to_date(' + getDate[0] + ' ' + getDate[1] + ' 2020, ' + "'Month DD YYYY')", time_num: getDate[2]});
     });
     const count_query = pgp.helpers.update(count_values, count_cs);
     db.none(count_query);
+    // Dynamic conditions must be escaped/formatted properly:
+    const condition = pgp.as.format(' WHERE id = ${id}', count_values);
+    pgp.helpers.update(count_values, ['count'], 'black_belt_class') + condition;
+    //=> UPDATE "my-table" SET "val"=123,"msg"='hello' WHERE id = 1
     const times_query = pgp.helpers.insert(times_values, times_cs);
     db.none(times_query);
     temp_name = item.fname + ' ' + item.lname;
