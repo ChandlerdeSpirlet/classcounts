@@ -2243,6 +2243,7 @@ app.post('/1degree_signup', function(req, res){
         insert_arr.push(temp_arr);
         */
     })
+    var temp_name = item.fname + ' ' + item.lname;
     res.render('store/class_register', {
         stud_name: temp_name,
         times: prettyPrint(dates_array),
