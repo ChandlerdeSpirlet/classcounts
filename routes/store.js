@@ -2,13 +2,13 @@
 var express = require('express');
 var db = require('../database');
 var app = express();
+var pgp = require('pg-promise');
 var busboy = require('connect-busboy');
 var path = require('path');
 var fs = require('fs');
 let fastcsv = require('fast-csv');
 var nodemailer = require('nodemailer');
 var session = require("express-session");
-var format = require('pg-format');
 var cookieParser = require("cookie-parser");
 var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
@@ -2200,7 +2200,7 @@ function parseDateInfo(day_time){
     var time = finalStr;
     var x = [];
     x.push(month);
-    x.push(day);
+    x.push(String(day));
     x.push(time);
     return x;
 }
@@ -2210,63 +2210,33 @@ app.post('/1degree_signup', function(req, res){
         fname: req.sanitize('fname'),
         lname: req.sanitize('lname'),
         email: req.sanitize('email'),
-        day_time: req.sanitize('day_time'),
-        id: req.sanitize('id')
+        id: req.sanitize('id'),
+        day_time: req.sanitize('day_time')
     }
     temp_dates = parseDates(item.day_time);
     var dates_array = [];
-    insert_arr = [];
+    const count_cs = new pgp.helpers.ColumnSet(['count', 'id'], {table: 'black_belt_class'});
+    const times_cs = new pgp.helpers.ColumnSet(['first_last_name', 'belt', 'test_day', 'time_num'], {table: 'people_classes'});
+    var count_values = [];
+    var times_values = [];
     temp_dates.forEach(function(value){
         var getDate = parseDateInfo(value);
-        month_input = getDate[0];
-        day_num = getDate[1];
-        time_num = getDate[2];
-        var readable_date = month_input + ' ' + day_num + ' at ' + time_num;
-        dates_array.push(readable_date);
-        var count_query = 'update black_belt_class set count = count + 1 where id = $1';
-        db.query(count_query, [item.id])
-            .then(function(row){
-            })
-            .catch(function(err){
-                req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: count_update.');
-                res.redirect('home');
-            })
-            /*
-        var temp_arr = [];
-        temp_arr.push(item.fname);
-        temp_arr.push(item.lname);
-        temp_arr.push(item.email);
-        temp_arr.push('Black Belt');
-        var temp_date = 'to_date(' + month_input + ' ' + String(day_num) + ' 2020' + ", 'Month DD YYYY')";
-        temp_arr.push(temp_date);
-        temp_arr.push(time_num);
-        insert_arr.push(temp_arr);
-        */
-    })
-    var temp_name = item.fname + ' ' + item.lname;
+        count_values.push({count: 'count = count + 1', id: 'item.id'});
+        times_values.push({first_last_name: item.fname + ' ' + item.lname, belt: 'Black Belt', test_day: 'to_date(' + getDate[0] + ' ' + getDate[1] + ' 2020, ' + "'Month DD YYYY')", time_num: getDate[2]});
+    });
+    const count_query = pgp.helpers.update(count_values, count_cs);
+    await db.none(count_query);
+    const times_query = pgp.helpers.insert(times_values, times_cs);
+    await db.none(times_query);
+    temp_name = item.fname + ' ' + item.lname;
+    sendEmail(temp_name, item.email, prettyPrint(dates_array));
     res.render('store/class_register', {
         stud_name: temp_name,
         times: prettyPrint(dates_array),
         email: item.email
     })
-    /*
-    let query1 = format('insert into people_classes (first_name, last_name, email, belt, test_day, time_num) values %L', insert_arr);
-    db.none(query1)
-        .then(function(row){
-            temp_name = item.fname + ' ' + item.lname;
-            sendEmail(temp_name, item.email, prettyPrint(dates_array));
-            res.render('store/class_register', {
-                stud_name: temp_name,
-                times: prettyPrint(dates_array),
-                email: item.email
-            })
-        })
-        .catch(function(err){
-            req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: sched_update.');
-            res.redirect('home');
-        })
-        */
 });
+
 /*
 app.post('/1degree_signup', function(req, res){
     req.assert('fname', 'First Name is Required').notEmpty();
