@@ -2205,20 +2205,6 @@ function parseDateInfo(day_time){
     return x;
 }
 
-function adaptQuery(fname, lname, email, belt, arr){
-    var final = [];
-    arr.forEach(function(item){
-        var temp = [];
-        temp.push(fname);
-        temp.push(lname);
-        temp.push(email);
-        temp.push(belt);
-        temp.push(item);
-        final.push(temp);
-    });
-    return final;
-}
-
 app.post('/1degree_signup', function(req, res){
     var item = {
         fname: req.sanitize('fname'),
@@ -2238,7 +2224,7 @@ app.post('/1degree_signup', function(req, res){
         var readable_date = month_input + ' ' + day_num + ' at ' + time_num;
         dates_array.push(readable_date);
         var count_query = 'update black_belt_class set count = count + 1 where id = $1';
-        db.none(count_query, [item.id])
+        db.query(count_query, [item.id])
             .then(function(row){
             })
             .catch(function(err){
@@ -2337,14 +2323,15 @@ app.post('/1degree_signup', function(req, res){
 function parseDates(date){
     var dates = [];
     var day_time_str = String(date);
-    while (day_time_str.length > 0){
+    var exit = true;
+    while (day_time_str.length > 0 && exit){
         var temp = day_time_str.substring(0, day_time_str.indexOf(','));
         dates.push(temp);
         temp_arr = [];
         day_time_str = day_time_str.substring(day_time_str.indexOf(',' + 1, day_time_str.length));
         if ((day_time_str.indexOf(',') == -1) && day_time_str.length > 0){
             dates.push(day_time_str.substring(0, day_time_str.length));
-            break;
+            exit = false;
         }
     }
     return dates;
