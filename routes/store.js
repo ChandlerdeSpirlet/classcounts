@@ -2220,10 +2220,6 @@ function adaptQuery(fname, lname, email, belt, arr){
 }
 
 app.post('/1degree_signup', function(req, res){
-    req.assert('fname', 'First Name is Required').notEmpty();
-    req.assert('lname', 'Last Name is Required').notEmpty();
-    req.assert('email', 'Email is Required').notEmpty();
-    req.assert('day_time', 'A Testing Time is Required').notEmpty();
     var item = {
         fname: req.sanitize('fname'),
         lname: req.sanitize('lname'),
@@ -2231,7 +2227,6 @@ app.post('/1degree_signup', function(req, res){
         day_time: req.sanitize('day_time'),
         id: req.sanitize('id')
     }
-    var belt_group = 1;
     temp_dates = parseDates(item.day_time);
     var dates_array = [];
     insert_arr = [];
@@ -2250,6 +2245,7 @@ app.post('/1degree_signup', function(req, res){
                 req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: count_update.');
                 res.redirect('home');
             })
+            /*
         var temp_arr = [];
         temp_arr.push(item.fname);
         temp_arr.push(item.lname);
@@ -2259,7 +2255,14 @@ app.post('/1degree_signup', function(req, res){
         temp_arr.push(temp_date);
         temp_arr.push(time_num);
         insert_arr.push(temp_arr);
+        */
     })
+    res.render('store/class_register', {
+        stud_name: temp_name,
+        times: prettyPrint(dates_array),
+        email: item.email
+    })
+    /*
     let query1 = format('insert into people_classes (first_name, last_name, email, belt, test_day, time_num) values %L', insert_arr);
     db.none(query1)
         .then(function(row){
@@ -2275,6 +2278,7 @@ app.post('/1degree_signup', function(req, res){
             req.flash('error', 'ERROR: ' + err + '. Please contact EMA_Testing@outlook.com with a screenshot of this error. ERR_NO: sched_update.');
             res.redirect('home');
         })
+        */
 });
 /*
 app.post('/1degree_signup', function(req, res){
