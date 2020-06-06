@@ -2218,24 +2218,23 @@ app.post('/1degree_signup', function(req, res){
     const times_cs = new pgp.helpers.ColumnSet(['first_last_name', 'id_from_other', 'email'], {table: 'people_classes'});
     var count_values = [];
     var times_values = [];
-    console.log('class_id is ' + item.class_id);
-    temp_dates.forEach(function(value){
+    var temp_id = parseID(item.class_id);
+    temp_id.forEach(function(value){
         count_values.push({count: item.count + 1, id: item.id});
-        times_values.push({first_last_name: item.fname + ' ' + item.lname, belt: 'Black Belt', test_day: 'to_date(' + getDate[0] + ' ' + getDate[1] + ' 2020, ' + "'Month DD YYYY')", time_num: getDate[2]});
+        times_values.push({first_last_name: item.fname + ' ' + item.lname, id_from_other: value, email: item.email});
     });
     const count_query = pgp.helpers.update(count_values, count_cs);
     db.none(count_query);
     // Dynamic conditions must be escaped/formatted properly:
-    const condition = pgp.as.format(' WHERE id = ${id} and month_name = ${month_name}, and day_num = ${time_num} and time_name=${time_name}', count_values);
+    const condition = pgp.as.format(' WHERE id = ${id}', count_values);
     pgp.helpers.update(count_values, ['count'], 'black_belt_class') + condition;
     //=> UPDATE "my-table" SET "val"=123,"msg"='hello' WHERE id = 1
     const times_query = pgp.helpers.insert(times_values, times_cs);
     db.none(times_query);
     temp_name = item.fname + ' ' + item.lname;
-    sendEmail(temp_name, item.email, prettyPrint(dates_array));
+    sendEmail(temp_name, item.email);
     res.render('store/class_register', {
         stud_name: temp_name,
-        times: prettyPrint(dates_array),
         email: item.email
     })
 });
@@ -2292,7 +2291,20 @@ app.post('/1degree_signup', function(req, res){
 });
 */
 
-
+function parseID(ids){
+    var id_s = [];
+    ids = String(ids);
+    var exit = true;
+    while (ids.length > 0 && exit){
+        if (ids.indexOf(',') == -1){
+            exit = false;
+            id_s.push(ids.substring(0, ids.length));
+        } else {
+            id_s.push(ids.substring(0, ids.indexOf(',')));
+            ids = ids.substring(ids.indexOf(',') + 1, ids.length);   
+        }
+    }
+}
 
 function parseDates(date){
     var dates = [];
