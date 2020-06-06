@@ -2220,7 +2220,7 @@ app.post('/1degree_signup', function(req, res){
     var times_values = [];
     var temp_id = parseID(item.class_id);
     temp_id.forEach(function(value){
-        count_values.push({count: item.count + 1, id: item.id});
+        count_values.push({count: Number(item.count + 1), id: Number(item.id)});
         times_values.push({first_last_name: item.fname + ' ' + item.lname, id_from_other: value, email: item.email});
     });
     const count_query = pgp.helpers.update(count_values, count_cs);
