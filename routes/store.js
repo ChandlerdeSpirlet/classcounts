@@ -2304,6 +2304,7 @@ function parseID(ids){
             ids = ids.substring(ids.indexOf(',') + 1, ids.length);   
         }
     }
+    return id_s;
 }
 
 function parseDates(date){
