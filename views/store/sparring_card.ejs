@@ -1,0 +1,67 @@
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:blue"><%- messages.success %></p>
+<% } %>
+<html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+    </style>
+    <head>
+        <h1>Sparring Card for <% bbname %></h1>
+    </head>
+    <body>
+        <form action="/store/sparring_card" method="POST">
+            <label>Grader</label>
+            <input type="text" name="bb_grader" placeholder="Black Belt Grader"/>
+            <label>Attack</label>
+            <select name="attack">
+                <optgroup label="Attack Grade">
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2 - Average</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - Awesome</option>
+                </optgroup>
+            </select>
+            <label>Defense</label>
+            <select name="defense">
+                <optgroup label="Defense Grade">
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2 - Average</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - Awesome</option>
+                </optgroup>
+            </select>
+            <label>Footwork</label>
+            <select name="footwork">
+                <optgroup label="Footwork Grade">
+                    <option value="1">1 - Poor</option>
+                    <option value="2">2 - Average</option>
+                    <option value="3">3 - Good</option>
+                    <option value="4">4 - Awesome</option>
+                </optgroup>
+            </select>
+            <label>Respect of Technique</label>
+            <select name="technique">
+                <optgroup label="Respect of Technique Grade">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </optgroup>
+            </select>
+            <label>Control</label>
+            <select name="control">
+                <optgroup label="Control Grade">
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </optgroup>
+            </select>
+            <input type="hidden" name="card_count" value="<%= data.card_count %>"/>
+            <input type="submit" name="submit" value="Grade"/>
+        </form>
+    </body>
+</html>

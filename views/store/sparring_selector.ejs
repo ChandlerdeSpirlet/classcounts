@@ -1,0 +1,30 @@
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:blue"><%- messages.success %></p>
+<% } %>
+<html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+    </style>
+    <head>
+        
+    </head>
+    <body>
+        <form action="/store/sparring_selector" method="post">
+            <label>Black Belt Scored</label>
+            <select name="bbname">
+                <option value="">Black belt being scored</option>
+                    <% for (var i = 0; i < data.length; i++) { %>
+                        <option value="<%= data[i].get_names %>"><%= data[i].get_names %></option>
+                    <% } %>
+            </select>
+            <input type="submit" name="Grade" value="Grade"/>
+        </form>
+    </body>
+</html>

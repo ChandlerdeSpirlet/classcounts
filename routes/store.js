@@ -14,7 +14,7 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-let testDateGlobal = 'Jun 06 2020';
+let testDateGlobal = 'Jun 28 2020';
 
 function sendMessage(text){
     db.query('select * from get_accountsid()')
@@ -351,7 +351,7 @@ app.get('/test_checkin', function(req, res){
             let nameString = JSON.stringify(rows);
             res.render('store/test_checkin', {
                 title: 'Testing Check-In',
-                date: 'June 6 - 13',
+                date: 'June 28 - 29',
                 data: rows,
                 bbrank: ''
             })
@@ -2161,6 +2161,55 @@ app.post('/updateLog', function(req, res){
         })
 });
 
+app.get('/sparring_selector', function(req, res){
+    var query = 'select * from get_names();';
+    db.any(query)
+        .then(function(rows){
+            res.render('store/test_checkin', {
+                data: rows
+            })
+        })
+        .catch(function(err){
+            req.flash('error', 'Unable to generate names. ERROR: ' + err);
+            res.redirect('home');
+        })
+});
+
+app.post('/sparring_selector', function(req, res){
+    var item = {
+        bbname: req.sanitize('bbname').trim()
+    }
+    const query = 'select * from translate_barcode($1)';
+    db.query(query, item.bbname)
+        .then(function(data){
+            var temp = data[0];
+            var barcode = temp.translate_barcode;
+            var testerID = testDateGlobal.replace(/\s/g, "") + barcode.toString();
+            const redir_link = 'sparring_card/' + item.bbname + '/' + testerID;
+            res.redirect(redir_link);
+        })
+});
+
+app.get('/sparring_card/(:bbname)/(:testerID)', function(req, res){
+    var query = 'select card_count from sparring_card where card_id = $1 and bb_name = $2;';
+    db.query(query, [req.params.testerID, req.params.bbname])
+        .then(function(rows){
+            res.render('store/sparring_card', {
+                bbname: req.params.bbname,
+                testerID: req.params.testerID, 
+                data: rows
+            });
+        })
+        .catch(function(err){
+            req.flash('error', 'Could not find sparring card. Err: ' + err);
+            res.redirect('home');
+        })
+});
+
+app.post('/sparring_card', function(req, res){
+    //FINISH
+    //take in card_count and implement. Build strings for query to add
+});
 
 function sendEmail(name, email_user, dates){
     var transporter = nodemailer.createTransport({
