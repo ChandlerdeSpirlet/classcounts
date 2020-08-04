@@ -351,7 +351,7 @@ app.get('/test_checkin', function(req, res){
             let nameString = JSON.stringify(rows);
             res.render('store/test_checkin', {
                 title: 'Testing Check-In',
-                date: 'June 28 - 29',
+                date: 'August 28 - 29',
                 data: rows,
                 bbrank: ''
             })
