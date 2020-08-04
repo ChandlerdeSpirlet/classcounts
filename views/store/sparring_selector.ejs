@@ -21,7 +21,7 @@
             <select name="bbname">
                 <option value="">Black belt being scored</option>
                     <% for (var i = 0; i < data.length; i++) { %>
-                        <option value="<%= data[i].get_names %>"><%= data[i].get_names %></option>
+                        <option value="<%= data[i].get_names %>" name="bbname"><%= data[i].get_names %></option>
                     <% } %>
             </select>
             <input type="submit" name="Grade" value="Grade"/>

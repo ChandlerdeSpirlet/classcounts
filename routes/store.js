@@ -2191,6 +2191,8 @@ app.post('/sparring_selector', function(req, res){
 });
 
 app.get('/sparring_card/(:bbname)/(:testerID)', function(req, res){
+    console.log('bbname is ' + req.params.bbname);
+    console.log('testerID is ' + req.params.testerID);
     var query = 'select card_count from sparring_card where card_id = $1 and bb_name = $2;';
     db.query(query, [req.params.testerID, req.params.bbname])
         .then(function(rows){
@@ -2209,6 +2211,17 @@ app.get('/sparring_card/(:bbname)/(:testerID)', function(req, res){
 app.post('/sparring_card', function(req, res){
     //FINISH
     //take in card_count and implement. Build strings for query to add
+    var item = {
+        bb_grader: req.sanitize('bb_grader').trim(),
+        attack: req.sanitize('attack').trim(),
+        defense: req.sanitize('defense').trim(),
+        footwork: req.sanitize('footwork').trim(),
+        technique: req.sanitize('technique').trim(),
+        control: req.sanitize('control').trim(),
+        card_count: req.sanitize('card_count').trim()
+    }
+    console.log('item is ' + item);
+    res.redirect('home');
 });
 
 function sendEmail(name, email_user, dates){
