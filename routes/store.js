@@ -2165,7 +2165,7 @@ app.get('/sparring_selector', function(req, res){
     var query = 'select * from get_names();';
     db.any(query)
         .then(function(rows){
-            res.render('store/test_checkin', {
+            res.render('store/sparring_selector', {
                 data: rows
             })
         })
