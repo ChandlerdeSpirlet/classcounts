@@ -11,20 +11,32 @@
         * {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
+        #grad1 {
+            height: 100%;
+            background-color: #03d3fc; /* For browsers that do not support gradients */
+            background-image: linear-gradient(#03d3fc, #ceeef5); /* Standard syntax (must be last) */
+        }
     </style>
-    <head>
-        
-    </head>
-    <body>
-        <form action="/store/sparring_selector" method="post">
-            <label>Black Belt Scored</label>
-            <select name="bbname">
-                <option value="">Black belt being scored</option>
-                    <% for (var i = 0; i < data.length; i++) { %>
-                        <option value="<%= data[i].get_names %>" name="bbname"><%= data[i].get_names %></option>
-                    <% } %>
-            </select>
-            <input type="submit" name="Grade" value="Grade"/>
-        </form>
-    </body>
+    <div id="grad1">
+        <head>
+            <h1>Select a black belt to be scored.</h1>
+            <h3>Grading requirements.</h3>
+            <ul>
+                <li>Progress Check - Choose 3 people who you think are an equal or better partner.</li>
+                <li>Significant Testing - Choose 5 people who you think are an equal or better partner.</li>
+            </ul>
+        </head>
+        <body>
+            <form action="/store/sparring_selector" method="post">
+                <label>Black belt being scored</label>
+                <select name="bbname">
+                    <option value="">Black belt being scored</option>
+                        <% for (var i = 0; i < data.length; i++) { %>
+                            <option value="<%= data[i].names_sparring %>" name="bbname"><%= data[i].names_sparring %></option>
+                        <% } %>
+                </select><br>
+                <input type="submit" name="Grade" value="Grade"/>
+            </form>
+        </body>
+    </div>
 </html>

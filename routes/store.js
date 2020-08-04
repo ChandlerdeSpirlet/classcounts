@@ -14,7 +14,7 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-let testDateGlobal = 'Aug 28 2020';
+let testDateGlobal = 'August 28 2020';
 
 function sendMessage(text){
     db.query('select * from get_accountsid()')
@@ -2162,8 +2162,8 @@ app.post('/updateLog', function(req, res){
 });
 
 app.get('/sparring_selector', function(req, res){
-    var query = 'select * from get_names();';
-    db.any(query)
+    var query = "select * from names_sparring(to_date($1, 'Month DD YYYY'));";
+    db.any(query, [testDateGlobal])
         .then(function(rows){
             res.render('store/sparring_selector', {
                 data: rows
@@ -2204,6 +2204,7 @@ app.get('/sparring_card/(:bbname)/(:testerID)', function(req, res){
         .then(function(rows){
             res.render('store/sparring_card', {
                 bbname: bbname,
+                testerID: testerID,
                 data: rows
             });
         })
@@ -2223,16 +2224,28 @@ app.post('/sparring_card', function(req, res){
         footwork: req.sanitize('footwork').trim(),
         technique: req.sanitize('technique').trim(),
         control: req.sanitize('control').trim(),
-        card_count: req.sanitize('card_count').trim()
+        card_count: req.sanitize('card_count').trim(),
+        testerID: req.sanitize('testerID').trim(),
+        bbname: req.sanitize('bbname').trim()
     }
-    console.log('bb_grader ' + item.bb_grader);
-    console.log('attack ' + item.attack);
-    console.log('defense ' + item.defense);
-    console.log('footwork ' + item.footwork);
-    console.log('technique ' + item.technique);
-    console.log('control ' + item.control);
-    console.log('count ' + item.card_count);
-    res.redirect('home');
+    var index = Number(item.card_count);
+    index = index + 1;
+    var attack = 'attack_' + index.toString();
+    var defense = 'defense_' + index.toString();
+    var footwork = 'footwork_' + index.toString();
+    var technique = 'technique_' + index.toString();
+    var control = 'control_' + index.toString();
+    var fighter = 'fighter_' + index.toString();
+    const query = 'update sparring_card set $1 = $2, $3 = $4, $5 = $6, $7 = $8, $9 = $10, $11 = $12, card_count = card_count + 1 where card_id = $13 and bb_name = $14';
+    db.any(query, [attack, item.attack, defense, item.defense, footwork, item.footwork, technique, item.technique, control, item.control, fighter, item.bb_grader, item.testerID, item.bbname])
+        .then(function(rows){
+            req.flash('success', item.bbname + 'graded successfully by ' + item.bb_grader);
+            res.redirect('sparring_selector');
+        })
+        .catch(function(err){
+            req.flash('error', 'Unable to add to sparring card for ' + item.bbname + '. Contact a system admin. ERR: ' + err);
+            res.redirect('sparring_selector');
+        })
 });
 
 function sendEmail(name, email_user, dates){

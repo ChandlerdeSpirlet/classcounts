@@ -11,58 +11,67 @@
         * {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
+        h1, h3, h5 {
+            text-align: center;
+        }
     </style>
-    <head>
-        <h1>Sparring Card for <%= bbname %></h1>
-    </head>
-    <body>
-        <form action="/store/sparring_card" method="POST">
-            <label>Grader</label>
-            <input type="text" name="bb_grader" placeholder="Black Belt Grader"/>
-            <label>Attack</label>
-            <select name="attack">
-                <optgroup label="Attack Grade">
-                    <option value="1">1 - Poor</option>
-                    <option value="2">2 - Average</option>
-                    <option value="3">3 - Good</option>
-                    <option value="4">4 - Awesome</option>
-                </optgroup>
-            </select>
-            <label>Defense</label>
-            <select name="defense">
-                <optgroup label="Defense Grade">
-                    <option value="1">1 - Poor</option>
-                    <option value="2">2 - Average</option>
-                    <option value="3">3 - Good</option>
-                    <option value="4">4 - Awesome</option>
-                </optgroup>
-            </select>
-            <label>Footwork</label>
-            <select name="footwork">
-                <optgroup label="Footwork Grade">
-                    <option value="1">1 - Poor</option>
-                    <option value="2">2 - Average</option>
-                    <option value="3">3 - Good</option>
-                    <option value="4">4 - Awesome</option>
-                </optgroup>
-            </select>
-            <label>Respect of Technique</label>
-            <select name="technique">
-                <optgroup label="Respect of Technique Grade">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </optgroup>
-            </select>
-            <label>Control</label>
-            <select name="control">
-                <optgroup label="Control Grade">
-                    <option value="true">Yes</option>
-                    <option value="false">No</option>
-                </optgroup>
-            </select>
-            <%= console.log(data) %>
-            <input type="hidden" name="card_count" value="<%= data[0].card_count %>"/>
-            <input type="submit" name="submit" value="Grade"/>
-        </form>
-    </body>
+    <div id="grad1">
+        <head>
+            <h1>Sparring Card for <%= bbname %></h1>
+            <h3>Number of grades: <%= data[0].card_count %></h3><br>
+            <h5>5 grades are needed for a significant test</h5>
+            <h5>3 grades are needed for a progress check</h5>
+        </head>
+        <body>
+            <form action="/store/sparring_card" method="POST">
+                <label>Grader</label>
+                <input type="text" name="bb_grader" placeholder="Black Belt Grader"/><br>
+                <label>Attack</label>
+                <select name="attack">
+                    <optgroup label="Attack Grade">
+                        <option value="1">1 - Poor</option>
+                        <option value="2">2 - Average</option>
+                        <option value="3">3 - Good</option>
+                        <option value="4">4 - Awesome</option>
+                    </optgroup>
+                </select><br>
+                <label>Defense</label>
+                <select name="defense">
+                    <optgroup label="Defense Grade">
+                        <option value="1">1 - Poor</option>
+                        <option value="2">2 - Average</option>
+                        <option value="3">3 - Good</option>
+                        <option value="4">4 - Awesome</option>
+                    </optgroup>
+                </select><br>
+                <label>Footwork</label>
+                <select name="footwork">
+                    <optgroup label="Footwork Grade">
+                        <option value="1">1 - Poor</option>
+                        <option value="2">2 - Average</option>
+                        <option value="3">3 - Good</option>
+                        <option value="4">4 - Awesome</option>
+                    </optgroup>
+                </select><br>
+                <label>Respect of Technique</label>
+                <select name="technique">
+                    <optgroup label="Respect of Technique Grade">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </optgroup>
+                </select><br>
+                <label>Control</label>
+                <select name="control">
+                    <optgroup label="Control Grade">
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
+                    </optgroup>
+                </select><br>
+                <input type="hidden" name="card_count" value="<%= data[0].card_count %>"/>
+                <input type="hidden" name="testerID" value="<%= testerID %>"/>
+                <input type="hidden" name="bbname" value="<%= bbname %>"/>
+                <input type="submit" name="submit" value="Grade"/>
+            </form>
+        </body>
+    </div>
 </html>
