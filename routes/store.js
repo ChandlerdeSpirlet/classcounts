@@ -2220,7 +2220,13 @@ app.post('/sparring_card', function(req, res){
         control: req.sanitize('control').trim(),
         card_count: req.sanitize('card_count').trim()
     }
-    console.log('item is ' + item);
+    console.log('bb_grader ' + item.bb_grader);
+    console.log('attack ' + item.attack);
+    console.log('defense ' + item.defense);
+    console.log('footwork ' + item.footwork);
+    console.log('technique ' + item.technique);
+    console.log('control ' + item.control);
+    console.log('count ' + item.card_count);
     res.redirect('home');
 });
 
