@@ -443,13 +443,13 @@ app.post('/test_checkin', function(req, res){
                             req.flash('success', "Successfully Registered for Testing");
                             res.redirect('home');
                         })
-                        .catch(function(){
-                            req.flash('error', "Not registered for test. Last name issue. CONTACT system admin.");
+                        .catch(function(err){
+                            req.flash('error', "Not registered for test. Last name issue. CONTACT system admin." + err);
                             res.redirect('home');
                         })
                 })
                 .catch(function(err){
-                    req.flash('error', "Unable to register for test. Use the contact tab at the top of the page to fix this issue. This error might occur if you have already registered for this test.");
+                    req.flash('error', "Unable to register for test. Use the contact tab at the top of the page to fix this issue. This error might occur if you have already registered for this test." + err);
                     res.redirect('home');
                 })
         })
