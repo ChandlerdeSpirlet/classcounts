@@ -13,7 +13,7 @@
         }
     </style>
     <head>
-        <h1>Sparring Card for <% bbname %></h1>
+        <h1>Sparring Card for <%= bbname %></h1>
     </head>
     <body>
         <form action="/store/sparring_card" method="POST">
@@ -60,7 +60,8 @@
                     <option value="false">No</option>
                 </optgroup>
             </select>
-            <input type="hidden" name="card_count" value="<%= data.card_count %>"/>
+            <%= console.log(data) %>
+            <input type="hidden" name="card_count" value="<%= data[0].card_count %>"/>
             <input type="submit" name="submit" value="Grade"/>
         </form>
     </body>

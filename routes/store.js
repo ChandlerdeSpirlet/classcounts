@@ -2188,17 +2188,22 @@ app.post('/sparring_selector', function(req, res){
             const redir_link = 'sparring_card/' + item.bbname + '/' + testerID;
             res.redirect(redir_link);
         })
+        .catch(function(err){
+            req.flash('error', 'Coult not get something. ERR: ' + err);
+            res.redirect('home');
+        })
 });
 
 app.get('/sparring_card/(:bbname)/(:testerID)', function(req, res){
     console.log('bbname is ' + req.params.bbname);
     console.log('testerID is ' + req.params.testerID);
+    const bbname = req.params.bbname;
+    const testerID = req.params.testerID;
     var query = 'select card_count from sparring_card where card_id = $1 and bb_name = $2;';
     db.query(query, [req.params.testerID, req.params.bbname])
         .then(function(rows){
             res.render('store/sparring_card', {
-                bbname: req.params.bbname,
-                testerID: req.params.testerID, 
+                bbname: bbname,
                 data: rows
             });
         })
