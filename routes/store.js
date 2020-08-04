@@ -14,7 +14,7 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-let testDateGlobal = 'Jun 28 2020';
+let testDateGlobal = 'Aug 28 2020';
 
 function sendMessage(text){
     db.query('select * from get_accountsid()')
