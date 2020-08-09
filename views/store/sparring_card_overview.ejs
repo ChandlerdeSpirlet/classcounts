@@ -5,6 +5,7 @@
         box-sizing: border-box;
         margin: 0;
         padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
     }
     html {
         /* height: 200%; */
@@ -99,7 +100,7 @@
                                 <p class="title"><strong>Grader:</strong><% data[i].fighter_1 %></p>
                                 <p>
                                     <ul>
-                                        <li><strong>Attack:</strong> <% data[i].attack_1 %></li>
+                                        <li><strong>Attack:</strong> <%= data[i].attack_1 %></li>
                                         <li><strong>Defense:</strong> <% data[i].defense_1 %></li>
                                         <li><strong>Footwork:</strong> <% data[i].footwork_1 %></li>
                                         <li><strong>Respect of Technique:</strong> <% if (data[i].technique_1 == true) { %>Yes<% } else { %>No<% } %></li>
