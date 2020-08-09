@@ -1,0 +1,168 @@
+<html>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+    html {
+        /* height: 200%; */
+        background-image: linear-gradient(#03d3fc, #ceeef5);
+        -webkit-background-size: cover;
+        -moz-background-size: cover;
+        -o-background-size: cover;
+        background-size: cover;
+    }
+    body {
+        font-size: 14px;
+    }
+    .wrapper {
+        width: 100%;
+        margin: 20px auto;
+    }
+    .cards_wrap {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .cards_wrap .card_item {
+        width: 25%;
+        padding: 10px;
+    }
+    .cards_wrap .card_inner {
+        background: #fff;
+    }
+    .cards_wrap .card_top {
+        width: 100%;
+        min-height: 225px;
+        padding: 10px;
+        padding-bottom: 0;
+    }
+    .cards_wrap .card_bottom {
+        padding: 15px;
+    }
+    .cards_wrap .card_bottom .card_category {
+        text-transform: uppercase;
+        text-align: center;
+    }
+    .cards_wrap .card_bottom .card_info {
+        padding: 15px;
+        margin: 10px 0;
+        border: 1px dashed #0071bc;
+    }
+    .cards_wrap .card_bottom .card_info .title {
+        color: #0071bc;
+        font-size: 18px;
+        margin-bottom: 5px;
+    }
+    .cards_wrap .card_bottom .card_creator {
+        text-align: center;
+    }
+    @media (max-width: 1024px) {
+        .cards_wrap .card_item {
+            width: 33.3%;
+        }
+    }
+    @media (max-width: 768px) {
+        .cards_wrap .card_item {
+            width: 50%;
+        }
+    }
+    @media (max-width: 528px) {
+    .cards_wrap .card_top {
+        height: auto;
+    }
+    .cards_wrap .card_item {
+        width: 100%;
+    }
+}
+    h1 {
+        text-align: center;
+    }
+    </style>
+    <body>
+        <h1>Sparring Cards for <% test_date %></h1>
+        <div class="wrapper">
+            <div class="cards_wrap">
+                <% for (var i = 0; i < data.length; i++) { %>
+                <div class="card_item">
+                    <div class="card_inner">
+                        <div class="card_top">
+                            <% data[i].bb_name %>
+                        </div>
+                        <div class="card_bottom">
+                            <div class="card_category">
+                            <% data[i].belt_rank %>
+                            </div>
+                            <div class="card_info">
+                                <p class="title"><strong>Grader:</strong><% data[i].fighter_1 %></p>
+                                <p>
+                                    <ul>
+                                        <li><strong>Attack:</strong> <% data[i].attack_1 %></li>
+                                        <li><strong>Defense:</strong> <% data[i].defense_1 %></li>
+                                        <li><strong>Footwork:</strong> <% data[i].footwork_1 %></li>
+                                        <li><strong>Respect of Technique:</strong> <% if (data[i].technique_1 == true) { %>Yes<% } else { %>No<% } %></li>
+                                        <li><strong>Control:</strong> <% if (data[i].control_1 == true) { %>Yes<% } else { %>No<% } %></li>
+                                    </ul>
+                                </p>
+                            </div>
+                            <div class="card_info">
+                                <p class="title"><strong>Grader:</strong><% data[i].fighter_2 %></p>
+                                <p>
+                                    <ul>
+                                        <li><strong>Attack:</strong> <% data[i].attack_2 %></li>
+                                        <li><strong>Defense:</strong> <% data[i].defense_2 %></li>
+                                        <li><strong>Footwork:</strong> <% data[i].footwork_2 %></li>
+                                        <li><strong>Respect of Technique:</strong> <% if (data[i].technique_2 == true) { %>Yes<% } else { %>No<% } %></li>
+                                        <li><strong>Control:</strong> <% if (data[i].control_2 == true) { %>Yes<% } else { %>No<% } %></li>
+                                    </ul>
+                                </p>
+                            </div>
+                            <div class="card_info">
+                                <p class="title"><strong>Grader:</strong><% data[i].fighter_3 %></p>
+                                <p>
+                                    <ul>
+                                        <li><strong>Attack:</strong> <% data[i].attack_3 %></li>
+                                        <li><strong>Defense:</strong> <% data[i].defense_3 %></li>
+                                        <li><strong>Footwork:</strong> <% data[i].footwork_3 %></li>
+                                        <li><strong>Respect of Technique:</strong> <% if (data[i].technique_3 == true) { %>Yes<% } else { %>No<% } %></li>
+                                        <li><strong>Control:</strong> <% if (data[i].control_3 == true) { %>Yes<% } else { %>No<% } %></li>
+                                    </ul>
+                                </p>
+                            </div>
+                            <% if (data[i].fighter_4 != ''){ %>
+                                <div class="card_info">
+                                    <p class="title"><strong>Grader:</strong><% data[i].fighter_4 %></p>
+                                    <p>
+                                        <ul>
+                                            <li><strong>Attack:</strong> <% data[i].attack_4 %></li>
+                                            <li><strong>Defense:</strong> <% data[i].defense_4 %></li>
+                                            <li><strong>Footwork:</strong> <% data[i].footwork_4 %></li>
+                                            <li><strong>Respect of Technique:</strong> <% if (data[i].technique_4 == true) { %>Yes<% } else { %>No<% } %></li>
+                                            <li><strong>Control:</strong> <% if (data[i].control_4 == true) { %>Yes<% } else { %>No<% } %></li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            <% } %>
+                            <% if (data[i].fighter_5 != ''){ %>
+                                <div class="card_info">
+                                    <p class="title"><strong>Grader:</strong><% data[i].fighter_5 %></p>
+                                    <p>
+                                        <ul>
+                                            <li><strong>Attack:</strong> <% data[i].attack_5 %></li>
+                                            <li><strong>Defense:</strong> <% data[i].defense_5 %></li>
+                                            <li><strong>Footwork:</strong> <% data[i].footwork_5 %></li>
+                                            <li><strong>Respect of Technique:</strong> <% if (data[i].technique_5 == true) { %>Yes<% } else { %>No<% } %></li>
+                                            <li><strong>Control:</strong> <% if (data[i].control_5 == true) { %>Yes<% } else { %>No<% } %></li>
+                                        </ul>
+                                    </p>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                </div>
+                <% } %> 
+            </div>
+        </div>
+    </body>
+</html>

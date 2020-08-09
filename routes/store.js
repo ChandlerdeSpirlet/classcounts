@@ -2251,7 +2251,7 @@ app.post('/sparring_card', function(req, res){
     }
     db.any(query, [item.attack, item.defense, item.footwork, item.technique, item.control, item.bb_grader, item.testerID, item.bbname])
         .then(function(rows){
-            req.flash('success', item.bbname + 'graded successfully by ' + item.bb_grader);
+            req.flash('success', item.bbname + ' graded successfully by ' + item.bb_grader);
             res.redirect('sparring_selector');
         })
         .catch(function(err){
@@ -2259,6 +2259,38 @@ app.post('/sparring_card', function(req, res){
             req.flash('error', 'Unable to add to sparring card for ' + item.bbname + '. Contact a system admin. ERR: ' + err);
             res.redirect('sparring_selector');
         })
+});
+
+app.get('/sparring_card_overview', function(req, res){
+    if (!req.session.user){
+        req.flash('error', 'Login credentials required');
+        var query = 'SELECT * FROM counts order by bbname_last';
+        getDate();
+        db.any(query)
+            .then(function (rows) {
+            // render views/store/list.ejs template file
+            res.render('store/home', {
+                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: rows
+            })
+        })
+        .catch(function (err) {
+            // display error message in case an error
+            req.flash('error', err);
+            res.render('store/home', {
+                title: 'Class Counts - Updated ' + global.globalDate,
+                result: '',
+                data: ''
+            })
+        })
+    } else {
+        const query = 'select * from sparring_cards order by rank_sort'
+        res.render('store/sparring_card_overview'), {
+            test_date: testDateGlobal,
+            data: ''
+        }
+    }
 });
 
 function sendEmail(name, email_user, dates){
