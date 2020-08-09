@@ -2263,33 +2263,21 @@ app.post('/sparring_card', function(req, res){
 
 app.get('/sparring_card_overview', function(req, res){
     if (!req.session.user){
-        req.flash('error', 'Login credentials required');
-        var query = 'SELECT * FROM counts order by bbname_last';
-        getDate();
-        db.any(query)
-            .then(function (rows) {
-            // render views/store/list.ejs template file
-            res.render('store/home', {
-                title: 'Blackbelt Class Counts - Updated ' + global.globalDate,
-                result: '',
-                data: rows
-            })
-        })
-        .catch(function (err) {
-            // display error message in case an error
-            req.flash('error', err);
-            res.render('store/home', {
-                title: 'Class Counts - Updated ' + global.globalDate,
-                result: '',
-                data: ''
-            })
-        })
+        res.redirect('home');
     } else {
-        const query = 'select * from sparring_cards order by rank_sort'
-        res.render('store/sparring_card_overview'), {
-            test_date: testDateGlobal,
-            data: ''
-        }
+        const query = 'select * from sparring_cards order by rank_sort';
+        db.any(query)
+            .then(function(rows){
+                res.render('store/sparring_card_overview', {
+                    test_date: testDateGlobal,
+                    data: rows
+                })
+            })
+            .catch(function(err){
+                console.log('Error in card overview: ' + err);
+                req.flash('error', 'Error getting sparring cards. ' + err);
+                res.redirect('list_instructor');
+            })
     }
 });
 
