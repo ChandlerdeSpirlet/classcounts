@@ -2265,7 +2265,7 @@ app.get('/sparring_card_overview', function(req, res){
     if (!req.session.user){
         res.redirect('home');
     } else {
-        const query = 'select * from sparring_cards order by rank_sort';
+        const query = 'select * from sparring_card order by rank_sort';
         db.any(query)
             .then(function(rows){
                 res.render('store/sparring_card_overview', {
