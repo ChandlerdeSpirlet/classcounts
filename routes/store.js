@@ -2215,8 +2215,6 @@ app.get('/sparring_card/(:bbname)/(:testerID)', function(req, res){
 });
 
 app.post('/sparring_card', function(req, res){
-    //FINISH
-    //take in card_count and implement. Build strings for query to add
     var item = {
         bb_grader: req.sanitize('bb_grader').trim(),
         attack: req.sanitize('attack').trim(),
@@ -2243,6 +2241,7 @@ app.post('/sparring_card', function(req, res){
             res.redirect('sparring_selector');
         })
         .catch(function(err){
+            console.log('Error: ' + err);
             req.flash('error', 'Unable to add to sparring card for ' + item.bbname + '. Contact a system admin. ERR: ' + err);
             res.redirect('sparring_selector');
         })

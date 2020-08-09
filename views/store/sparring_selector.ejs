@@ -11,32 +11,76 @@
         * {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
-        #grad1 {
+        html {
             height: 100%;
-            background-color: #03d3fc; /* For browsers that do not support gradients */
-            background-image: linear-gradient(#03d3fc, #ceeef5); /* Standard syntax (must be last) */
+            background-image: linear-gradient(#03d3fc, #ceeef5);
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        button, label, input, select {
+            display: block;
+            font-size: 100%;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 5px;
+            height: 30px;
+        }
+        select {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 1rem;
+            top: 6px;
+            right: 10px;
+            position: absolute;
+        }
+
+        input[type="text"], select {
+            box-shadow: inset 1px 1px 3px #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        button {
+            width: 60%;
+            margin: 0 auto;
+        }
+        label{
+            font-weight: bold;
         }
     </style>
-    <div id="grad1">
-        <head>
-            <h1>Select a black belt to be scored.</h1>
-            <h3>Grading requirements.</h3>
-            <ul>
-                <li>Progress Check - Choose 3 people who you think are an equal or better partner.</li>
-                <li>Significant Testing - Choose 5 people who you think are an equal or better partner.</li>
-            </ul>
-        </head>
-        <body>
-            <form action="/store/sparring_selector" method="post">
-                <label>Black belt being scored</label>
-                <select name="bbname">
-                    <option value="">Black belt being scored</option>
-                        <% for (var i = 0; i < data.length; i++) { %>
-                            <option value="<%= data[i].names_sparring %>" name="bbname"><%= data[i].names_sparring %></option>
-                        <% } %>
-                </select><br>
-                <input type="submit" name="Grade" value="Grade"/>
-            </form>
-        </body>
-    </div>
+    <head>
+        <h1>Select a black belt to be scored.</h1>
+        <h3>Grading requirements.</h3>
+        <ul>
+            <li>Progress Check - Choose 3 people who you think are an equal or better partner.</li>
+            <li>Significant Testing - Choose 5 people who you think are an equal or better partner.</li>
+        </ul>
+    </head>
+    <body>
+        <form action="/store/sparring_selector" method="post">
+            <label for="select">Black belt being scored: </label>
+            <div class="select-wrapper"><select name="bbname">
+                <option value="">Black belt being scored</option>
+                    <% for (var i = 0; i < data.length; i++) { %>
+                        <option value="<%= data[i].names_sparring %>" name="bbname"><%= data[i].names_sparring %></option>
+                    <% } %>
+            </select></div><br>
+            <input type="submit" name="Grade" value="Grade"/>
+        </form>
+    </body>
 </html>

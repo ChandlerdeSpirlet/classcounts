@@ -11,6 +11,57 @@
         * {
             font-family: -apple-system, BlinkMacSystemFont, sans-serif;
         }
+        html {
+            height: 100%;
+            background-image: linear-gradient(#03d3fc, #ceeef5);
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        button, label, input, select {
+            display: block;
+            font-size: 100%;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 5px;
+            height: 30px;
+        }
+        select {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 1rem;
+            top: 6px;
+            right: 10px;
+            position: absolute;
+        }
+
+        input[type="text"], select {
+            box-shadow: inset 1px 1px 3px #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        button {
+            width: 60%;
+            margin: 0 auto;
+        }
+        label{
+            font-weight: bold;
+        }
         h1, h3, h5 {
             text-align: center;
         }
@@ -24,49 +75,49 @@
         </head>
         <body>
             <form action="/store/sparring_card" method="POST">
-                <label>Grader</label>
-                <input type="text" name="bb_grader" placeholder="Black Belt Grader"/><br>
-                <label>Attack</label>
-                <select name="attack">
+                <label for="bb_grader">Grader</label>
+                <input type="text" id="bb_grader" name="bb_grader" placeholder="Black Belt Grader" required/><br>
+                <label for="attack">Attack</label>
+                <div class="select-wrapper"><select name="attack" id="attack" name="attack" required>
                     <optgroup label="Attack Grade">
                         <option value="1">1 - Poor</option>
                         <option value="2">2 - Average</option>
                         <option value="3">3 - Good</option>
                         <option value="4">4 - Awesome</option>
                     </optgroup>
-                </select><br>
-                <label>Defense</label>
-                <select name="defense">
+                </select></div><br>
+                <label for="defense">Defense</label>
+                <div class="select-wrapper"><select name="defense" id="defense" required>
                     <optgroup label="Defense Grade">
                         <option value="1">1 - Poor</option>
                         <option value="2">2 - Average</option>
                         <option value="3">3 - Good</option>
                         <option value="4">4 - Awesome</option>
                     </optgroup>
-                </select><br>
-                <label>Footwork</label>
-                <select name="footwork">
+                </select></div><br>
+                <label for="footwork">Footwork</label>
+                <div class="select-wrapper"><select name="footwork" id="footwork" required>
                     <optgroup label="Footwork Grade">
                         <option value="1">1 - Poor</option>
                         <option value="2">2 - Average</option>
                         <option value="3">3 - Good</option>
                         <option value="4">4 - Awesome</option>
                     </optgroup>
-                </select><br>
-                <label>Respect of Technique</label>
-                <select name="technique">
+                </select></div><br>
+                <label for="technique">Respect of Technique</label>
+                <div class="select-wrapper"><select name="technique" id="technique" required>
                     <optgroup label="Respect of Technique Grade">
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </optgroup>
-                </select><br>
-                <label>Control</label>
-                <select name="control">
+                </select></div><br>
+                <label for="control">Control</label>
+                <div class="select-wrapper"><select name="control" id="control" required>
                     <optgroup label="Control Grade">
                         <option value="true">Yes</option>
                         <option value="false">No</option>
                     </optgroup>
-                </select><br>
+                </select></div><br>
                 <input type="hidden" name="card_count" value="<%= data[0].card_count %>"/>
                 <input type="hidden" name="testerID" value="<%= testerID %>"/>
                 <input type="hidden" name="bbname" value="<%= bbname %>"/>
