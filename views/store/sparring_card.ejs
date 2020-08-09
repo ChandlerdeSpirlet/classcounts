@@ -74,34 +74,35 @@
             <h5>3 grades are needed for a progress check</h5>
         </head>
         <body>
+            <% if (data[0].card_count < 5) { %>
             <form action="/store/sparring_card" method="POST">
                 <label for="bb_grader">Grader</label>
                 <input type="text" id="bb_grader" name="bb_grader" placeholder="Black Belt Grader" required/><br>
                 <label for="attack">Attack</label>
                 <div class="select-wrapper"><select name="attack" id="attack" name="attack" required>
                     <optgroup label="Attack Grade">
-                        <option value="1">1 - Poor</option>
-                        <option value="2">2 - Average</option>
-                        <option value="3">3 - Good</option>
-                        <option value="4">4 - Awesome</option>
+                        <option value="1">1 &mdash; Poor</option>
+                        <option value="2">2 &mdash; Average</option>
+                        <option value="3">3 &mdash; Good</option>
+                        <option value="4">4 &mdash; Awesome</option>
                     </optgroup>
                 </select></div><br>
                 <label for="defense">Defense</label>
                 <div class="select-wrapper"><select name="defense" id="defense" required>
                     <optgroup label="Defense Grade">
-                        <option value="1">1 - Poor</option>
-                        <option value="2">2 - Average</option>
-                        <option value="3">3 - Good</option>
-                        <option value="4">4 - Awesome</option>
+                        <option value="1">1 &mdash; Poor</option>
+                        <option value="2">2 &mdash; Average</option>
+                        <option value="3">3 &mdash; Good</option>
+                        <option value="4">4 &mdash; Awesome</option>
                     </optgroup>
                 </select></div><br>
                 <label for="footwork">Footwork</label>
                 <div class="select-wrapper"><select name="footwork" id="footwork" required>
                     <optgroup label="Footwork Grade">
-                        <option value="1">1 - Poor</option>
-                        <option value="2">2 - Average</option>
-                        <option value="3">3 - Good</option>
-                        <option value="4">4 - Awesome</option>
+                        <option value="1">1 &mdash; Poor</option>
+                        <option value="2">2 &mdash; Average</option>
+                        <option value="3">3 &mdash; Good</option>
+                        <option value="4">4 &mdash; Awesome</option>
                     </optgroup>
                 </select></div><br>
                 <label for="technique">Respect of Technique</label>
@@ -123,6 +124,9 @@
                 <input type="hidden" name="bbname" value="<%= bbname %>"/>
                 <input type="submit" name="submit" value="Grade"/>
             </form>
+            <% } else { %>
+                <h3><% bbname %> has reached their maximum number of grades and cannot receive any further grades.</h3>
+            <% } %>
         </body>
     </div>
 </html>

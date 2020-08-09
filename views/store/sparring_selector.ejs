@@ -2,7 +2,7 @@
     <p style="color:red"><%- messages.error %></p>
 <% } %>
 <% if (messages.success) { %>
-    <p style="color:blue"><%- messages.success %></p>
+    <p style="color:black"><%- messages.success %></p>
 <% } %>
 <html>
     <meta charset="UTF-8">
@@ -67,8 +67,8 @@
         <h1>Select a black belt to be scored.</h1>
         <h3>Grading requirements.</h3>
         <ul>
-            <li>Progress Check - Choose 3 people who you think are an equal or better partner.</li>
-            <li>Significant Testing - Choose 5 people who you think are an equal or better partner.</li>
+            <li><strong>Significant Testing</strong> &mdash; Choose 5 people who you think are an equal or better partner.</li>
+            <li><strong>Progress Check</strong> &mdash; Choose 3 people who you think are an equal or better partner.</li>
         </ul>
     </head>
     <body>
@@ -77,7 +77,7 @@
             <div class="select-wrapper"><select name="bbname">
                 <option value="">Black belt being scored</option>
                     <% for (var i = 0; i < data.length; i++) { %>
-                        <option value="<%= data[i].names_sparring %>" name="bbname"><%= data[i].names_sparring %></option>
+                        <option value="<%= data[i].bb_name %>" name="bbname"><%= data[i].bb_name %> &mdash; <%= card_count %> grades</option>
                     <% } %>
             </select></div><br>
             <input type="submit" name="Grade" value="Grade"/>

@@ -2228,25 +2228,34 @@ app.post('/sparring_card', function(req, res){
     }
     var index = Number(item.card_count);
     index = index + 1;
-    console.log('index is ' + index);
-    console.log('index after .toString() ' + index.toString());
-    var attack = 'attack_' + index.toString();
-    var defense = 'defense_' + index.toString();
-    var footwork = 'footwork_' + index.toString();
-    var technique = 'technique_' + index.toString();
-    var control = 'control_' + index.toString();
-    var fighter = 'fighter_' + index.toString();
-    const query = 'update sparring_card set $1 = $2, $3 = $4, $5 = $6, $7 = $8, $9 = $10, $11 = $12, card_count = card_count + 1 where card_id = $13 and bb_name = $14';
-    console.log('query before db ' + query);
-    db.any(query, [attack, item.attack, defense, item.defense, footwork, item.footwork, technique, item.technique, control, item.control, fighter, item.bb_grader, item.testerID, item.bbname])
+    switch (index){
+        case 1:
+            var query = 'update sparring_card set attack_1 = $1, defense_1 = $2, footwork_1 = $3, technique_1 = $4, control_1 = $5, fighter_1 = $6, card_count = card_count + 1 where card_id = $7 and bb_name = $8;';
+            break;
+        case 2:
+            var query = 'update sparring_card set attack_2 = $1, defense_2 = $2, footwork_2 = $3, technique_2 = $4, control_2 = $5, fighter_2 = $6, card_count = card_count + 1 where card_id = $7 and bb_name = $8;';
+            break;
+        case 3:
+            var query = 'update sparring_card set attack_3 = $1, defense_3 = $2, footwork_3 = $3, technique_3 = $4, control_3 = $5, fighter_3 = $6, card_count = card_count + 1 where card_id = $7 and bb_name = $8;';
+            break;
+        case 4:
+            var query = 'update sparring_card set attack_4 = $1, defense_4 = $2, footwork_4 = $3, technique_4 = $4, control_4 = $5, fighter_4 = $6, card_count = card_count + 1 where card_id = $7 and bb_name = $8;';
+            break;
+        case 5:
+            var query = 'update sparring_card set attack_5 = $1, defense_5 = $2, footwork_5 = $3, technique_5 = $4, control_5 = $5, fighter_5 = $6, card_count = card_count + 1 where card_id = $7 and bb_name = $8;';
+            break;
+        default:
+            req.flash('error', item.bbname + ' has reached the maximum number of grades for their sparring card.');
+            res.redirect('sparring_selector');
+            break;
+    }
+    db.any(query, [item.attack, item.defense, item.footwork, item.technique, item.control, item.bb_grader, item.testerID, item.bbname])
         .then(function(rows){
-            console.log('query at success ' + query);
             req.flash('success', item.bbname + 'graded successfully by ' + item.bb_grader);
             res.redirect('sparring_selector');
         })
         .catch(function(err){
             console.log('Error: ' + err);
-            console.log('query at catch ' + query);
             req.flash('error', 'Unable to add to sparring card for ' + item.bbname + '. Contact a system admin. ERR: ' + err);
             res.redirect('sparring_selector');
         })
