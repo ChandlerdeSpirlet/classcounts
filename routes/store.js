@@ -2228,6 +2228,8 @@ app.post('/sparring_card', function(req, res){
     }
     var index = Number(item.card_count);
     index = index + 1;
+    console.log('index is ' + index);
+    console.log('index after .toString() ' + index.toString());
     var attack = 'attack_' + index.toString();
     var defense = 'defense_' + index.toString();
     var footwork = 'footwork_' + index.toString();
@@ -2235,13 +2237,16 @@ app.post('/sparring_card', function(req, res){
     var control = 'control_' + index.toString();
     var fighter = 'fighter_' + index.toString();
     const query = 'update sparring_card set $1 = $2, $3 = $4, $5 = $6, $7 = $8, $9 = $10, $11 = $12, card_count = card_count + 1 where card_id = $13 and bb_name = $14';
+    console.log('query before db ' + query);
     db.any(query, [attack, item.attack, defense, item.defense, footwork, item.footwork, technique, item.technique, control, item.control, fighter, item.bb_grader, item.testerID, item.bbname])
         .then(function(rows){
+            console.log('query at success ' + query);
             req.flash('success', item.bbname + 'graded successfully by ' + item.bb_grader);
             res.redirect('sparring_selector');
         })
         .catch(function(err){
             console.log('Error: ' + err);
+            console.log('query at catch ' + query);
             req.flash('error', 'Unable to add to sparring card for ' + item.bbname + '. Contact a system admin. ERR: ' + err);
             res.redirect('sparring_selector');
         })
