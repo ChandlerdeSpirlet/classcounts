@@ -90,7 +90,6 @@
         <div class="wrapper">
             <div class="cards_wrap">
                 <% for (var i = 0; i < data.length; i++) { %>
-                <% console.log(data); %>
                 <div class="card_item">
                     <div class="card_inner">
                         <div class="card_top">
@@ -103,24 +102,22 @@
                             <div class="card_info">
                                 <p class="title"><strong>Grader:</strong> <%= data[i].fighter_1 %></p>
                                 <p>
-                                    <ul>
-                                        <li><strong>Attack:</strong> <%= data[i].attack_1 %></li>
-                                        <li><strong>Defense:</strong> <%= data[i].defense_1 %></li>
-                                        <li><strong>Footwork:</strong> <%= data[i].footwork_1 %></li>
-                                        <li><strong>Respect of Technique:</strong> <% if (data[i].technique_1 == true) { %>Yes<% } else { %>No<% } %></li>
-                                        <li><strong>Control:</strong> <% if (data[i].control_1 == true) { %>Yes<% } else { %>No<% } %></li>
-                                    </ul>
+                                        <strong>Attack:</strong> <%= data[i].attack_1 %>
+                                        <strong>Defense:</strong> <%= data[i].defense_1 %>
+                                        <strong>Footwork:</strong> <%= data[i].footwork_1 %>
+                                        <strong>Respect of Technique:</strong> <% if (data[i].technique_1 == true) { %>Yes<% } else { %>No<% } %>
+                                        <strong>Control:</strong> <% if (data[i].control_1 == true) { %>Yes<% } else { %>No<% } %>
                                 </p>
                             </div>
                             <div class="card_info">
                                 <p class="title"><strong>Grader:</strong> <%= data[i].fighter_2 %></p>
                                 <p>
                                     <ul>
-                                        <li><strong>Attack:</strong> <%= data[i].attack_2 %></li>
-                                        <li><strong>Defense:</strong> <%= data[i].defense_2 %></li>
-                                        <li><strong>Footwork:</strong> <%= data[i].footwork_2 %></li>
-                                        <li><strong>Respect of Technique:</strong> <% if (data[i].technique_2 == true) { %>Yes<% } else { %>No<% } %></li>
-                                        <li><strong>Control:</strong> <% if (data[i].control_2 == true) { %>Yes<% } else { %>No<% } %></li>
+                                        <strong>Attack:</strong> <%= data[i].attack_2 %>
+                                        <strong>Defense:</strong> <%= data[i].defense_2 %>
+                                        <strong>Footwork:</strong> <%= data[i].footwork_2 %>
+                                        <strong>Respect of Technique:</strong> <% if (data[i].technique_2 == true) { %>Yes<% } else { %>No<% } %>
+                                        <strong>Control:</strong> <% if (data[i].control_2 == true) { %>Yes<% } else { %>No<% } %>
                                     </ul>
                                 </p>
                             </div>
@@ -128,11 +125,11 @@
                                 <p class="title"><strong>Grader:</strong> <%= data[i].fighter_3 %></p>
                                 <p>
                                     <ul>
-                                        <li><strong>Attack:</strong> <%= data[i].attack_3 %></li>
-                                        <li><strong>Defense:</strong> <%= data[i].defense_3 %></li>
-                                        <li><strong>Footwork:</strong> <%= data[i].footwork_3 %></li>
-                                        <li><strong>Respect of Technique:</strong> <% if (data[i].technique_3 == true) { %>Yes<% } else { %>No<% } %></li>
-                                        <li><strong>Control:</strong> <% if (data[i].control_3 == true) { %>Yes<% } else { %>No<% } %></li>
+                                        <strong>Attack:</strong> <%= data[i].attack_3 %>
+                                        <strong>Defense:</strong> <%= data[i].defense_3 %>
+                                        <strong>Footwork:</strong> <%= data[i].footwork_3 %>
+                                        <strong>Respect of Technique:</strong> <% if (data[i].technique_3 == true) { %>Yes<% } else { %>No<% } %>
+                                        <strong>Control:</strong> <% if (data[i].control_3 == true) { %>Yes<% } else { %>No<% } %>
                                     </ul>
                                 </p>
                             </div>
@@ -141,11 +138,11 @@
                                     <p class="title"><strong>Grader:</strong> <%= data[i].fighter_4 %></p>
                                     <p>
                                         <ul>
-                                            <li><strong>Attack:</strong> <%= data[i].attack_4 %></li>
-                                            <li><strong>Defense:</strong> <%= data[i].defense_4 %></li>
-                                            <li><strong>Footwork:</strong> <%= data[i].footwork_4 %></li>
-                                            <li><strong>Respect of Technique:</strong> <% if (data[i].technique_4 == true) { %>Yes<% } else { %>No<% } %></li>
-                                            <li><strong>Control:</strong> <% if (data[i].control_4 == true) { %>Yes<% } else { %>No<% } %></li>
+                                            <strong>Attack:</strong> <%= data[i].attack_4 %>
+                                            <strong>Defense:</strong> <%= data[i].defense_4 %>
+                                            <strong>Footwork:</strong> <%= data[i].footwork_4 %>
+                                            <strong>Respect of Technique:</strong> <% if (data[i].technique_4 == true) { %>Yes<% } else { %>No<% } %>
+                                            <strong>Control:</strong> <% if (data[i].control_4 == true) { %>Yes<% } else { %>No<% } %>
                                         </ul>
                                     </p>
                                 </div>
@@ -155,11 +152,11 @@
                                     <p class="title"><strong>Grader:</strong> <%= data[i].fighter_5 %></p>
                                     <p>
                                         <ul>
-                                            <li><strong>Attack:</strong> <%= data[i].attack_5 %></li>
-                                            <li><strong>Defense:</strong> <%= data[i].defense_5 %></li>
-                                            <li><strong>Footwork:</strong> <%= data[i].footwork_5 %></li>
-                                            <li><strong>Respect of Technique:</strong> <% if (data[i].technique_5 == true) { %>Yes<% } else { %>No<% } %></li>
-                                            <li><strong>Control:</strong> <% if (data[i].control_5 == true) { %>Yes<% } else { %>No<% } %></li>
+                                            <strong>Attack:</strong> <%= data[i].attack_5 %>
+                                            <strong>Defense:</strong> <%= data[i].defense_5 %>
+                                            <strong>Footwork:</strong> <%= data[i].footwork_5 %>
+                                            <strong>Respect of Technique:</strong> <% if (data[i].technique_5 == true) { %>Yes<% } else { %>No<% } %>
+                                            <strong>Control:</strong> <% if (data[i].control_5 == true) { %>Yes<% } else { %>No<% } %>
                                         </ul>
                                     </p>
                                 </div>
