@@ -48,6 +48,7 @@
     .cards_wrap .card_bottom .card_category {
         text-transform: uppercase;
         text-align: center;
+        font-size: 25px;
     }
     .cards_wrap .card_bottom .card_info {
         padding: 15px;
@@ -100,7 +101,7 @@
                             <%= data[i].belt_rank %>
                             </div>
                             <div class="card_info">
-                                <p class="title"><strong>Grader:</strong><%= data[i].fighter_1 %></p>
+                                <p class="title"><strong>Grader:</strong> <%= data[i].fighter_1 %></p>
                                 <p>
                                     <ul>
                                         <li><strong>Attack:</strong> <%= data[i].attack_1 %></li>
@@ -112,7 +113,7 @@
                                 </p>
                             </div>
                             <div class="card_info">
-                                <p class="title"><strong>Grader:</strong><%= data[i].fighter_2 %></p>
+                                <p class="title"><strong>Grader:</strong> <%= data[i].fighter_2 %></p>
                                 <p>
                                     <ul>
                                         <li><strong>Attack:</strong> <%= data[i].attack_2 %></li>
@@ -124,7 +125,7 @@
                                 </p>
                             </div>
                             <div class="card_info">
-                                <p class="title"><strong>Grader:</strong><%= data[i].fighter_3 %></p>
+                                <p class="title"><strong>Grader:</strong> <%= data[i].fighter_3 %></p>
                                 <p>
                                     <ul>
                                         <li><strong>Attack:</strong> <%= data[i].attack_3 %></li>
@@ -137,7 +138,7 @@
                             </div>
                             <% if (data[i].fighter_4 != ''){ %>
                                 <div class="card_info">
-                                    <p class="title"><strong>Grader:</strong><%= data[i].fighter_4 %></p>
+                                    <p class="title"><strong>Grader:</strong> <%= data[i].fighter_4 %></p>
                                     <p>
                                         <ul>
                                             <li><strong>Attack:</strong> <%= data[i].attack_4 %></li>
@@ -151,7 +152,7 @@
                             <% } %>
                             <% if (data[i].fighter_5 != ''){ %>
                                 <div class="card_info">
-                                    <p class="title"><strong>Grader:</strong><%= data[i].fighter_5 %></p>
+                                    <p class="title"><strong>Grader:</strong> <%= data[i].fighter_5 %></p>
                                     <p>
                                         <ul>
                                             <li><strong>Attack:</strong> <%= data[i].attack_5 %></li>
