@@ -160,6 +160,7 @@
             <% } %>
         </body>
     </div>
+    <% var temp = []; for (int i = 0; i < data.length; i++) { temp.push(data[i].get_names); } %>
 </html>
 <script>
     function autocomplete(inp, arr) {
@@ -260,8 +261,9 @@
     }
     
     /*An array containing all the country names in the world:*/
-    var countries = [];
-    <% for (int i = 0; i < data.length; i++) { countries.push(data[i].get_names); } %>
+    var countries = <%= temp %>;
+    console.log(countries);
+    
     
     /*initiate the autocomplete function on the "bb_grader" element, and pass along the countries array as possible autocomplete values:*/
     autocomplete(document.getElementById("bb_grader"), countries);
