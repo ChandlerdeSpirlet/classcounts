@@ -102,9 +102,9 @@
                             <div class="card_info">
                                 <p class="title"><strong>Grader:</strong><%= data[0].fighter_1 %></p>
                                 <p>
-                                    <strong>Attack:</strong> <%= data[0].attack_1 %><br>
-                                    <strong>Defense:</strong> <%= data[0].defense_1 %><br>
-                                    <strong>Footwork:</strong> <%= data[0].footwork_1 %><br>
+                                    <strong>Attack:</strong> <% if (data[0].attack_1  == 1) { %>1 &mdash; Poor<% } if (data[0].attack_1 == 2) { %>2 &mdash; Average<% } if (data[0].attack_1 == 3) { %>3 &mdash; Good<% } if (data[0].attack_1 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                    <strong>Defense:</strong> <% if (data[0].defense_1  == 1) { %>1 &mdash; Poor<% } if (data[0].defense_1 == 2) { %>2 &mdash; Average<% } if (data[0].defense_1 == 3) { %>3 &mdash; Good<% } if (data[0].defense_1 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                    <strong>Footwork:</strong> <% if (data[0].footwork_1  == 1) { %>1 &mdash; Poor<% } if (data[0].footwork_1 == 2) { %>2 &mdash; Average<% } if (data[0].footwork_1 == 3) { %>3 &mdash; Good<% } if (data[0].footwork_1 == 4) { %>4 &mdash; Awesome <% } %><br>
                                     <strong>Respect of Technique:</strong> <% if (data[0].technique_1 == true) { %>Yes<% } else { %>No<% } %><br>
                                     <strong>Control:</strong> <% if (data[0].control_1 == true) { %>Yes<% } else { %>No<% } %>
                                 </p>
@@ -124,9 +124,9 @@
                             <div class="card_info">
                                 <p class="title"><strong>Grader:</strong><%= data[0].fighter_2 %></p>
                                 <p>
-                                    <strong>Attack:</strong> <%= data[0].attack_2 %><br>
-                                    <strong>Defense:</strong> <%= data[0].defense_2 %><br>
-                                    <strong>Footwork:</strong> <%= data[0].footwork_2 %><br>
+                                    <strong>Attack:</strong> <% if (data[0].attack_2  == 1) { %>1 &mdash; Poor<% } if (data[0].attack_2 == 2) { %>2 &mdash; Average<% } if (data[0].attack_2 == 3) { %>3 &mdash; Good<% } if (data[0].attack_2 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                    <strong>Defense:</strong> <% if (data[0].defense_2  == 1) { %>1 &mdash; Poor<% } if (data[0].defense_2 == 2) { %>2 &mdash; Average<% } if (data[0].defense_2 == 3) { %>3 &mdash; Good<% } if (data[0].defense_2 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                    <strong>Footwork:</strong> <% if (data[0].footwork_2  == 1) { %>1 &mdash; Poor<% } if (data[0].footwork_2 == 2) { %>2 &mdash; Average<% } if (data[0].footwork_2 == 3) { %>3 &mdash; Good<% } if (data[0].footwork_2 == 4) { %>4 &mdash; Awesome <% } %><br>
                                     <strong>Respect of Technique:</strong> <% if (data[0].technique_2 == true) { %>Yes<% } else { %>No<% } %><br>
                                     <strong>Control:</strong> <% if (data[0].control_2 == true) { %>Yes<% } else { %>No<% } %>
                                 </p>
@@ -146,9 +146,9 @@
                             <div class="card_info">
                                 <p class="title"><strong>Grader:</strong><%= data[0].fighter_3 %></p>
                                 <p>
-                                    <strong>Attack:</strong> <%= data[0].attack_3 %><br>
-                                    <strong>Defense:</strong> <%= data[0].defense_3 %><br>
-                                    <strong>Footwork:</strong> <%= data[0].footwork_3 %><br>
+                                    <strong>Attack:</strong> <% if (data[0].attack_3  == 1) { %>1 &mdash; Poor<% } if (data[0].attack_3 == 2) { %>2 &mdash; Average<% } if (data[0].attack_3 == 3) { %>3 &mdash; Good<% } if (data[0].attack_3 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                    <strong>Defense:</strong> <% if (data[0].defense_3  == 1) { %>1 &mdash; Poor<% } if (data[0].defense_3 == 2) { %>2 &mdash; Average<% } if (data[0].defense_3 == 3) { %>3 &mdash; Good<% } if (data[0].defense_3 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                    <strong>Footwork:</strong> <% if (data[0].footwork_3  == 1) { %>1 &mdash; Poor<% } if (data[0].footwork_3 == 2) { %>2 &mdash; Average<% } if (data[0].footwork_3 == 3) { %>3 &mdash; Good<% } if (data[0].footwork_3 == 4) { %>4 &mdash; Awesome <% } %><br>
                                     <strong>Respect of Technique:</strong> <% if (data[0].technique_3 == true) { %>Yes<% } else { %>No<% } %><br>
                                     <strong>Control:</strong> <% if (data[0].control_3 == true) { %>Yes<% } else { %>No<% } %>
                                 </p>
@@ -169,9 +169,9 @@
                                 <div class="card_info">
                                     <p class="title"><strong>Grader:</strong><%= data[0].fighter_4 %></p>
                                     <p>
-                                        <strong>Attack:</strong> <%= data[0].attack_4 %><br>
-                                        <strong>Defense:</strong> <%= data[0].defense_4 %><br>
-                                        <strong>Footwork:</strong> <%= data[0].footwork_4 %><br>
+                                        <strong>Attack:</strong> <% if (data[0].attack_4  == 1) { %>1 &mdash; Poor<% } if (data[0].attack_4 == 2) { %>2 &mdash; Average<% } if (data[0].attack_4 == 3) { %>3 &mdash; Good<% } if (data[0].attack_4 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                        <strong>Defense:</strong> <% if (data[0].defense_4  == 1) { %>1 &mdash; Poor<% } if (data[0].defense_4 == 2) { %>2 &mdash; Average<% } if (data[0].defense_4 == 3) { %>3 &mdash; Good<% } if (data[0].defense_4 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                        <strong>Footwork:</strong> <% if (data[0].footwork_4  == 1) { %>1 &mdash; Poor<% } if (data[0].footwork_4 == 2) { %>2 &mdash; Average<% } if (data[0].footwork_4 == 3) { %>3 &mdash; Good<% } if (data[0].footwork_4 == 4) { %>4 &mdash; Awesome <% } %><br>
                                         <strong>Respect of Technique:</strong> <% if (data[0].technique_4 == true) { %>Yes<% } else { %>No<% } %><br>
                                         <strong>Control:</strong> <% if (data[0].control_4 == true) { %>Yes<% } else { %>No<% } %>
                                     </p>
@@ -193,9 +193,9 @@
                                 <div class="card_info">
                                     <p class="title"><strong>Grader:</strong><%= data[0].fighter_5 %></p>
                                     <p>
-                                        <strong>Attack:</strong> <%= data[0].attack_5 %><br>
-                                        <strong>Defense:</strong> <%= data[0].defense_5 %><br>
-                                        <strong>Footwork:</strong> <%= data[0].footwork_5 %><br>
+                                        <strong>Attack:</strong> <% if (data[0].attack_5  == 1) { %>1 &mdash; Poor<% } if (data[0].attack_5 == 2) { %>2 &mdash; Average<% } if (data[0].attack_5 == 3) { %>3 &mdash; Good<% } if (data[0].attack_5 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                        <strong>Defense:</strong> <% if (data[0].defense_5  == 1) { %>1 &mdash; Poor<% } if (data[0].defense_5 == 2) { %>2 &mdash; Average<% } if (data[0].defense_5 == 3) { %>3 &mdash; Good<% } if (data[0].defense_5 == 4) { %>4 &mdash; Awesome <% } %><br>
+                                        <strong>Footwork:</strong> <% if (data[0].footwork_5  == 1) { %>1 &mdash; Poor<% } if (data[0].footwork_5 == 2) { %>2 &mdash; Average<% } if (data[0].footwork_5 == 3) { %>3 &mdash; Good<% } if (data[0].footwork_5 == 4) { %>4 &mdash; Awesome <% } %><br>
                                         <strong>Respect of Technique:</strong> <% if (data[0].technique_5 == true) { %>Yes<% } else { %>No<% } %><br>
                                         <strong>Control:</strong> <% if (data[0].control_5 == true) { %>Yes<% } else { %>No<% } %>
                                     </p>
