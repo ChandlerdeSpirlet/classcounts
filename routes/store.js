@@ -2282,23 +2282,19 @@ app.get('/sparring_card_overview', function(req, res){
 });
 
 app.get('/sparring_card_overview_indv/(:bbname)', function(req, res){
-    if (!req.session.user){
-        res.redirect('home');
-    } else {
-        const query = 'select * from sparring_card where bb_name = $1 order by test_date';
-        db.any(query, [req.params.bbname])
-            .then(function(rows){
-                res.render('store/sparring_card_overview_indv', {
-                    test_date: testDateGlobal,
-                    data: rows
-                })
+    const query = 'select * from sparring_card where bb_name = $1 order by test_date';
+    db.any(query, [req.params.bbname])
+        .then(function(rows){
+            res.render('store/sparring_card_overview_indv', {
+                test_date: testDateGlobal,
+                data: rows
             })
-            .catch(function(err){
-                console.log('Error in card overview: ' + err);
-                req.flash('error', 'Error getting sparring cards. ' + err);
-                res.redirect('home');
-            })
-    }
+        })
+        .catch(function(err){
+            console.log('Error in card overview: ' + err);
+            req.flash('error', 'Error getting sparring cards. ' + err);
+            res.redirect('home');
+        })
 });
 
 function sendEmail(name, email_user, dates){
