@@ -2199,7 +2199,7 @@ app.get('/sparring_card/(:bbname)/(:testerID)', function(req, res){
     console.log('testerID is ' + req.params.testerID);
     const bbname = req.params.bbname;
     const testerID = req.params.testerID;
-    var query = 'select card_count from sparring_card where card_id = $1 and bb_name = $2;';
+    var query = 'select card_count, get_names() from sparring_card where card_id = $1 and bb_name = $2;';
     db.query(query, [req.params.testerID, req.params.bbname])
         .then(function(rows){
             res.render('store/sparring_card', {
