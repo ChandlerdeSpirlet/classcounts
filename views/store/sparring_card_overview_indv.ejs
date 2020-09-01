@@ -1,5 +1,5 @@
 <html>
-    <title>Sparring card for <%= test_date %></title>
+    <title>Sparring card for <%= data[0].test_date %></title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
     * {
@@ -87,77 +87,11 @@
     }
     </style>
     <body>
-        <h1>Sparring Cards for <%= test_date %></h1>
+        <h1>Sparring Cards for <%= data[0].test_date %></h1>
         <div class="wrapper">
             <div class="cards_wrap">
                 <div class="card_item">
-                    <div class="card_top">
-                        <%= data[0].bbname %>
-                    </div>
-                    <div class="card_bottom">
-                        <div class="card_category">
-                            <%= data[0].belt_rank %>
-                        </div>
-                        <div class="card_info">
-                            <p class="title"><strong>Grader:</strong><%= data[0].fighter_1 %></p>
-                            <p>
-                                <strong>Attack:</strong> <%= data[0].attack_1 %><br>
-                                <strong>Defense:</strong> <%= data[0].defense_1 %><br>
-                                <strong>Footwork:</strong> <%= data[0].footwork_1 %><br>
-                                <strong>Respect of Technique:</strong> <% if (data[0].technique_1 == true) { %>Yes<% } else { %>No<% } %><br>
-                                <strong>Control:</strong> <% if (data[0].control_1 == true) { %>Yes<% } else { %>No<% } %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cards_wrap">
-                <div class="card_item">
-                    <div class="card_top">
-                        <%= data[0].bbname %>
-                    </div>
-                    <div class="card_bottom">
-                        <div class="card_category">
-                            <%= data[0].belt_rank %>
-                        </div>
-                        <div class="card_info">
-                            <p class="title"><strong>Grader:</strong><%= data[0].fighter_2 %></p>
-                            <p>
-                                <strong>Attack:</strong> <%= data[0].attack_2 %><br>
-                                <strong>Defense:</strong> <%= data[0].defense_2 %><br>
-                                <strong>Footwork:</strong> <%= data[0].footwork_2 %><br>
-                                <strong>Respect of Technique:</strong> <% if (data[0].technique_2 == true) { %>Yes<% } else { %>No<% } %><br>
-                                <strong>Control:</strong> <% if (data[0].control_2 == true) { %>Yes<% } else { %>No<% } %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cards_wrap">
-                <div class="card_item">
-                    <div class="card_top">
-                        <%= data[0].bbname %>
-                    </div>
-                    <div class="card_bottom">
-                        <div class="card_category">
-                            <%= data[0].belt_rank %>
-                        </div>
-                        <div class="card_info">
-                            <p class="title"><strong>Grader:</strong><%= data[0].fighter_3 %></p>
-                            <p>
-                                <strong>Attack:</strong> <%= data[0].attack_3 %><br>
-                                <strong>Defense:</strong> <%= data[0].defense_3 %><br>
-                                <strong>Footwork:</strong> <%= data[0].footwork_3 %><br>
-                                <strong>Respect of Technique:</strong> <% if (data[0].technique_3 == true) { %>Yes<% } else { %>No<% } %><br>
-                                <strong>Control:</strong> <% if (data[0].control_3 == true) { %>Yes<% } else { %>No<% } %>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="cards_wrap">
-                <% if (data[0].fighter_4 != ''){ %>
-                    <div class="card_item">
+                    <div class="card_inner">
                         <div class="card_top">
                             <%= data[0].bbname %>
                         </div>
@@ -166,38 +100,106 @@
                                 <%= data[0].belt_rank %>
                             </div>
                             <div class="card_info">
-                                <p class="title"><strong>Grader:</strong><%= data[0].fighter_4 %></p>
+                                <p class="title"><strong>Grader:</strong><%= data[0].fighter_1 %></p>
                                 <p>
-                                    <strong>Attack:</strong> <%= data[0].attack_4 %><br>
-                                    <strong>Defense:</strong> <%= data[0].defense_4 %><br>
-                                    <strong>Footwork:</strong> <%= data[0].footwork_4 %><br>
-                                    <strong>Respect of Technique:</strong> <% if (data[0].technique_4 == true) { %>Yes<% } else { %>No<% } %><br>
-                                    <strong>Control:</strong> <% if (data[0].control_4 == true) { %>Yes<% } else { %>No<% } %>
+                                    <strong>Attack:</strong> <%= data[0].attack_1 %><br>
+                                    <strong>Defense:</strong> <%= data[0].defense_1 %><br>
+                                    <strong>Footwork:</strong> <%= data[0].footwork_1 %><br>
+                                    <strong>Respect of Technique:</strong> <% if (data[0].technique_1 == true) { %>Yes<% } else { %>No<% } %><br>
+                                    <strong>Control:</strong> <% if (data[0].control_1 == true) { %>Yes<% } else { %>No<% } %>
                                 </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card_item">
+                    <div class="card_inner">
+                        <div class="card_top">
+                            <%= data[0].bbname %>
+                        </div>
+                        <div class="card_bottom">
+                            <div class="card_category">
+                                <%= data[0].belt_rank %>
+                            </div>
+                            <div class="card_info">
+                                <p class="title"><strong>Grader:</strong><%= data[0].fighter_2 %></p>
+                                <p>
+                                    <strong>Attack:</strong> <%= data[0].attack_2 %><br>
+                                    <strong>Defense:</strong> <%= data[0].defense_2 %><br>
+                                    <strong>Footwork:</strong> <%= data[0].footwork_2 %><br>
+                                    <strong>Respect of Technique:</strong> <% if (data[0].technique_2 == true) { %>Yes<% } else { %>No<% } %><br>
+                                    <strong>Control:</strong> <% if (data[0].control_2 == true) { %>Yes<% } else { %>No<% } %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card_item">
+                    <div class="card_inner">
+                        <div class="card_top">
+                            <%= data[0].bbname %>
+                        </div>
+                        <div class="card_bottom">
+                            <div class="card_category">
+                                <%= data[0].belt_rank %>
+                            </div>
+                            <div class="card_info">
+                                <p class="title"><strong>Grader:</strong><%= data[0].fighter_3 %></p>
+                                <p>
+                                    <strong>Attack:</strong> <%= data[0].attack_3 %><br>
+                                    <strong>Defense:</strong> <%= data[0].defense_3 %><br>
+                                    <strong>Footwork:</strong> <%= data[0].footwork_3 %><br>
+                                    <strong>Respect of Technique:</strong> <% if (data[0].technique_3 == true) { %>Yes<% } else { %>No<% } %><br>
+                                    <strong>Control:</strong> <% if (data[0].control_3 == true) { %>Yes<% } else { %>No<% } %>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% if (data[0].fighter_4 != ''){ %>
+                    <div class="card_item">
+                        <div class="card_inner">
+                            <div class="card_top">
+                                <%= data[0].bbname %>
+                            </div>
+                            <div class="card_bottom">
+                                <div class="card_category">
+                                    <%= data[0].belt_rank %>
+                                </div>
+                                <div class="card_info">
+                                    <p class="title"><strong>Grader:</strong><%= data[0].fighter_4 %></p>
+                                    <p>
+                                        <strong>Attack:</strong> <%= data[0].attack_4 %><br>
+                                        <strong>Defense:</strong> <%= data[0].defense_4 %><br>
+                                        <strong>Footwork:</strong> <%= data[0].footwork_4 %><br>
+                                        <strong>Respect of Technique:</strong> <% if (data[0].technique_4 == true) { %>Yes<% } else { %>No<% } %><br>
+                                        <strong>Control:</strong> <% if (data[0].control_4 == true) { %>Yes<% } else { %>No<% } %>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 <% } %>
-            </div>
-            <div class="cards_wrap">
                 <% if (data[0].fighter_5 != ''){ %>
                     <div class="card_item">
-                        <div class="card_top">
-                            <%= data[0].bbname %>
-                        </div>
-                        <div class="card_bottom">
-                            <div class="card_category">
-                                <%= data[0].belt_rank %>
+                        <div class="card_inner">
+                            <div class="card_top">
+                                <%= data[0].bbname %>
                             </div>
-                            <div class="card_info">
-                                <p class="title"><strong>Grader:</strong><%= data[0].fighter_5 %></p>
-                                <p>
-                                    <strong>Attack:</strong> <%= data[0].attack_5 %><br>
-                                    <strong>Defense:</strong> <%= data[0].defense_5 %><br>
-                                    <strong>Footwork:</strong> <%= data[0].footwork_5 %><br>
-                                    <strong>Respect of Technique:</strong> <% if (data[0].technique_5 == true) { %>Yes<% } else { %>No<% } %><br>
-                                    <strong>Control:</strong> <% if (data[0].control_5 == true) { %>Yes<% } else { %>No<% } %>
-                                </p>
+                            <div class="card_bottom">
+                                <div class="card_category">
+                                    <%= data[0].belt_rank %>
+                                </div>
+                                <div class="card_info">
+                                    <p class="title"><strong>Grader:</strong><%= data[0].fighter_5 %></p>
+                                    <p>
+                                        <strong>Attack:</strong> <%= data[0].attack_5 %><br>
+                                        <strong>Defense:</strong> <%= data[0].defense_5 %><br>
+                                        <strong>Footwork:</strong> <%= data[0].footwork_5 %><br>
+                                        <strong>Respect of Technique:</strong> <% if (data[0].technique_5 == true) { %>Yes<% } else { %>No<% } %><br>
+                                        <strong>Control:</strong> <% if (data[0].control_5 == true) { %>Yes<% } else { %>No<% } %>
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </div>
