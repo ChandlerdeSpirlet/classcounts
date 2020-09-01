@@ -14,7 +14,7 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-let testDateGlobal = 'August 28 2020';
+let testDateGlobal = 'December 04 2020';
 
 function sendMessage(text){
     db.query('select * from get_accountsid()')
@@ -351,7 +351,7 @@ app.get('/test_checkin', function(req, res){
             let nameString = JSON.stringify(rows);
             res.render('store/test_checkin', {
                 title: 'Testing Check-In',
-                date: 'August 28 - 29',
+                date: testDateGlobal,
                 data: rows,
                 bbrank: ''
             })
@@ -2277,6 +2277,26 @@ app.get('/sparring_card_overview', function(req, res){
                 console.log('Error in card overview: ' + err);
                 req.flash('error', 'Error getting sparring cards. ' + err);
                 res.redirect('list_instructor');
+            })
+    }
+});
+
+app.get('/sparring_card_overview_indv/(:bbname)', function(req, res){
+    if (!req.session.user){
+        res.redirect('home');
+    } else {
+        const query = 'select * from sparring_card where bb_name = $1';
+        db.any(query, [req.params.bbname])
+            .then(function(rows){
+                res.render('store/sparring_card_overview_indv', {
+                    test_date: testDateGlobal,
+                    data: rows
+                })
+            })
+            .catch(function(err){
+                console.log('Error in card overview: ' + err);
+                req.flash('error', 'Error getting sparring cards. ' + err);
+                res.redirect('home');
             })
     }
 });

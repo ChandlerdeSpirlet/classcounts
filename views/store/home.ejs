@@ -283,7 +283,8 @@ input[type=submit] {
                 <div class="sparring"><%= item.sparring %></div>
                 <div class="swats"><%= item.swats %></div>
                 <div class="camp"><a sty href='/store/history/<%= item.barcode %>'>Class History</a></div><br>
-                <div class="camp"><a sty href='/store/test_history/<%= item.barcode %>'>Test History</a></div>
+                <div class="camp"><a sty href='/store/test_history/<%= item.barcode %>'>Test History</a></div><br>
+                <div class="camp"><a sty href='/store/sparring_card_overview_indv/<%= item.bbname_first %> <%= item.bbname_last %>'>Sparring Card</a></div>
             </div>
         </div>
                 <% }) %>
