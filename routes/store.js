@@ -2162,8 +2162,8 @@ app.post('/updateLog', function(req, res){
 });
 
 app.get('/sparring_selector', function(req, res){
-    console.log('Access_key is ' + process.env.access_key);
-    if (process.env.access_key) {
+    console.log('Access_key is ' + process.env.ACCESS_KEY);
+    if (process.env.ACCESS_KEY) {
         var query = "select * from names_sparring(to_date($1, 'Month DD YYYY'));";
         db.any(query, [testDateGlobal])
             .then(function(rows){
