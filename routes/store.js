@@ -2162,17 +2162,22 @@ app.post('/updateLog', function(req, res){
 });
 
 app.get('/sparring_selector', function(req, res){
-    var query = "select * from names_sparring(to_date($1, 'Month DD YYYY'));";
-    db.any(query, [testDateGlobal])
-        .then(function(rows){
-            res.render('store/sparring_selector', {
-                data: rows
+    if (process.env.access_key) {
+        var query = "select * from names_sparring(to_date($1, 'Month DD YYYY'));";
+        db.any(query, [testDateGlobal])
+            .then(function(rows){
+                res.render('store/sparring_selector', {
+                    data: rows
+                })
             })
-        })
-        .catch(function(err){
-            req.flash('error', 'Unable to generate names. ERROR: ' + err);
-            res.redirect('home');
-        })
+            .catch(function(err){
+                req.flash('error', 'Unable to generate names. ERROR: ' + err);
+                res.redirect('home');
+            })
+    } else {
+        req.flash('error', 'System admin must allow access to the sparring cards.');
+        res.redirect('home');
+    }
 });
 
 app.post('/sparring_selector', function(req, res){
