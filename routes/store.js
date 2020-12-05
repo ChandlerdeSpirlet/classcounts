@@ -540,7 +540,7 @@ app.get('/fail/(:barcode)', function(req, res){
 });
 app.get('/test_history/(:barcode)', function(req, res){
     var code = req.params.barcode;
-    var query = "select cast(to_char(test_date, 'Mon DD, YYYY') as varchar) as test_date, bbrank from test_history where barcode = $1 and pass_status = $2 order by test_date";
+    var query = "select cast(to_char(test_date, 'Mon DD, YYYY') as varchar) as test_date, bbrank from test_history where barcode = $1 and pass_status = $2 order by test_date desc";
     db.any(query, [code, 'PASS'])
         .then(function(rows){
             res.render('store/test_history', {
