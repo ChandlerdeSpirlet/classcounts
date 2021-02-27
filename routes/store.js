@@ -434,13 +434,13 @@ app.post('/test_checkin', function(req, res){
                     rank_order = 999;
                     break;
             }
-            query2 = "insert into test_candidates(barcode, bbname, bbrank, test_id, test_date, rank_sort) values ($1, $2, $3, $4, to_date($5, 'Month DD YYYY'), $6) on conflict(test_id) do nothing;";
-            console.log('barcode:' + barcode);
-            console.log('item.bbname:' + item.bbname);
-            console.log('bbrank:' + item.bbrank);
-            console.log('testerID:' + testerID);
-            console.log('testDateGlobal:' + testDateGlobal);
-            console.log('rankOrder:' + rank_order);
+            query2 = "insert into test_candidates(barcode, bbname, bbrank, test_id, test_date, rank_sort) values ($1, $2, $3, $4, to_date($5, 'Month DD YYYY'), $6)";
+            //console.log('barcode:' + barcode);
+            //console.log('item.bbname:' + item.bbname);
+            //console.log('bbrank:' + item.bbrank);
+           // console.log('testerID:' + testerID);
+            //console.log('testDateGlobal:' + testDateGlobal);
+            //console.log('rankOrder:' + rank_order);
             db.query(query2, [barcode, item.bbname, item.bbrank, testerID, testDateGlobal, rank_order])
                 .then(function(){
                     console.log('Inserted into test_checkin');
