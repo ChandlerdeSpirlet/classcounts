@@ -1,6 +1,6 @@
 //require('newrelic');
 var express = require('express');
-var db = require('../database');
+var db = require('../database.js');
 var app = express();
 var pgp = require('pg-promise')({});
 var busboy = require('connect-busboy');
