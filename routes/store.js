@@ -75,9 +75,9 @@ function getDate() {
 }
 
 app.get('/', function (request, response) {
-    //if(request.headers['x-forwarded-proto']!='https'){
-     //   response.redirect('https://classcounts.herokuapp.com/store/home')
-    //} else {
+    if(request.headers['x-forwarded-proto']!='https'){
+        response.redirect('https://classcounts.herokuapp.com')
+    } else {
         var query = 'SELECT * FROM counts order by bbname_last';
         //var query = 'select Z.*, S.mon, S.tues, S.wed, S.thurs, S.fri from counts Z, signup S where Z.bbname like S.bbname';
         getDate();
@@ -99,7 +99,7 @@ app.get('/', function (request, response) {
                 data: ''
             })
         })
-    //}
+    }
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     
@@ -435,30 +435,20 @@ app.post('/test_checkin', function(req, res){
                     break;
             }
             query2 = "insert into test_candidates(barcode, bbname, bbrank, test_id, test_date, rank_sort) values ($1, $2, $3, $4, to_date($5, 'Month DD YYYY'), $6)";
-            //console.log('barcode:' + barcode);
-            //console.log('item.bbname:' + item.bbname);
-            //console.log('bbrank:' + item.bbrank);
-           // console.log('testerID:' + testerID);
-            //console.log('testDateGlobal:' + testDateGlobal);
-            //console.log('rankOrder:' + rank_order);
             db.query(query2, [barcode, item.bbname, item.bbrank, testerID, testDateGlobal, rank_order])
                 .then(function(){
-                    console.log('Inserted into test_checkin');
                     var query_last = 'update test_candidates set bbname_last = (select bbname_last from counts where barcode = $1) where barcode = $2';
                     db.query(query_last, [barcode, barcode])
                         .then(function(){
-                            console.log('Updated lastname');
                             req.flash('success', "Successfully Registered for Testing");
                             res.redirect('home');
                         })
                         .catch(function(err){
-                            console.log('Last name issue');
                             req.flash('error', "Not registered for test. Last name issue. CONTACT system admin." + err);
                             res.redirect('home');
                         })
                 })
                 .catch(function(err){
-                    console.log("Some sort of issue");
                     req.flash('error', "Unable to register for test. Use the contact tab at the top of the page to fix this issue. This error might occur if you have already registered for this test." + err);
                     res.redirect('home');
                 })
