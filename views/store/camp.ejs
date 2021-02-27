@@ -1,0 +1,220 @@
+<!-- Include Header Partial -->
+<%- include ../layouts/header.ejs %>
+
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:green"><%- messages.success %></p>
+<% } %>
+<style> 
+    body {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    }
+    table {
+        border-collapse: collapse;
+    }
+th {
+    background-color: blue;
+    color: white;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+tr:hover {
+    background-color: #ddd;
+}
+@media (prefers-color-scheme: no-preference){
+    tr:nth-child(even){
+        background-color: #3d3c3c;
+    }
+    tr:hover {
+        background-color: #282727;
+    }
+    background-color: black;
+    h1 {
+        color: white;
+    }
+    td {
+        color: white;
+    }
+}
+@media (prefers-color-scheme: dark){
+    tr:nth-child(even){
+        background-color: #3d3c3c;
+    }
+    tr:hover {
+        background-color: #282727;
+    }
+    background-color: black;
+    h1 {
+        color: white;
+    }
+    td {
+        color: white;
+    }
+}
+.dark, tr:nth-child(even) {
+    background-color: #3d3c3c;
+}
+.dark, tr {
+    background-color: #333232;
+}
+.dark, tr:hover {
+    background-color: #282727;
+}
+.dark, h1, h2, td {
+    color: white;
+}
+.dark, body {
+    background-color: black;
+}
+@media (min-width: 300px) {
+    th {
+        /* Since color is in min-width: 300px it will follow all the other sizes upwards */
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    th,td {
+        width: calc(598px /5);
+        text-align: center;
+        padding-top: 5px; 
+        padding-bottom: 5px;
+    }
+    th:first-child {
+        padding-left: 30px;
+        padding-right: 25px;
+    }
+}
+@media (min-width: 600px) {
+    th, td {
+        width: calc(768px / 5);
+    }
+}
+
+@media (min-width: 768px) {
+    th,td {
+        width: calc(768px / 5);
+    }
+}
+@media (min-width: 768.02px) {
+    th, td {
+        width: calc(1024px / 5);
+    }
+}
+@media (min-width: 1024px) {
+    th,td {
+        width: calc(1024px / 5);
+    }
+}
+@media (min-width: 1024.02px) {
+    th, td {
+        width: calc(1200px / 5);
+    }
+}
+@media (min-width: 1200px) {
+    th,td {
+        width: calc(1600px / 5);
+    }
+}
+@media (min-width: 1600.02px) {
+    th, td {
+        width: calc(2000px / 5);
+        /* Simple hack for screen larger than 1600 pixels but smaller than 2000 */
+    }
+}
+@media (min-width: 2000.02px) {
+    th, td {
+        width: calc(2400px / 5);
+    }
+}
+</style>
+<div>
+    <div class="header" id="myHeader">
+    <!-- Header class and id work with javascript at bottom for sticky header -->
+        <table>
+        <!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
+            <tr>
+                <th>Name</th>
+                <th>Monday</th>
+                <th>Tuesday</th>
+                <th>Wednesday</th>
+                <th>Thursday</th>
+                <th>Friday</th>
+            </tr>
+        </table>
+    </div>
+    <div class="content"> 
+    <!-- Content class and new table for the content that will be scrolling past the sticky header -->
+    <table >
+        <% if (data) { var temp = []
+            if (data.mon == true){
+                temp.push('Yes');
+            } else {
+                temp.push('No');
+            }
+            if (data.tues == true){
+                temp.push('Yes');
+            } else {
+                temp.push('No');
+            }
+            if (data.wed == true){
+                temp.push('Yes');
+            } else {
+                temp.push('No');
+            }
+            if (data.thurs == true){
+                temp.push('Yes');
+            } else {
+                temp.push('No');
+            }
+            if (data.fri == true){
+                temp.push('Yes');
+            } else {
+                temp.push('No');
+            }%>
+            
+                    <tr>
+                        <td><%= data.bbname %></td>
+                        <br>
+                        <td><%= temp[0] %></td>
+                        <br>
+                        <td><%= temp[1] %></td>
+                        <br>
+                        <td><%= temp[2] %></td>
+                        <br>
+                        <td><%= temp[3] %></td>
+                        <br>
+                        <td><%= temp[4] %></td>
+                        <br>
+                    </tr>
+                <% } %>
+            
+    </table>
+    </div>
+</div>
+<!-- The action attribute of the form refers to a item using its database id -->
+<script>
+var x = "True";
+            var y = "False";
+            var localTime = new Date();
+            // var localTime = new Date(2018, 11, 24, 10, 33);
+            var hours   = localTime.getHours();
+            console.log(hours, ' -hours');
+            var timeString = "" + hours;
+            
+            console.log('localTime is ', localTime);
+            console.log(timeString);
+    
+            if (hours >= 7 && hours <= 19) {
+                console.log(x);
+                document.getElementById("body-content").classList.add('day');
+            } else {
+                console.log(y);
+                // document.getElementById("body-content").classList.add('dark');
+            }
+</script>
+<!-- Include Footer Partial -->
+<%- include ../layouts/footer2.ejs %>

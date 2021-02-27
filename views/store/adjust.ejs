@@ -1,0 +1,153 @@
+<%- include ../layouts/header3.ejs %>
+
+<!--Using if-check to see if an error occurred and displaying appropriate message-->
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:blue"><%- messages.success %></p>
+<% } %>
+<script type="text/javascript">
+    var err = <%- JSON.stringify(messages) %>;
+    console.log(err);
+</script>
+
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+#blackbelts {
+    font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#blackbelts td, #blackbelts th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#blackbelts tr:nth-child(even){background-color: #f2f2f2;}
+
+#blackbelts tr:hover {background-color: #ddd;}
+
+#blackbelts th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: blue;
+    color: white;
+}
+thead {
+    position:sticky;
+}
+
+input[type=text] {
+        width: 130px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+    
+    input[type=text]:focus {
+        width: 100%;
+    }
+    input[type=number] {
+        width: 130px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        font-size: 16px;
+        background-color: white;
+        background-position: 10px 10px; 
+        background-repeat: no-repeat;
+        padding: 12px 20px 12px 40px;
+        -webkit-transition: width 0.4s ease-in-out;
+        transition: width 0.4s ease-in-out;
+    }
+    
+    input[type=number]:focus {
+        width: 100%;
+    }
+    [type=submit] {
+    background-color: blue; /* Green */
+    border: none;
+    color: white;
+    padding: 16px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    -webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    }
+
+    [type=submit] {
+        background-color: white; 
+        color: black; 
+        border: 2px solid blue;
+    }
+
+    [type=submit]:hover {
+        background-color: blue;
+        color: white;
+    }
+    body {
+        font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+</style>
+</head>
+<body>
+<form action="/store/adjust/<%= barcode %>" method="post" name="form1">
+    <table width="30%" border="0">
+        <tr>
+            <td>Barcode</td>
+            <td><input type="number" pattern="[0-9]*" name="barcode" value="<%= barcode %>" novalidate/></td>
+        </tr>
+        <tr>
+            <td>Regular</td>
+            <td><input type="number" pattern="[0-9]*" name="regular" min="0" max="99999" value="<%= regular %>" novalidate/></td>
+        </tr>
+        <tr>
+            <td>Sparring</td>
+            <td><input type="number" pattern="[0-9]*" name="spar" min="0" max="99999" value="<%= spar %>" novalidate/></td>
+        </tr>
+        <tr>
+            <td>Swats</td>
+            <td><input type="number" pattern="[0-9]*" name="swat" min="0" max="99999" value="<%= swat %>" novalidate/></td>
+        </tr>
+        <tr>
+            <td>Date String (enter as Month dd, yyyy)</td>
+            <td><input type="date" name="date" value="<%= datestring %>"/></td>
+        </tr>
+        <tr>
+            <select name="type" value="<%= type %>">
+                <option value="Regular">Regular</option>
+                <option value="Sparring">Sparring</option>
+                <option value="SWAT">SWAT</option>
+                <option value="SWAT & Sparring">SWAT & Sparring</option>
+            </select>
+        </tr>
+        <tr>
+            <td>Class Name</td>
+            <td><input type="text" name="classname" value="<%= classname %>"/></td>
+        </tr>
+        <tr>
+            <td></td>
+            <td><input type="submit" name="Submit" value="Add"/></td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
+<%- include ../layouts/footer.ejs %>

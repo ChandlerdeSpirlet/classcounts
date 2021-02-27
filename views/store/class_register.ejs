@@ -1,0 +1,106 @@
+<html>
+    <meta http-equiv = "refresh" content = "10; url = https://classcounts.herokuapp.com"/>
+    <style>
+        @media (prefers-color-scheme: dark){
+            body{
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: black;
+            }
+            h2 {
+                color: white;
+            }
+            p {
+                color: white;
+                text-emphasis: small;
+            }
+            #page-container {
+                position: relative;
+                min-height: 90vh;
+            }
+
+            #content-wrap {
+                padding-bottom: 2.5rem;    /* Footer height */
+            }
+
+            #footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2.5rem;            /* Footer height */
+                color: white;
+                background-color: black;
+            }
+        }
+        @media (prefers-color-scheme: light){
+            body{
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: white;
+            }
+            h2 {
+                color: black;
+            }
+            p {
+                color: black;
+                text-emphasis: small;
+            }
+            #page-container {
+                position: relative;
+                min-height: 90vh;
+            }
+
+            #content-wrap {
+                padding-bottom: 2.5rem;    /* Footer height */
+            }
+
+            #footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2.5rem;            /* Footer height */
+                color: black;
+                background-color: white;
+            }
+        }
+        @media (prefers-color-scheme: no-preference){
+            body{
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: white;
+            }
+            h2 {
+                color: black;
+            }
+            p {
+                color: black;
+                text-emphasis: small;
+            }
+            #page-container {
+                position: relative;
+                min-height: 90vh;
+            }
+
+            #content-wrap {
+                padding-bottom: 2.5rem;    /* Footer height */
+            }
+
+            #footer {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                height: 2.5rem;            /* Footer height */
+                color: black;
+                background-color: white;
+            }
+        }
+    </style>
+    <body>
+        <div id="page-container">
+            <div id="content-wrap">
+                <h2><%= stud_name %>, you are signed up for class. An email confirmation will be sent to <%= email %>.</h2>
+                <p>(This page will return home in 10 seconds.)</p>
+            </div>
+        <footer id="footer">
+            Intellectual property of Chandler de Spirlet.
+        </footer>
+    </div>    
+    </body>
+</html>

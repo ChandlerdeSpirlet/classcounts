@@ -1,0 +1,117 @@
+<html>
+<head>
+    <!-- The param which is passed from render-->
+    <title><%= title %></title>
+</head>
+<body>
+
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: blue;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+h1 {
+    margin-left:8px;
+    margin-right: 8px;
+    margin-bottom: 8px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0px;
+}
+.dark h1 {
+    color: white;
+}
+.white h1 {
+    color: black;
+}
+.dark body {
+    background-color: black;
+}
+.dark {
+    background-color: black;
+}
+.white .body {
+    background-color: white;
+}
+
+</style>
+</head>
+<div id="data">
+<body>
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/store/login">Login</a></li>
+    <li><a href="/store/email">Contact</a></li>
+</ul>
+<h1><%= title %></h1>
+</body>
+</body>
+</html>
+<script>
+    var x = "True";
+    var y = "False";
+    var localTime = new Date();
+    // var localTime = new Date(2018, 11, 24, 10, 33);
+    var hours   = localTime.getHours();
+    console.log(hours, ' -hours');
+    var timeString = "" + hours;
+    
+    console.log('localTime is ', localTime);
+    console.log(timeString);
+
+    if (hours >= 7 && hours <= 17) {
+        console.log(x);
+        document.getElementById("data").classList.add('white');
+    } else {
+        console.log(y);
+        document.getElementById("data").classList.add('dark');
+        // document.getElementById("body-content").classList.add('dark');
+    }
+</script>

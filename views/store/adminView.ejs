@@ -1,0 +1,347 @@
+
+<!--Including Header Partial-->
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:blue"><%- messages.success %></p>
+<% } %>
+<script type="text/javascript">
+    var err = <%- JSON.stringify(messages) %>;
+    console.log(err);
+</script>
+<!DOCTYPE html>
+<html>
+<head>
+	<!-- The param which is passed from render-->
+    <title><%= title %></title>
+    
+	<!-- Here is the web page I referenced for the idea of sticky header. -->
+	<!-- https://www.w3schools.com/howto/howto_js_sticky_header.asp -->
+    <meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+</head>
+<style>
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+li a, .dropbtn {
+    display: inline-block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+li a:hover, .dropdown:hover .dropbtn {
+    background-color: blue;
+}
+
+li.dropdown {
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a:hover {background-color: #f1f1f1}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+    margin: 0px;
+    }
+    .top-container {
+    
+    }
+    h1 {                    /*NJ 01122019*/
+    margin-left: 8px;   /*NJ 01122019*/
+    margin-right: 8px;
+    margin-bottom: 2px;
+    }
+    h2{
+        margin-left: 8px;
+        margin-right: 8px;
+        margin-top: 2px;
+    }
+.content {
+    margin-left: 10px;  /*NJ 01122019*/
+    margin-right: 10px; /*NJ 01122019*/
+}
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    }
+  /* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+    .sticky + .content {
+    padding-top: 50px;
+    }
+    table {
+        border-collapse: collapse;
+    }
+th {
+    background-color: blue;
+    color: white;
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+tr:hover {
+    background-color: #ddd;
+}
+@media (prefers-color-scheme: no-preference){
+    tr:nth-child(even){
+        background-color: #3d3c3c;
+    }
+    tr:hover {
+        background-color: #282727;
+    }
+    background-color: black;
+    h1 {
+        color: white;
+    }
+    td {
+        color: white;
+    }
+}
+@media (prefers-color-scheme: dark){
+    tr:nth-child(even){
+        background-color: #3d3c3c;
+    }
+    tr:hover {
+        background-color: #282727;
+    }
+    background-color: black;
+    h1 {
+        color: white;
+    }
+    td {
+        color: white;
+    }
+}
+.dark, tr:nth-child(even) {
+    background-color: #3d3c3c;
+}
+.dark, tr {
+    background-color: #333232;
+}
+.dark, tr:hover {
+    background-color: #282727;
+}
+.dark, h1, h2, td {
+    color: white;
+}
+.dark, body {
+    background-color: black;
+}
+@media (min-width: 300px) {
+    th {
+        /* Since color is in min-width: 300px it will follow all the other sizes upwards */
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    th,td {
+        width: calc(598px /5);
+        text-align: center;
+        padding-top: 5px; 
+        padding-bottom: 5px;
+    }
+    th:first-child {
+        padding-left: 30px;
+        padding-right: 25px;
+    }
+}
+@media (min-width: 600px) {
+    th, td {
+        width: calc(768px / 5);
+    }
+}
+
+@media (min-width: 768px) {
+    th,td {
+        width: calc(768px / 5);
+    }
+}
+@media (min-width: 768.02px) {
+    th, td {
+        width: calc(1024px / 5);
+    }
+}
+@media (min-width: 1024px) {
+    th,td {
+        width: calc(1024px / 5);
+    }
+}
+@media (min-width: 1024.02px) {
+    th, td {
+        width: calc(1200px / 5);
+    }
+}
+@media (min-width: 1200px) {
+    th,td {
+        width: calc(1600px / 5);
+    }
+}
+@media (min-width: 1600.02px) {
+    th, td {
+        width: calc(2000px / 5);
+        /* Simple hack for screen larger than 1600 pixels but smaller than 2000 */
+    }
+}
+@media (min-width: 2000.02px) {
+    th, td {
+        width: calc(2400px / 5);
+    }
+}
+</style>
+<body>
+<div id="data">
+    <div class="top-container">
+	<!-- top-container class helps with the Sticky header -->
+    <div>
+        <ul>
+            <li><a href="/store/list3">Home</a></li>
+            <li><a href="/store/adminView">Logs</a></li>
+            <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Edit</a>
+            <div class="dropdown-content">
+                <a href="/store/file">Add File</a>
+                <a href="/store/add">Add Blackbelt</a>
+                <a href="/store/del">Remove Blackbelt</a>
+                <a href="/store/edit">Change Counts</a>
+                <a href="/store/additional">Store Classes</a>
+            </div>
+            </li>
+            <li class="dropdown">
+                <a href="javascript:void(0)" class="dropbtn">Files</a>
+                <div class="dropdown-content">
+                    <a href="/store/schedule">Schedule</a>
+                    <a href="/store/ITP">Intent To Promote</a>
+                    <a href="/store/aspHomework">After School Program Homework</a>
+                    <a href="/store/Lvl1Homework">Level 1 Homework</a>
+                    <a href="/store/Lvl2Homework">Level 2 Homework</a>
+                    <a href="/store/Lvl3Homework">Level 3 Homework</a>
+                    <a href="/store/BBHomework">Black Belt Homework</a>
+                    <a href="/store/Lvl1Sparring">Level 1 Sparring List</a>
+                    <a href="/store/Lvl2Sparring">Level 2 Sparring List</a>
+                    <a href="/store/ASPPacket">After School Program Packet</a>
+                    <a href="/store/Calendar">Calendar</a>
+                    <a href="/store/1Confidence">1. Confidence</a>
+                    <a href="/store/2Discipline">2. Discipline</a>
+                    <a href="/store/3Respect">3. Respect</a>
+                    <a href="/store/4Responsibility">4. Responsibility</a>
+                    <a href="/store/5Focus">5. Focus</a>
+                    <a href="/store/6GoalSetting">6. Goal Setting</a>
+                </div>
+                </li>
+            <li><a href="/store/changelog">Change Log</a></li>
+            <li><a href="/">Logout</a></li>
+        </ul>
+    </div>
+    <h1>SWAT Signups</h1>
+    <h2><%= title %></h2>
+    <form action="/store/updateLog" method="post">
+        <input type="submit" name="update" value="Update Logs">
+    </form><!--Using if-check to see if an error occurred and displaying appropriate message-->
+    </div>
+	<div>
+        <div class="header" id="myHeader">
+        <!-- Header class and id work with javascript at bottom for sticky header -->
+            <table>
+            <!-- Seperate table for the header area. Since it is in seperate DIV group from the body -->
+                <tr>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Class Name</th>
+                    <th>Scanned Time</th>
+                    <th>Class Time</th>
+                </tr>
+            </table>
+        </div>
+        <div class="content"> 
+        <!-- Content class and new table for the content that will be scrolling past the sticky header -->
+        <table >
+            <% if (data) { %>
+                <!-- Using a for-loop to loop over each row in the database.
+                The 'data' variable is passed from the store.js during the response.render function call -->
+                    <% data.forEach(function(item){ %>
+                        <tr>
+                            <td><%= item.firstname %></td>
+                            <td><%= item.lastname %></td>
+                            <td><%= item.classname %></td>
+                            <td><%= item.classdate %></td>
+                            <td><%= item.classtime %></td>
+                        </tr>
+                    <% }) %>
+                <% } %>
+        </table>
+    </div>
+    </div><!--Including Footer Partial-->
+</div>
+    <script>
+        window.onscroll = function() {myFunction()};
+        
+        var header = document.getElementById("myHeader");
+        var sticky = header.offsetTop;
+        
+        function myFunction() {
+            if (window.pageYOffset > sticky) {
+            header.classList.add("sticky");
+            } else {
+            header.classList.remove("sticky");
+            }
+        }
+    </script>
+    <script>
+        var sun = require('sun-time');
+        var options = {
+            timeZone: "America/Denver",
+            hour: 'numeric', minute: 'numeric'
+        };
+        var formatter = new Intl.DateTimeFormat('en-us', options);
+        var localTime = formatter.format(newDate());
+        var dataStuff = document.getElementById("data");
+        if (localTime >= sun.rise('Denver', {format:"12h"}) && localTime < sun.set('Denver', {format:"12h"})){
+            dataStuff.classList.remove("dark");
+        }
+        else if (localTime >= sun.set('Denver', {format:"12h"})){
+            dataStuff.classList.add("dark");
+        }
+        else if (localTime < sun.rise('Denver', {format:"12h"})){
+            dataStuff.classList.add("dark");
+        } else {
+            dataStuff.classList.remove("dark");
+        }
+    </script>
+</body>
+</html>
+<%- include ../layouts/footer.ejs %>

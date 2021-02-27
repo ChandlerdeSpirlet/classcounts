@@ -1,0 +1,87 @@
+<% if (messages.error) { %>
+    <p style="color:red"><%- messages.error %></p>
+<% } %>
+<% if (messages.success) { %>
+    <p style="color:black; font-weight: bold;"><%- messages.success %></p>
+<% } %>
+<html>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Black Belt Grading</title>
+    <style>
+        * {
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        html {
+            height: 100%;
+            background-image: linear-gradient(#03d3fc, #ceeef5);
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+        button, label, input, select {
+            display: block;
+            font-size: 100%;
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+            width: 100%;
+            padding: 5px;
+            height: 30px;
+        }
+        select {
+            -webkit-appearance: none;
+            appearance: none;
+        }
+
+        .select-wrapper {
+            position: relative;
+        }
+
+        .select-wrapper::after {
+            content: "▼";
+            font-size: 1rem;
+            top: 6px;
+            right: 10px;
+            position: absolute;
+        }
+
+        input[type="text"], select {
+            box-shadow: inset 1px 1px 3px #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            margin-bottom: 5px;
+        }
+
+        button {
+            width: 60%;
+            margin: 0 auto;
+        }
+        label{
+            font-weight: bold;
+        }
+    </style>
+    <head>
+        <h1>Select a black belt to be scored.</h1>
+        <h3>Grading requirements.</h3>
+        <ul>
+            <li><strong>Significant Testing</strong> &mdash; Choose 5 people who you think are an equal or better partner.</li>
+            <li><strong>Progress Check</strong> &mdash; Choose 3 people who you think are an equal or better partner.</li>
+        </ul>
+    </head>
+    <body>
+        <form action="/store/sparring_selector" method="post">
+            <label for="select">Black belt being scored: </label>
+            <div class="select-wrapper"><select name="bbname">
+                <option value="">Black belt being scored</option>
+                    <% for (var i = 0; i < data.length; i++) { %>
+                    <option value="<%= data[i].bb_name %>" name="bbname"><%= data[i].bb_name %> &mdash; <% if (data[i].card_count == 1) { %><%= data[i].card_count %> grade <% } else { %><%= data[i].card_count %> grades <% } %></option>
+                    <% } %>
+            </select></div><br>
+            <input type="submit" name="Grade" value="Grade"/>
+        </form>
+    </body>
+</html>

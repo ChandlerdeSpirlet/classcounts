@@ -1,0 +1,49 @@
+<html>
+    <style>
+        footer{
+            padding-left: 8px;
+            padding-top: 1.5px;
+            font-size: 8pt;
+            border-top: solid black 1px;
+            border-spacing: 8px;
+            padding-bottom: 8px;
+            width: 100%;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+
+        }
+        .dark footer {
+            color: white;
+            border-top: solid white 1px;
+            background-color: black;
+        }
+        .white footer {
+            color: black;
+            border-top: solid black 1px;
+        }
+    </style>
+    <div id="foot">
+    <footer style="position: absolute; bottom: 5px;">Intellectual property of Chandler de Spirlet.<br>
+            Design contributions graciously made by Nick Jantz.</footer>
+    </div>
+</html>
+<script>
+    var x = "True";
+    var y = "False";
+    var localTime = new Date();
+    // var localTime = new Date(2018, 11, 24, 10, 33);
+    var hours   = localTime.getHours();
+    console.log(hours, ' -hours');
+    var timeString = "" + hours;
+    
+    console.log('localTime is ', localTime);
+    console.log(timeString);
+
+    if (hours >= 7 && hours <= 19) {
+        console.log(x);
+        document.getElementById("foot").classList.add('white');
+    } else {
+        console.log(y);
+        document.getElementById("foot").classList.add('dark');
+        // document.getElementById("body-content").classList.add('dark');
+    }
+    </script>
