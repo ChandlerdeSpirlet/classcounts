@@ -1,6 +1,12 @@
 //require('newrelic');
 var express = require('express');
-const db = require('./database');
+//const db = require('./database');
+var pgp = require('pg-promise')();
+
+var dbConfig = process.env.DATABASE_URL;
+var db = pgp(dbConfig);
+
+module.exports = db;
 var app = express();
 app.set('view engine', 'ejs');
 var expressValidator = require('express-validator');
