@@ -75,9 +75,9 @@ function getDate() {
 }
 
 app.get('/', function (request, response) {
-    if(request.headers['x-forwarded-proto']!='https'){
-        response.redirect('https://classcounts.herokuapp.com')
-    } else {
+    //if(request.headers['x-forwarded-proto']!='https'){
+     //   response.redirect('https://classcounts.herokuapp.com/store/home')
+    //} else {
         var query = 'SELECT * FROM counts order by bbname_last';
         //var query = 'select Z.*, S.mon, S.tues, S.wed, S.thurs, S.fri from counts Z, signup S where Z.bbname like S.bbname';
         getDate();
@@ -99,7 +99,7 @@ app.get('/', function (request, response) {
                 data: ''
             })
         })
-    }
+    //}
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     
