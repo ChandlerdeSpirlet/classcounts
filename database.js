@@ -1,6 +1,11 @@
-var pgp = require('pg-promise')();
+const { Client } = require('pg');
 
-var dbConfig = process.env.DATABASE_URL;
-var db = pgp(dbConfig);
+const client = new Client({
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false
+  }
+});
 
-module.exports = db;
+client.connect();
+module.exports = client;
