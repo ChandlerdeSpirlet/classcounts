@@ -1,6 +1,6 @@
 //require('newrelic');
 var express = require('express');
-//const db = require('./database');
+const db = require('./database');
 //var pgp = require('pg-promise')();
 
 //var dbConfig = process.env.DATABASE_URL;
@@ -28,31 +28,7 @@ function getDate() {
 }
 
 app.get('/', function (request, response) {
-    if(request.headers['x-forwarded-proto']!='https'){
-        response.redirect('https://classcounts.herokuapp.com')
-    } else {
-        var query = 'SELECT * FROM counts order by bbname_last';
-    //var query = 'select Z.*, S.mon, S.tues, S.wed, S.thurs, S.fri from counts Z, signup S where Z.bbname like S.bbname';
-        getDate();
-        db.any(query)
-            .then(function (rows) {
-            // render views/store/list.ejs template file
-            response.render('store/home', {
-                title: 'Updated - ' + global.globalDate,
-                result: '',
-                data: rows
-            })
-        })
-        .catch(function (err) {
-            // display error message in case an error
-            request.flash('error', err);
-            response.render('store/home', {
-                title: 'Updated - ' + global.globalDate,
-                result: '',
-                data: ''
-            })
-        })
-    }
+    response.redirect('https://classcounts.herokuapp.com/store/home')
     // TODO: Initialize the query variable with a SQL query
     // that returns all the rows and columns in the 'store' table
     
