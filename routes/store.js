@@ -487,7 +487,7 @@ app.get('/test_candidates', function(req, res){
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/home', {
+            res.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
                 result: '',
                 data: rows
@@ -495,8 +495,8 @@ app.get('/test_candidates', function(req, res){
         })
         .catch(function (err) {
             // display error message in case an error
-            request.flash('error', err);
-            response.render('store/home', {
+            req.flash('error', err);
+            res.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
                 result: '',
                 data: ''
