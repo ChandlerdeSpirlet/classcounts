@@ -4,9 +4,9 @@ var express = require('express');
 var pgp = require('pg-promise')();
 
 var dbConfig = process.env.DATABASE_URL;
-const db = pgp(dbConfig);
+var db = pgp(dbConfig);
 
-//module.exports = db;
+module.exports = db;
 var app = express();
 var pgp = require('pg-promise')({});
 var busboy = require('connect-busboy');
