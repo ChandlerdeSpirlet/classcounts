@@ -1,6 +1,6 @@
 //require('newrelic');
 var express = require('express');
-const db = require('./database');
+const db = require('/app/database');
 
 var app = express();
 var pgp = require('pg-promise')({});
