@@ -1,6 +1,7 @@
 //require('newrelic');
 var express = require('express');
 const db = require('/app/database');
+
 var app = express();
 app.set('view engine', 'ejs');
 var expressValidator = require('express-validator');
