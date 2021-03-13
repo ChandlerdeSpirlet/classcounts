@@ -1,12 +1,12 @@
 //require('newrelic');
-var express = require('express');
+//var express = require('express');
 //const db = require('./database');
-var pgp = require('pg-promise')();
+//var pgp = require('pg-promise')();
 
-var dbConfig = process.env.DATABASE_URL;
-var db = pgp(dbConfig);
+//var dbConfig = process.env.DATABASE_URL;
+//var db = pgp(dbConfig);
 
-module.exports = db;
+//module.exports = db;
 var app = express();
 module.exports = app;
 
