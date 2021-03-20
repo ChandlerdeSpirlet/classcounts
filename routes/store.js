@@ -170,6 +170,30 @@ function addClass(code, name, time, id){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
         addType(code, name, 'Regular', time, id);
     }
+    if (name == 'Weapons'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Basic (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 1 (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 2 (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 3 (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Prep / Cond. (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
     if (name == 'Lvl 3/Prep/Cond'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
         addType(code, name, 'Regular', time, id);
@@ -950,6 +974,27 @@ function readData(area){
                     addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == '2nd Degree BB VK'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Weapons'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Basic (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Level 1 (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Level 2 (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Level 3 (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Prep / Cond. (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Prep / Cond.'){
                     addClass(csvData[x][1], csvData[x][2], localTime);
                 }
             }
