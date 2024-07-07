@@ -1,6 +1,6 @@
 //require('newrelic');
 var express = require('express');
-const db = require('/app/database');
+const db = require('../database.js');
 
 var app = express();
 module.exports = app;

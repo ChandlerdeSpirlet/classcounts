@@ -1,6 +1,6 @@
 //require('newrelic');
 var express = require('express');
-const db = require('/app/database');
+const db = require('../database.js');
 
 var app = express();
 var pgp = require('pg-promise')({});
@@ -15,7 +15,7 @@ var exp_val = require('express-validator');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-let testDateGlobal = 'March 12 2021';
+let testDateGlobal = 'December 03 2021';
 
 function sendMessage(text){
     db.query('select * from get_accountsid()')
@@ -167,6 +167,30 @@ function addClass(code, name, time, id){
         addType(code, name, 'Regular', time, id);
     }
     if (name == 'Level 3'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Weapons'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Basic (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 1 (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 2 (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Level 3 (FLOOR 2)'){
+        db.none('update counts set regular = (regular + 1) where barcode = ' + code);
+        addType(code, name, 'Regular', time, id);
+    }
+    if (name == 'Prep / Cond. (FLOOR 2)'){
         db.none('update counts set regular = (regular + 1) where barcode = ' + code);
         addType(code, name, 'Regular', time, id);
     }
@@ -487,7 +511,7 @@ app.get('/test_candidates', function(req, res){
         db.any(query)
             .then(function (rows) {
             // render views/store/list.ejs template file
-            response.render('store/home', {
+            res.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
                 result: '',
                 data: rows
@@ -495,8 +519,8 @@ app.get('/test_candidates', function(req, res){
         })
         .catch(function (err) {
             // display error message in case an error
-            request.flash('error', err);
-            response.render('store/home', {
+            req.flash('error', err);
+            res.render('store/home', {
                 title: 'Class Counts - Updated ' + globalDate,
                 result: '',
                 data: ''
@@ -950,6 +974,27 @@ function readData(area){
                     addClass(csvData[x][1], csvData[x][2], localTime);
                 }
                 if (csvData[x][2] == '2nd Degree BB VK'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Weapons'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Basic (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Level 1 (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Level 2 (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Level 3 (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Prep / Cond. (FLOOR 2)'){
+                    addClass(csvData[x][1], csvData[x][2], localTime);
+                }
+                if (csvData[x][2] == 'Prep / Cond.'){
                     addClass(csvData[x][1], csvData[x][2], localTime);
                 }
             }
